@@ -12,6 +12,24 @@ Read-only Markdown viewer, binary `marq` (Tauri 2 + Vanilla TS + markdown-it + g
 - Search: Ctrl+F or toolbar icon; ↑/↓, Enter/Shift+Enter or F3 step from the visible area, Esc closes
 - Zero-Touch: the backend only uses `fs::read_to_string`, nothing is ever written
 
+## Install
+
+Packages for x86_64 are attached to each [release](https://github.com/Skrrytch/Marq/releases)
+(built against glibc 2.39: Ubuntu 24.04+, Debian 13+, Fedora 40+, current Arch).
+
+```sh
+# Debian / Ubuntu
+sudo apt install ./Marq_0.1.0_amd64.deb
+
+# Fedora / openSUSE
+sudo dnf install ./Marq-0.1.0-1.x86_64.rpm
+
+# Arch (AUR, package marq-bin) – or build locally from packaging/aur:
+cd packaging/aur && makepkg -si
+```
+
+## Build
+
 ```sh
 npm install
 npm run tauri dev -- -- path/to/file.md   # development
