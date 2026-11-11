@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Marq
+GenericName=Markdown Viewer
+Comment=Read-only Markdown viewer
+Exec=marq %f
+TryExec=marq
+Icon=marq
+Terminal=false
+Categories=Utility;Viewer;TextTools;
+MimeType=text/markdown;text/x-markdown;
+StartupWMClass=marq
