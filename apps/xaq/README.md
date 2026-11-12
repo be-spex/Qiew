@@ -1,6 +1,6 @@
 # Xaq (read: Zack)
 
-Read-only XML source viewer, binary `xaq` (Tauri 2 + Vanilla TS). Sibling of [Marq](https://github.com/Skrrytch/Marq),
+Read-only XML source viewer, binary `xaq` (Tauri 2 + Vanilla TS). Sibling of [Marq](https://github.com/be-spex/Marq),
 built on the same frame. It shows the *source*, nothing is rendered or executed – except an XSLT you run
 yourself in the mapping view.
 
@@ -31,7 +31,7 @@ yourself in the mapping view.
 
 ## Install
 
-Packages for x86_64 are attached to each [release](https://github.com/Skrrytch/Xaq/releases)
+Packages for x86_64 are attached to each [release](https://github.com/be-spex/Xaq/releases)
 (built against glibc 2.39: Ubuntu 24.04+, Debian 13+, Fedora 40+, current Arch).
 
 ```sh
