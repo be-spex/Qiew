@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Xaq
+GenericName=XML Viewer
+Comment=Read-only XML source viewer
+Exec=xaq %f
+TryExec=xaq
+Icon=xaq
+Terminal=false
+Categories=Utility;Viewer;TextTools;Development;
+MimeType=application/xml;text/xml;application/xslt+xml;application/xsd;application/xhtml+xml;text/html;
+StartupWMClass=xaq

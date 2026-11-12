@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xaq</title>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <section class="pane pane-xml" id="pane-xml">
+    <h2 class="pane-title">XML</h2>
+    <header class="toolbar" id="toolbar">
+      <div class="toolbar-inner">
+        <div class="tb-group tb-left">
+          <button class="tb-btn labeled" id="mapping-close-btn" title="Close XSLT Mapping, back to the XML view">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
+            <span>Back to XML</span>
+          </button>
+        </div>
+        <div class="tb-center">
+          <span class="tb-stats" id="stats" hidden></span>
+          <button class="tb-btn" id="mapping-btn" title="XSLT Mapping (XML · XSLT · Result)" aria-label="XSLT Mapping" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3.5" y="5" width="17" height="14" rx="2" /><path d="M9.2 5v14M14.8 5v14" />
+            </svg>
+          </button>
+          <div class="tb-search" id="search" role="search" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="tb-search-icon">
+            <circle cx="11" cy="11" r="6.5" /><path d="m20 20-4.4-4.4" />
+          </svg>
+          <input id="search-input" type="text" placeholder="Search" aria-label="Search in document" spellcheck="false" autocomplete="off" />
+          <span class="tb-search-count" id="search-count" aria-live="polite"></span>
+          <button class="tb-btn small" id="search-prev" title="Previous match (↑, Shift+Enter)" aria-label="Previous match">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 6-6 6 6" /></svg>
+          </button>
+          <button class="tb-btn small" id="search-next" title="Next match (↓, Enter)" aria-label="Next match">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </button>
+          <button class="tb-btn small" id="search-close" title="Close (Esc)" aria-label="Close search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17" /></svg>
+          </button>
+          </div>
+        </div>
+        <div class="tb-group tb-right">
+          <div class="tb-group" id="doc-tools" hidden>
+          <span id="fold-tools" class="tb-group">
+          <button class="tb-btn" id="unfold-btn" title="Expand all" aria-label="Expand all">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 9 5-5 5 5M7 15l5 5 5-5" /></svg>
+          </button>
+          <button class="tb-btn" id="fold-btn" title="Collapse all (keeps the root open)" aria-label="Collapse all">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 5 5 5-5M7 20l5-5 5 5" /></svg>
+          </button>
+          </span>
+          <span class="tb-sep" aria-hidden="true"></span>
+          <button class="tb-btn" id="search-btn" title="Search (Ctrl+F)" aria-label="Search">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="6.5" /><path d="m20 20-4.4-4.4" />
+            </svg>
+          </button>
+          <button class="tb-btn" id="copy-btn" title="Copy to Clipboard (formatted XML)" aria-label="Copy to Clipboard">
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="icon-copy">
+              <rect x="8.5" y="8.5" width="11" height="11" rx="2" />
+              <path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2" />
+            </svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="icon-done">
+              <path d="m5 12.5 4.5 4.5L19 7.5" />
+            </svg>
+          </button>
+          </div>
+          <span class="tb-sep" aria-hidden="true"></span>
+          <div class="tb-menu">
+            <button class="tb-btn" id="view-btn" title="Farbschema" aria-label="Farbschema" aria-haspopup="menu" aria-expanded="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.7 0-.5-.2-.8-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.7 1.8-1.7h2.1A4.3 4.3 0 0 0 21 11c0-4.4-4-8-9-8Z" />
+                <circle cx="7.5" cy="11" r="1.1" class="fill" />
+                <circle cx="10" cy="7.2" r="1.1" class="fill" />
+                <circle cx="14.6" cy="7.2" r="1.1" class="fill" />
+              </svg>
+            </button>
+            <div class="tb-dropdown" id="view-menu" role="menu" hidden></div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div id="notice" class="notice" role="status" hidden></div>
+    <div id="empty" class="empty">Drop XML File Here</div>
+    <article id="doc" class="xml" hidden></article>
+    </section>
+
+    <section class="pane pane-xslt" id="pane-xslt" hidden>
+      <h2 class="pane-title">XSLT</h2>
+      <header class="toolbar" id="xslt-toolbar">
+        <div class="toolbar-inner">
+          <div class="tb-group tb-left">
+            <button class="tb-btn" id="xslt-load-btn" title="Load XSLT File" aria-label="Load XSLT File">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3.5 7v10.5A1.5 1.5 0 0 0 5 19h14a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 19 8h-7l-2-2.5H5A1.5 1.5 0 0 0 3.5 7Z" />
+              </svg>
+            </button>
+          </div>
+          <div class="tb-center"></div>
+          <div class="tb-group tb-right">
+            <button class="tb-btn" id="xslt-format-btn" title="Pretty Print XSLT (text content stays as written)" aria-label="Pretty Print XSLT">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M8 10h12M8 14h12M4 18h16" /></svg>
+            </button>
+            <button class="tb-btn run" id="xslt-run-btn" title="Run Transformation (Ctrl+Enter)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5Z" class="fill" /></svg>
+              <span>Run</span>
+            </button>
+          </div>
+        </div>
+      </header>
+      <textarea id="xslt-editor" class="xslt-editor" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="XSLT"></textarea>
+    </section>
+
+    <section class="pane pane-result" id="pane-result" hidden>
+      <h2 class="pane-title">Transformed XML</h2>
+      <header class="toolbar" id="result-toolbar">
+        <div class="toolbar-inner">
+          <div class="tb-group tb-left">
+            <button class="tb-btn" id="result-save-btn" title="Save Result" aria-label="Save Result">
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="icon-copy">
+                <path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14" />
+              </svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="icon-done"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>
+            </button>
+            <button class="tb-btn" id="result-copy-btn" title="Copy Result to Clipboard" aria-label="Copy Result to Clipboard">
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="icon-copy">
+                <rect x="8.5" y="8.5" width="11" height="11" rx="2" />
+                <path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2" />
+              </svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="icon-done"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>
+            </button>
+          </div>
+          <div class="tb-center"><span class="tb-stats" id="duration" aria-live="polite"></span></div>
+          <div class="tb-group tb-right"></div>
+        </div>
+      </header>
+      <article id="result" class="xml"></article>
+    </section>
+  </body>
+</html>
