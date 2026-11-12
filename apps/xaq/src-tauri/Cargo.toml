@@ -1,6 +1,6 @@
 [package]
 name = "xaq"
-version = "0.1.0"
+version = "0.2.0"
 description = "Read-only XML source viewer"
 authors = ["Skrrytch <skrrytch@speckels.net>"]
 edition = "2024"
