@@ -1,6 +1,6 @@
 [package]
 name = "marq"
-version = "0.1.0"
+version = "0.1.1"
 description = "Read-only Markdown viewer"
 authors = ["Skrrytch <skrrytch@speckels.net>"]
 edition = "2024"

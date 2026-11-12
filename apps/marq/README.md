@@ -19,10 +19,10 @@ Packages for x86_64 are attached to each [release](https://github.com/Skrrytch/M
 
 ```sh
 # Debian / Ubuntu
-sudo apt install ./Marq_0.1.0_amd64.deb
+sudo apt install ./Marq_0.1.1_amd64.deb
 
 # Fedora / openSUSE
-sudo dnf install ./Marq-0.1.0-1.x86_64.rpm
+sudo dnf install ./Marq-0.1.1-1.x86_64.rpm
 
 # Arch (AUR, package marq-bin) – or build locally from packaging/aur:
 cd packaging/aur && makepkg -si

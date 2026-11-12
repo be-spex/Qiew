@@ -1,6 +1,6 @@
 pkgbase = marq-bin
 	pkgdesc = Lightweight read-only Markdown viewer
-	pkgver = 0.1.0
+	pkgver = 0.1.1
 	pkgrel = 1
 	url = https://github.com/Skrrytch/Marq
 	arch = x86_64
@@ -11,9 +11,9 @@ pkgbase = marq-bin
 	optdepends = xdg-utils: register Marq as the default Markdown viewer
 	provides = marq
 	conflicts = marq
-	source = Marq_0.1.0_amd64.deb::https://github.com/Skrrytch/Marq/releases/download/v0.1.0/Marq_0.1.0_amd64.deb
-	source = LICENSE-0.1.0::https://raw.githubusercontent.com/Skrrytch/Marq/v0.1.0/LICENSE
-	sha256sums = d9a1683a322d288ea2c0dcf28abc8699e607d57f1b27b73095d4158fe388032f
+	source = Marq_0.1.1_amd64.deb::https://github.com/Skrrytch/Marq/releases/download/v0.1.1/Marq_0.1.1_amd64.deb
+	source = LICENSE-0.1.1::https://raw.githubusercontent.com/Skrrytch/Marq/v0.1.1/LICENSE
+	sha256sums = 818f4d9a5602f18f1b2053a22b3b4aa32dd3575a17ac9fdcc5630d2ce46cf163
 	sha256sums = eb623b9a1690b7c81266504114a64a877a5e670eef6cf187bd735d0a397addcb
 
 pkgname = marq-bin
