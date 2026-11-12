@@ -1,6 +1,6 @@
 # Xtaq
 
-Read-only XML source viewer, binary `xtaq` (Tauri 2 + Vanilla TS). Sibling of [Marq](../Marq),
+Read-only XML source viewer, binary `xtaq` (Tauri 2 + Vanilla TS). Sibling of [Marq](https://github.com/Skrrytch/Marq),
 built on the same frame. It shows the *source*, nothing is rendered or executed.
 
 - Open: drag & drop (any file), CLI argument (`xtaq pom.xml`), file association
@@ -19,6 +19,19 @@ built on the same frame. It shows the *source*, nothing is rendered or executed.
 - Default handler on Linux: asks once on first start for XML; or run `xtaq --register-default`
 - Zero-Touch: the backend only reads (`fs::read`), nothing is ever written
 
+## Install
+
+Packages for x86_64 are attached to each [release](https://github.com/Skrrytch/Xtaq/releases)
+(built against glibc 2.39: Ubuntu 24.04+, Debian 13+, Fedora 40+, current Arch).
+
+```sh
+# Debian / Ubuntu
+sudo apt install ./Xtaq_0.1.0_amd64.deb
+
+# Fedora / openSUSE
+sudo dnf install ./Xtaq-0.1.0-1.x86_64.rpm
+```
+
 ## Build
 
 ```sh
@@ -31,4 +44,4 @@ Layout: `src/xml.ts` (parse, pretty print, highlighting, raw fallback), `src/fol
 `src/main.ts` (rendering, drag & drop, history), `src-tauri/src/lib.rs` (commands, decoding, watcher),
 `src-tauri/tauri.conf.json` (window, CSP, file association).
 
-The icons in `src-tauri/icons` are still Marq's; replace them before a release.
+The app icon's SVG source is `src-tauri/icons/icon.svg`.
