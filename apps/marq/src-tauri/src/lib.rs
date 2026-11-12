@@ -5,6 +5,8 @@
 
 #[cfg(target_os = "linux")]
 mod default_handler;
+#[cfg(target_os = "linux")]
+mod migrate;
 mod window_layout;
 
 use std::fs;
@@ -129,6 +131,9 @@ fn initial_file(state: State<'_, ViewerState>) -> Option<String> {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    // Identifier until 0.3 (de.lab.marq); keeps settings and the colour scheme.
+    #[cfg(target_os = "linux")]
+    migrate::from_old_identifiers("net.spex.marq", &["de.lab.marq"]);
     // `marq --register-default`: set up the file association without asking
     // (e.g. from a setup script) and exit.
     #[cfg(target_os = "linux")]

@@ -14,7 +14,7 @@ Read-only Markdown viewer, binary `marq` (Tauri 2 + Vanilla TS + markdown-it + g
 
 ## Install
 
-Packages for x86_64 are attached to each [release](https://github.com/Skrrytch/Marq/releases)
+Packages for x86_64 are attached to each [release](https://github.com/be-spex/Marq/releases)
 (built against glibc 2.39: Ubuntu 24.04+, Debian 13+, Fedora 40+, current Arch).
 
 ```sh

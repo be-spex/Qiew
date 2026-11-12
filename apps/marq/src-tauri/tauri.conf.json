@@ -3,7 +3,7 @@
   "productName": "Marq",
   "mainBinaryName": "marq",
   "version": "0.1.1",
-  "identifier": "de.lab.marq",
+  "identifier": "net.spex.marq",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
