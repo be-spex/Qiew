@@ -15,6 +15,8 @@ interface Doc {
 }
 
 const DROP_HINT = "Drop XML File Here";
+/** Documents above this size take noticeable time to render; the user gets a hint first. */
+const LOADING_HINT_CHARS = 300_000;
 
 const empty = document.getElementById("empty")!;
 const notice = document.getElementById("notice")!;
@@ -28,6 +30,23 @@ document.getElementById("unfold-btn")!.addEventListener("click", () => setAllCol
 
 const fmt = new Intl.NumberFormat("en");
 const plural = (n: number, word: string) => `${fmt.format(n)} ${word}${n === 1 ? "" : "s"}`;
+
+/**
+ * Shows "Lade …" for big documents and lets the browser paint it: rendering
+ * blocks the UI thread, so without this the drop target would stay on screen.
+ */
+async function showLoading(doc: Doc) {
+  if (doc.content.length < LOADING_HINT_CHARS) return;
+  article.hidden = true;
+  notice.hidden = true;
+  updateToolbar(null, "", false);
+  closeSearch();
+  empty.classList.remove("error");
+  empty.classList.add("loading");
+  empty.textContent = `Lade ${fmt.format(Math.round(doc.content.length / 1000))} KB …`;
+  empty.hidden = false;
+  await new Promise<void>((done) => requestAnimationFrame(() => setTimeout(done, 0)));
+}
 
 /** `keepState` (live reload): keep scroll position and folded nodes. */
 function render(doc: Doc, keepState: boolean) {
@@ -44,6 +63,7 @@ function render(doc: Doc, keepState: boolean) {
   }
 
   empty.hidden = true;
+  empty.classList.remove("loading");
   article.hidden = false;
   updateToolbar(
     view.ok ? view.text : doc.content,
@@ -91,6 +111,7 @@ async function open(path: string, mode: "push" | "replace" | "none" = "push", sc
     } else if (mode !== "none") {
       history.replaceState({ path: doc.path, idx: navIdx, scroll: 0 } satisfies NavState, "");
     }
+    await showLoading(doc);
     current = doc;
     render(doc, false);
     window.scrollTo(0, scroll);
@@ -131,7 +152,7 @@ getCurrentWebview().onDragDropEvent((event) => {
   if (p.type === "enter" || p.type === "over") {
     document.body.classList.add("dragging");
     empty.textContent = DROP_HINT;
-    empty.classList.remove("error");
+    empty.classList.remove("error", "loading");
     empty.hidden = false;
   } else {
     document.body.classList.remove("dragging");

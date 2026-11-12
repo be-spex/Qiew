@@ -193,6 +193,7 @@ html, body {
   user-select: none;
   transition: border-color .12s, color .12s;
 }
+.empty.loading { border-color: transparent; }
 .empty.error { white-space: pre-wrap; text-align: center; padding: 24px; }
 
 body.dragging .empty {
