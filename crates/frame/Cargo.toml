@@ -1,0 +1,16 @@
+[package]
+name = "qiew-frame"
+version = "0.1.0"
+description = "What the Qiew viewers share: window placement, file watching, default handler, updates"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+tauri = { workspace = true }
+tauri-plugin-dialog = { workspace = true }
+tauri-plugin-updater = { workspace = true }
+serde = { workspace = true }
+notify = { workspace = true }
+encoding_rs = "0.8"

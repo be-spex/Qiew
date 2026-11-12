@@ -1,5 +1,6 @@
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
-import { onXmlScroll, xmlScrollTop } from "./scroll";
+import { appId } from "./app";
+import { docScrollTop, onDocScroll } from "./scroll";
 import { VIEWS, applyView, effectiveView, onSystemThemeChange, saveView, storedView } from "./views";
 
 const $ = (id: string) => document.getElementById(id)!;
@@ -74,7 +75,7 @@ function initCopy() {
       await writeText(source);
       flashDone(btn);
     } catch (err) {
-      console.error("xaq: copy failed", err);
+      console.error(`${appId()}: copy failed`, err);
     }
   });
 }
@@ -82,8 +83,8 @@ function initCopy() {
 /** Separator line appears only once the document scrolls under the bar. */
 function initScrollShadow() {
   const bar = $("toolbar");
-  const update = () => bar.classList.toggle("scrolled", xmlScrollTop() > 2);
-  onXmlScroll(update);
+  const update = () => bar.classList.toggle("scrolled", docScrollTop() > 2);
+  onDocScroll(update);
   update();
 }
 
@@ -94,13 +95,15 @@ export function initToolbar() {
 }
 
 /**
- * Called after each render; `text` is null when no document is open.
- * `foldable` is false for the raw fallback view (nothing to fold).
+ * Called after each render; `text` (what "Copy" hands out) is null when no
+ * document is open. `foldable` is false where there is nothing to fold (raw
+ * fallback view, apps without folding).
  */
-export function updateToolbar(text: string | null, stats: string, foldable: boolean) {
+export function updateToolbar(text: string | null, stats: string, foldable = false) {
   source = text ?? "";
   $("doc-tools").hidden = text === null;
-  $("fold-tools").hidden = text === null || !foldable;
+  const foldTools = document.getElementById("fold-tools");
+  if (foldTools) foldTools.hidden = text === null || !foldable;
   $("stats").hidden = text === null;
   $("stats").textContent = stats;
 }

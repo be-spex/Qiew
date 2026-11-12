@@ -4,33 +4,12 @@
  * elements can be folded. If the parser rejects the input (or it is HTML that
  * is not well-formed), the original text is shown unchanged, only highlighted.
  *
- * Everything that ends up in the DOM goes through `esc` first, so the result
- * can be assigned to innerHTML without further sanitising.
- *
- * Every piece of markup is built twice in one go: as highlighted HTML (`h`)
- * and as plain text (`t`), so "Copy" can hand out the pretty-printed source.
+ * The markup is built from the frame's fragments (HTML and plain text at once).
  */
-
-const INDENT = "  ";
-
-const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-const escAttr = (s: string) => esc(s).replace(/"/g, "&quot;");
-
-export type ViewResult =
-  | { ok: true; html: string; text: string; elements: number }
-  | { ok: false; html: string; lines: number; error: string };
-
-/** A fragment as highlighted HTML and as plain text. */
-interface S {
-  h: string;
-  t: string;
-}
-
-const EMPTY: S = { h: "", t: "" };
-const cat = (...parts: S[]): S => ({ h: parts.map((p) => p.h).join(""), t: parts.map((p) => p.t).join("") });
-/** Literal display text `d` in a highlight class. */
-const lit = (cls: string, d: string): S => ({ h: `<span class="${cls}">${esc(d)}</span>`, t: d });
-const plain = (d: string): S => ({ h: esc(d), t: d });
+import {
+  EMPTY, INDENT, cat, esc, escAttr, foldBlock, line, lit, plain, rawView,
+  type S, type ViewResult,
+} from "@qiew/frame/fragment";
 
 const ENTITY = /(&(?:amp|lt|gt|quot);)/;
 /** Escaped text with its predefined entities picked out. */
@@ -66,7 +45,7 @@ function openTag(el: Element, selfClose: boolean): S {
   return cat(...parts);
 }
 
-/** Closing tag; its name is also stored on the fold marker (see fold.ts). */
+/** Closing tag; also shown after the "…" of a folded node. */
 const closeTag = (el: Element): S => cat(lit("x-p", "</"), nameS(el.tagName, "x-tag"), lit("x-p", ">"));
 
 const isText = (n: Node) => n.nodeType === Node.TEXT_NODE || n.nodeType === Node.CDATA_SECTION_NODE;
@@ -150,7 +129,7 @@ class Builder {
   private line(s: S, depth: number, cls = ""): string {
     // Continuation lines of multi-line text keep the source's own layout.
     this.lines.push(INDENT.repeat(depth) + s.t);
-    return `<div class="ln${cls}">${s.h}</div>`;
+    return line(s, cls);
   }
 
   /** A comment, processing instruction or other single "line" node. */
@@ -190,7 +169,7 @@ class Builder {
       // Multi-line text: foldable block with the text indented below the tag.
       return this.block(el, depth, path, () => {
         this.lines.push(...body.t.split("\n").map((l) => INDENT.repeat(depth + 1) + l));
-        return `<div class="ln">${body.h}</div>`;
+        return line(body);
       });
     }
 
@@ -213,14 +192,7 @@ class Builder {
     this.lines.push(INDENT.repeat(depth) + open.t);
     const inner = children();
     this.lines.push(INDENT.repeat(depth) + close.t);
-    return (
-      `<div class="node" data-p="${path}">` +
-      `<div class="ln open"><button class="tw" tabindex="-1" aria-label="Fold" aria-expanded="true"></button>` +
-      `${open.h}<span class="ellip" data-close="${escAttr(close.t)}"></span></div>` +
-      `<div class="kids">${inner}</div>` +
-      `<div class="ln close">${close.h}</div>` +
-      `</div>`
-    );
+    return foldBlock(path, open, close, inner);
   }
 }
 
@@ -274,14 +246,7 @@ export function highlightRaw(src: string): string {
   return out + esc(src.slice(last));
 }
 
-function raw(src: string, error: string): ViewResult {
-  return {
-    ok: false,
-    html: `<pre class="raw">${highlightRaw(src)}</pre>`,
-    lines: src === "" ? 0 : src.split("\n").length,
-    error,
-  };
-}
+const raw = (src: string, error: string) => rawView(src, highlightRaw(src), error);
 
 /** Parses decoded XML text; returns the parser's message if it is not well-formed. */
 export function parseXml(src: string): Document | string {
@@ -324,7 +289,7 @@ export function renderXml(src: string, exact = false): ViewResult {
           break;
       }
     });
-    return { ok: true, html, text: b.lines.join("\n") + "\n", elements: b.elements };
+    return { ok: true, html, text: b.lines.join("\n") + "\n", count: b.elements };
   } catch (e) {
     return raw(src, `Interner Fehler: ${e}`);
   }

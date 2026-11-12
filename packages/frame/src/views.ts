@@ -1,4 +1,5 @@
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { appId } from "./app";
 
 export const VIEWS = [
   { id: "soft-light", label: "Soft Light", dark: false },
@@ -8,12 +9,12 @@ export const VIEWS = [
 ] as const;
 export type ViewId = (typeof VIEWS)[number]["id"];
 
-const STORAGE_KEY = "marq.view";
+const storageKey = () => `${appId()}.view`;
 const systemDark = matchMedia("(prefers-color-scheme: dark)");
 
 export function storedView(): ViewId | null {
   try {
-    const v = localStorage.getItem(STORAGE_KEY);
+    const v = localStorage.getItem(storageKey());
     return VIEWS.some((x) => x.id === v) ? (v as ViewId) : null;
   } catch {
     return null;
@@ -22,7 +23,7 @@ export function storedView(): ViewId | null {
 
 export function saveView(id: ViewId) {
   try {
-    localStorage.setItem(STORAGE_KEY, id);
+    localStorage.setItem(storageKey(), id);
   } catch {
     /* view still applies for this session */
   }

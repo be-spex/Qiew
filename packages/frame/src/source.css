@@ -1,0 +1,194 @@
+/*
+ * Source view of a document: monospace lines, foldable nodes, the banner of
+ * the raw fallback and the split layout (document | editor | result).
+ * Goes on top of base.css; the token classes are the app's.
+ */
+
+/* ---------------------------------------------------------------------------
+   Source view: monospace, full width, soft wrapping.
+   --------------------------------------------------------------------------- */
+.source {
+  padding: 8px 24px 72px 40px; /* left room for the fold triangles */
+  font: 13.5px/1.55 var(--mono);
+  tab-size: 4;
+}
+.source .ln { white-space: pre-wrap; overflow-wrap: anywhere; position: relative; }
+.source .raw { margin: 0; font: inherit; white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .source { padding: 8px 12px 32px 28px; }
+}
+
+/* Folding: the triangle hangs in the indent of the parent, on the guide line. */
+.source .kids {
+  margin-left: 1ch;
+  padding-left: 1ch;
+  border-left: 1px solid var(--border-soft);
+}
+.source .tw {
+  position: absolute;
+  left: -2ch;
+  top: 0;
+  width: 2ch;
+  height: 1.55em;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  opacity: .45;
+  user-select: none;
+}
+.source .tw::before {
+  content: "";
+  display: block;
+  margin: auto;
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  border-bottom: 0;
+  transition: transform .1s;
+}
+.source .ln.open:hover > .tw,
+.source .tw:hover,
+.source .tw:focus-visible { opacity: 1; color: var(--fg); }
+.source .tw:focus-visible { outline: 2px solid var(--accent); border-radius: 3px; }
+
+.source .ellip { display: none; cursor: pointer; }
+.source .ellip::before {
+  content: "…";
+  margin: 0 .15ch;
+  padding: 0 .5ch;
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--muted);
+}
+.source .ellip::after { content: attr(data-close); color: var(--muted); }
+.source .ellip:hover::before { background: var(--border-soft); color: var(--fg); }
+
+.source .node.collapsed > .kids,
+.source .node.collapsed > .close { display: none; }
+.source .node.collapsed > .open > .ellip { display: inline; }
+.source .node.collapsed > .open > .tw::before { transform: rotate(-90deg); }
+
+/* Banner shown while the raw fallback is displayed. */
+.notice {
+  position: sticky;
+  top: calc(var(--title-h) + 40px);
+  z-index: 9;
+  padding: 8px 24px 8px 40px;
+  background: color-mix(in srgb, #d1242f 10%, var(--bg));
+  border-bottom: 1px solid color-mix(in srgb, #d1242f 35%, var(--bg));
+  color: var(--fg);
+  font: 12.5px/1.4 var(--sans);
+}
+
+/* ---------------------------------------------------------------------------
+   Split layout: document | editor | result, each column scrolls by itself.
+   --------------------------------------------------------------------------- */
+.pane-title { display: none; }
+
+body.split {
+  --title-h: 34px;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+body.split .pane {
+  position: relative;
+  height: 100vh;
+  min-width: 0;
+  overflow: auto;
+  border-left: 1px solid var(--border);
+}
+body.split .pane:first-child { border-left: 0; }
+
+body.split .pane-title {
+  position: sticky;
+  top: 0;
+  z-index: 11;
+  box-sizing: border-box;
+  height: var(--title-h);
+  margin: 0;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-soft);
+  color: var(--fg);
+  font: 600 12.5px/1 var(--sans);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+}
+/* Columns scroll independently, so the bars are always set off from the content. */
+body.split .toolbar { border-bottom-color: var(--border-soft); }
+
+/* The drop target stays inside the document column. */
+body.split .empty {
+  position: absolute;
+  inset: calc(var(--title-h) + 56px) 16px 16px;
+}
+body.split .tb-search { width: min(320px, 100%); }
+
+/* The editor fills its column and scrolls by itself. */
+body.split .pane-editor {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.editor {
+  flex: 1;
+  min-height: 0;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 8px 24px 72px 40px;
+  border: 0;
+  outline: none;
+  resize: none;
+  background: var(--bg);
+  color: var(--fg);
+  caret-color: var(--accent);
+  font: 13.5px/1.55 var(--mono);
+  tab-size: 4;
+  white-space: pre;
+  overflow: auto;
+}
+.editor::selection { background: color-mix(in srgb, var(--accent) 25%, transparent); }
+
+/* Buttons with a text label: Run, Back. */
+.tb-btn.run,
+.tb-btn.labeled {
+  display: inline-flex;
+  gap: 5px;
+  width: auto;
+  padding: 0 11px 0 7px;
+  color: var(--accent);
+  font: 600 12.5px/1 var(--sans);
+  white-space: nowrap;
+}
+.tb-btn.run svg,
+.tb-btn.labeled svg { width: 15px; height: 15px; }
+.tb-btn.labeled {
+  padding: 0 11px 0 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--bg));
+  height: 28px;
+}
+.tb-btn.labeled:hover { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--bg)); }
+/* "Back" only exists in the split layout. */
+body:not(.split) #split-close-btn { display: none; }
+.tb-btn.run:hover { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--bg)); }
+#split-btn[aria-pressed="true"] { color: var(--accent); background: var(--surface); }
+
+.result-error {
+  margin: 0 -24px 0 -40px; /* full column width despite the article's padding */
+  padding: 8px 24px 8px 40px;
+  background: color-mix(in srgb, #d1242f 10%, var(--bg));
+  border-bottom: 1px solid color-mix(in srgb, #d1242f 35%, var(--bg));
+  font: 12.5px/1.4 var(--sans);
+  white-space: pre-wrap;
+}

@@ -1,0 +1,13 @@
+{
+  "name": "qiew",
+  "private": true,
+  "description": "Quick viewers: Marq (Markdown), Xaq (XML), Jayq (JSON)",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "check": "npm run build --workspaces --if-present && cargo check --workspace"
+  }
+}

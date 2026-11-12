@@ -1,0 +1,313 @@
+/*
+ * What all Qiew viewers look like: colour schemes, page, drop target,
+ * toolbar with search and the colour scheme menu.
+ */
+
+/* ---------------------------------------------------------------------------
+   Views: each defines three base colours; everything else is derived.
+   Without data-view (first start), the system light/dark setting decides.
+   --------------------------------------------------------------------------- */
+:root,
+[data-view="soft-light"] {
+  color-scheme: light;
+  --bg: #f8f9fa;
+  --fg: #24292f;
+  --accent: #0969da;
+  --x-tag: #116329;
+  --x-attr: #953800;
+  --x-val: #0a3069;
+  --x-com: #6e7781;
+  --x-ns: #8250df;
+  --x-pi: #cf222e;
+  --x-ent: #0550ae;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-view]) {
+    color-scheme: dark;
+    --bg: #1e1e1e;
+    --fg: #d4d4d4;
+    --accent: #539bf5;
+    --x-tag: #569cd6;
+    --x-attr: #9cdcfe;
+    --x-val: #ce9178;
+    --x-com: #6a9955;
+    --x-ns: #4ec9b0;
+    --x-pi: #c586c0;
+    --x-ent: #d7ba7d;
+  }
+}
+[data-view="soft-dark"] {
+  color-scheme: dark;
+  --bg: #1e1e1e;
+  --fg: #d4d4d4;
+  --accent: #539bf5;
+  --x-tag: #569cd6;
+  --x-attr: #9cdcfe;
+  --x-val: #ce9178;
+  --x-com: #6a9955;
+  --x-ns: #4ec9b0;
+  --x-pi: #c586c0;
+  --x-ent: #d7ba7d;
+}
+[data-view="sepia"] {
+  color-scheme: light;
+  --bg: #f4ecd8;
+  --fg: #5b4636;
+  --accent: #005973;
+  --x-tag: #9a3412;
+  --x-attr: #7c5a00;
+  --x-val: #1d6b4f;
+  --x-com: #8a7a66;
+  --x-ns: #6b4c9a;
+  --x-pi: #a0305a;
+  --x-ent: #005973;
+}
+[data-view="nord"] {
+  color-scheme: dark;
+  --bg: #2e3440;
+  --fg: #d8dee9;
+  --accent: #81a1c1;
+  --x-tag: #81a1c1;
+  --x-attr: #8fbcbb;
+  --x-val: #a3be8c;
+  --x-com: #7b88a1;
+  --x-ns: #b48ead;
+  --x-pi: #d08770;
+  --x-ent: #ebcb8b;
+}
+
+:root {
+  --mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", system-ui, sans-serif;
+  --title-h: 0px; /* column headings, only in the split layout */
+  --muted: color-mix(in srgb, var(--fg) 70%, var(--bg));
+  --border: color-mix(in srgb, var(--fg) 20%, var(--bg));
+  --border-soft: color-mix(in srgb, var(--fg) 12%, var(--bg));
+  --surface: color-mix(in srgb, var(--fg) 6%, var(--bg));
+}
+
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* ---------------------------------------------------------------------------
+   Empty state / drop target
+   --------------------------------------------------------------------------- */
+.empty {
+  position: fixed;
+  inset: 56px 16px 16px; /* below the toolbar */
+  display: grid;
+  place-items: center;
+  border: 2px dashed color-mix(in srgb, var(--muted) 45%, transparent);
+  border-radius: 12px;
+  color: var(--muted);
+  font: 500 18px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  user-select: none;
+  transition: border-color .12s, color .12s;
+}
+.empty.loading { border-color: transparent; }
+.empty.error { white-space: pre-wrap; text-align: center; padding: 24px; }
+
+body.dragging .empty {
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+body.dragging #doc { opacity: .35; }
+
+/* ---------------------------------------------------------------------------
+   Toolbar: slim and document-coloured.
+   --------------------------------------------------------------------------- */
+.toolbar {
+  position: sticky;
+  top: var(--title-h);
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 97%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .15s;
+  font: 12.5px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", system-ui, sans-serif;
+  user-select: none;
+}
+.toolbar.scrolled { border-bottom-color: var(--border-soft); }
+
+.toolbar-inner {
+  box-sizing: border-box;
+  height: 40px;
+  margin: 0 auto;
+  padding: 0 32px; /* buttons' own 8px inset lines icons up with the content */
+  /* Equal outer columns keep the centre truly centred. */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+@media (max-width: 600px) {
+  .toolbar-inner { padding: 0 8px; }
+}
+
+.tb-group { display: flex; align-items: center; gap: 4px; }
+.tb-right { justify-self: end; }
+.tb-center { display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; }
+
+.tb-btn {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color .12s, background .12s;
+}
+.tb-btn:hover,
+.tb-btn[aria-expanded="true"] { color: var(--fg); background: var(--surface); }
+.tb-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.tb-btn:disabled { opacity: .35; cursor: default; background: transparent; color: var(--muted); }
+
+.tb-sep {
+  width: 1px;
+  height: 16px;
+  margin: 0 4px;
+  background: var(--border);
+}
+#doc-tools[hidden] + .tb-sep,
+#fold-tools[hidden] + .tb-sep { display: none; }
+.tb-btn svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.tb-btn svg .fill { fill: currentColor; stroke: none; }
+
+/* Copy button swaps to a check mark for a moment after copying. */
+.tb-btn .icon-done { display: none; }
+.tb-btn.done { color: var(--accent); }
+.tb-btn.done .icon-copy { display: none; }
+.tb-btn.done .icon-done { display: block; }
+
+.tb-stats {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .01em;
+  white-space: nowrap;
+}
+@media (max-width: 420px) {
+  .tb-stats { display: none; }
+}
+
+/* Search field, shown inside the toolbar between the two groups. */
+.tb-search {
+  width: min(380px, 60vw);
+  height: 28px;
+  padding: 0 2px 0 9px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid var(--border-soft);
+  border-radius: 7px;
+  background: var(--surface);
+  transition: border-color .12s;
+}
+.tb-search:focus-within { border-color: color-mix(in srgb, var(--accent) 60%, var(--border)); }
+.tb-search.no-results { border-color: color-mix(in srgb, #d1242f 55%, var(--border)); }
+.tb-search-icon {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+.tb-search input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 6px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  font-size: 13px;
+}
+.tb-search input::placeholder { color: var(--muted); opacity: .8; }
+.tb-search-count {
+  flex: none;
+  margin: 0 4px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.tb-btn.small { width: 24px; height: 24px; border-radius: 5px; }
+.tb-btn.small svg { width: 15px; height: 15px; }
+
+/* While searching the stats make room; the search button shows as pressed. */
+body.searching #stats { display: none; }
+body.searching #search-btn { color: var(--fg); background: var(--surface); }
+
+::highlight(search) {
+  background-color: color-mix(in srgb, var(--accent) 22%, transparent);
+}
+::highlight(search-active) {
+  background-color: var(--accent);
+  color: var(--bg);
+}
+
+.tb-menu { position: relative; }
+.tb-dropdown {
+  position: absolute;
+  top: 36px;
+  right: 0; /* the palette sits at the right edge */
+  min-width: 170px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--fg) 3%, var(--bg));
+  box-shadow: 0 6px 24px rgb(0 0 0 / .18);
+  font-size: 13.5px;
+}
+
+.tb-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.tb-item:hover,
+.tb-item:focus-visible { background: var(--surface); outline: none; }
+
+.swatch {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgb(128 128 128 / .45);
+  /* carries its own data-view, so --bg/--accent are that view's colours */
+  background:
+    radial-gradient(circle at 50% 50%, var(--accent) 0 3px, transparent 3.5px),
+    var(--bg);
+}
+.check { margin-left: auto; color: var(--accent); visibility: hidden; }
+.tb-item[aria-checked="true"] .check { visibility: visible; }

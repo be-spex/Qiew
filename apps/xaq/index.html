@@ -7,19 +7,19 @@
     <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
-    <section class="pane pane-xml" id="pane-xml">
+    <section class="pane pane-doc" id="pane-doc">
     <h2 class="pane-title">XML</h2>
     <header class="toolbar" id="toolbar">
       <div class="toolbar-inner">
         <div class="tb-group tb-left">
-          <button class="tb-btn labeled" id="mapping-close-btn" title="Close XSLT Mapping, back to the XML view">
+          <button class="tb-btn labeled" id="split-close-btn" title="Close XSLT Mapping, back to the XML view">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
             <span>Back to XML</span>
           </button>
         </div>
         <div class="tb-center">
           <span class="tb-stats" id="stats" hidden></span>
-          <button class="tb-btn" id="mapping-btn" title="XSLT Mapping (XML · XSLT · Result)" aria-label="XSLT Mapping" aria-pressed="false">
+          <button class="tb-btn" id="split-btn" title="XSLT Mapping (XML · XSLT · Result)" aria-label="XSLT Mapping" aria-pressed="false">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <rect x="3.5" y="5" width="17" height="14" rx="2" /><path d="M9.2 5v14M14.8 5v14" />
             </svg>
@@ -84,15 +84,15 @@
     </header>
     <div id="notice" class="notice" role="status" hidden></div>
     <div id="empty" class="empty">Drop XML File Here</div>
-    <article id="doc" class="xml" hidden></article>
+    <article id="doc" class="source" hidden></article>
     </section>
 
-    <section class="pane pane-xslt" id="pane-xslt" hidden>
+    <section class="pane pane-editor" id="pane-editor" hidden>
       <h2 class="pane-title">XSLT</h2>
-      <header class="toolbar" id="xslt-toolbar">
+      <header class="toolbar" id="editor-toolbar">
         <div class="toolbar-inner">
           <div class="tb-group tb-left">
-            <button class="tb-btn" id="xslt-load-btn" title="Load XSLT File" aria-label="Load XSLT File">
+            <button class="tb-btn" id="editor-load-btn" title="Load XSLT File" aria-label="Load XSLT File">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M3.5 7v10.5A1.5 1.5 0 0 0 5 19h14a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 19 8h-7l-2-2.5H5A1.5 1.5 0 0 0 3.5 7Z" />
               </svg>
@@ -100,17 +100,17 @@
           </div>
           <div class="tb-center"></div>
           <div class="tb-group tb-right">
-            <button class="tb-btn" id="xslt-format-btn" title="Pretty Print XSLT (text content stays as written)" aria-label="Pretty Print XSLT">
+            <button class="tb-btn" id="editor-format-btn" title="Pretty Print XSLT (text content stays as written)" aria-label="Pretty Print XSLT">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M8 10h12M8 14h12M4 18h16" /></svg>
             </button>
-            <button class="tb-btn run" id="xslt-run-btn" title="Run Transformation (Ctrl+Enter)">
+            <button class="tb-btn run" id="run-btn" title="Run Transformation (Ctrl+Enter)">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5Z" class="fill" /></svg>
               <span>Run</span>
             </button>
           </div>
         </div>
       </header>
-      <textarea id="xslt-editor" class="xslt-editor" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="XSLT"></textarea>
+      <textarea id="editor" class="editor" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="XSLT"></textarea>
     </section>
 
     <section class="pane pane-result" id="pane-result" hidden>
@@ -136,7 +136,7 @@
           <div class="tb-group tb-right"></div>
         </div>
       </header>
-      <article id="result" class="xml"></article>
+      <article id="result" class="source"></article>
     </section>
   </body>
 </html>

@@ -1,6 +1,6 @@
 //! Updates for the AppImage: at start, Tauri's updater looks for a newer
-//! signed release (latest.json of the GitHub release) and offers to install
-//! it. Installed as a .deb, APT keeps the app current, so nothing is checked.
+//! signed release (the app's manifest in the GitHub release "updater", see
+//! `plugins.updater.endpoints` in tauri.conf.json) and offers to install it. Installed as a .deb, APT keeps the app current, so nothing is checked.
 
 use tauri::AppHandle;
 use tauri_plugin_dialog::{DialogExt, MessageDialogButtons, MessageDialogKind};

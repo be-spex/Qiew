@@ -15,27 +15,14 @@ Read-only Markdown viewer, binary `marq` (Tauri 2 + Vanilla TS + markdown-it + g
 
 ## Install
 
-Each [release](https://github.com/be-spex/Marq/releases) has a `.deb` and an AppImage for x86_64,
-built on Ubuntu 24.04 (glibc 2.39: Ubuntu 24.04+, Linux Mint 22+, Debian 13+).
+`sudo apt install marq` from the [be-spex package repository](https://be-spex.github.io/packages/), or the
+`.deb` / AppImage from the [releases](https://github.com/be-spex/Qiew/releases) (tags `marq-v…`).
+See the [repository README](../../README.md) for details, building and releasing.
 
 ```sh
-# Debian / Ubuntu / Mint
-sudo apt install ./marq_0.1.1_amd64.deb
-
-# any distribution: the AppImage runs as it is and offers updates itself
-chmod +x Marq_0.1.1_amd64.AppImage && ./Marq_0.1.1_amd64.AppImage
+npm run tauri --workspace apps/marq -- dev -- -- path/to/file.md
 ```
 
-Releases are built by [`.github/workflows/release.yml`](.github/workflows/release.yml): bump the version
-(`package.json`, `src-tauri/tauri.conf.json`, `src-tauri/Cargo.toml`), commit, tag `v<version>` and push the tag.
-
-## Build
-
-```sh
-npm install
-npm run tauri dev -- -- path/to/file.md   # development
-npm run tauri build                         # .deb and AppImage (Linux)
-```
-
-Layout: `src-tauri/src/lib.rs` (commands + watcher), `src/main.ts` (rendering, drag & drop, links),
-`src-tauri/tauri.conf.json` (window, CSP, asset scope, file association).
+Layout: `src/main.ts` (rendering, drag & drop, links), `src-tauri/src/lib.rs` (commands),
+`src-tauri/tauri.conf.json` (window, CSP, asset scope, file association). Toolbar, search, colour schemes,
+watcher and window handling come from the frame.

@@ -1,6 +1,6 @@
 # Xaq (read: Zack)
 
-Read-only XML source viewer, binary `xaq` (Tauri 2 + Vanilla TS). Sibling of [Marq](https://github.com/be-spex/Marq),
+Read-only XML source viewer, binary `xaq` (Tauri 2 + Vanilla TS). Sibling of [Marq](../marq) and [Jayq](../jayq),
 built on the same frame. It shows the *source*, nothing is rendered or executed – except an XSLT you run
 yourself in the mapping view.
 
@@ -31,31 +31,16 @@ yourself in the mapping view.
 
 ## Install
 
-Each [release](https://github.com/be-spex/Xaq/releases) has a `.deb` and an AppImage for x86_64,
-built on Ubuntu 24.04 (glibc 2.39: Ubuntu 24.04+, Linux Mint 22+, Debian 13+).
+`sudo apt install xaq` from the [be-spex package repository](https://be-spex.github.io/packages/), or the
+`.deb` / AppImage from the [releases](https://github.com/be-spex/Qiew/releases) (tags `xaq-v…`).
+See the [repository README](../../README.md) for details, building and releasing.
 
 ```sh
-# Debian / Ubuntu / Mint
-sudo apt install ./xaq_0.3.0_amd64.deb
-
-# any distribution: the AppImage runs as it is and offers updates itself
-chmod +x Xaq_0.3.0_amd64.AppImage && ./Xaq_0.3.0_amd64.AppImage
+npm run tauri --workspace apps/xaq -- dev -- -- path/to/file.xml
 ```
 
-Releases are built by [`.github/workflows/release.yml`](.github/workflows/release.yml): bump the version
-(`package.json`, `src-tauri/tauri.conf.json`, `src-tauri/Cargo.toml`), commit, tag `v<version>` and push the tag.
-
-## Build
-
-```sh
-npm install
-npm run tauri dev -- -- path/to/file.xml   # development
-npm run tauri build                         # .deb and AppImage (Linux)
-```
-
-Layout: `src/xml.ts` (parse, pretty print, highlighting, raw fallback), `src/fold.ts` (folding),
-`src/main.ts` (rendering, drag & drop, history),
-`src/mapping.ts` (XSLT mapping view), `src/scroll.ts` (scrolling in either layout), `src-tauri/src/lib.rs` (commands, decoding, watcher),
-`src-tauri/tauri.conf.json` (window, CSP, file association).
+Layout: `src/xml.ts` (parse, pretty print, highlighting, raw fallback), `src/mapping.ts` (XSLT for the split
+view), `src/main.ts` (wiring), `src-tauri/src/lib.rs` (commands), `src-tauri/tauri.conf.json` (window, CSP,
+file association). Everything else comes from the frame.
 
 The app icon's SVG source is `src-tauri/icons/icon.svg`.

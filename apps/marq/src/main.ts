@@ -6,9 +6,11 @@ import { getCurrentWebview } from "@tauri-apps/api/webview";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import "github-markdown-css/github-markdown.css";
 import "./styles.css";
+import { setApp } from "@qiew/frame/app";
+import { closeSearch, initSearch, refreshSearch } from "@qiew/frame/search";
 import { initToolbar, setBackEnabled, updateToolbar } from "./toolbar";
-import { closeSearch, initSearch, refreshSearch } from "./search";
 
+setApp("marq");
 initToolbar();
 
 interface Doc {

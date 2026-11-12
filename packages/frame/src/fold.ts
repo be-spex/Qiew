@@ -1,5 +1,5 @@
 /**
- * Folding of element nodes (`.node` in the markup built by xml.ts).
+ * Folding of nodes (`.node` in the markup built by `block` in fragment.ts).
  * A click on the triangle or on the "…" of a folded node toggles it;
  * Alt+click toggles the node together with everything below it.
  */
