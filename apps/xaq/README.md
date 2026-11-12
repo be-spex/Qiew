@@ -36,10 +36,10 @@ Packages for x86_64 are attached to each [release](https://github.com/Skrrytch/X
 
 ```sh
 # Debian / Ubuntu
-sudo apt install ./Xaq_0.2.0_amd64.deb
+sudo apt install ./Xaq_0.3.0_amd64.deb
 
 # Fedora / openSUSE
-sudo dnf install ./Xaq-0.2.0-1.x86_64.rpm
+sudo dnf install ./Xaq-0.3.0-1.x86_64.rpm
 ```
 
 ## Build
