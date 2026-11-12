@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Jayq
+GenericName=JSON Viewer
+Comment=Read-only JSON source viewer with jq filters
+Exec=jayq %f
+TryExec=jayq
+Icon=jayq
+Terminal=false
+Categories=Utility;Viewer;TextTools;Development;
+MimeType=application/json;application/x-ndjson;application/geo+json;
+StartupWMClass=jayq

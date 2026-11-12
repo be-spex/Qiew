@@ -1,0 +1,14 @@
+@import "@qiew/frame/base.css";
+@import "@qiew/frame/source.css";
+
+/* JSON tokens; the colours are the frame's syntax palette. */
+.x-p { color: var(--muted); }
+.x-com { color: var(--x-com); font-style: italic; }
+.j-key { color: var(--x-tag); }
+.j-str { color: var(--x-val); }
+.j-num { color: var(--x-attr); }
+.j-lit { color: var(--x-pi); }
+.j-esc { color: var(--x-ent); }
+
+/* "jq" is spelled in lower case, also as a column heading. */
+#pane-editor .pane-title { text-transform: none; }

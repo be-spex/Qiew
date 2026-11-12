@@ -1,0 +1,84 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Jayq",
+  "mainBinaryName": "jayq",
+  "version": "0.1.0",
+  "identifier": "net.spex.jayq",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Jayq",
+        "width": 920,
+        "height": 1000,
+        "minWidth": 360,
+        "minHeight": 240,
+        "decorations": true,
+        "transparent": false,
+        "resizable": true,
+        "dragDropEnabled": true,
+        "visible": false
+      }
+    ],
+    "security": {
+      "csp": {
+        "default-src": "'self'",
+        "script-src": "'self'",
+        "style-src": "'self' 'unsafe-inline'",
+        "img-src": "'self' data:",
+        "font-src": "'self' data:",
+        "connect-src": "ipc: http://ipc.localhost",
+        "object-src": "'none'",
+        "frame-src": "'none'"
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "deb",
+      "appimage"
+    ],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "fileAssociations": [
+      {
+        "ext": [
+          "json",
+          "jsonl",
+          "ndjson",
+          "geojson"
+        ],
+        "name": "JSON",
+        "description": "JSON document",
+        "role": "Viewer",
+        "mimeType": "application/json"
+      }
+    ],
+    "linux": {
+      "deb": {
+        "desktopTemplate": "jayq.desktop"
+      }
+    },
+    "createUpdaterArtifacts": true
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEI5N0MxRTlFMjlGN0FCNkQKUldSdHEvY3BuaDU4dVJ4WVlqTll2b25sMmdhUlVjNXJhZDFZMEZNU3RxeVlqdXRZWlJyeGdsbUoK",
+      "endpoints": [
+        "https://github.com/be-spex/Qiew/releases/download/updater/jayq.json"
+      ]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Minimal rights for the viewer window: events, window theme, writing text to the clipboard, file dialogs for loading a jq file and saving the filter result.",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:event:default",
+    "core:webview:default",
+    "core:window:allow-set-theme",
+    "clipboard-manager:allow-write-text",
+    "dialog:allow-open",
+    "dialog:allow-save"
+  ]
+}
