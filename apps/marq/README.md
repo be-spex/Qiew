@@ -10,30 +10,31 @@ Read-only Markdown viewer, binary `marq` (Tauri 2 + Vanilla TS + markdown-it + g
 - Back/forward through followed links: toolbar, context menu, Alt+←/→, mouse buttons
 - Colour schemes: Soft Light, Soft Dark, Sepia, Slate / Nord; the choice is kept
 - Search: Ctrl+F or toolbar icon; ↑/↓, Enter/Shift+Enter or F3 step from the visible area, Esc closes
-- Zero-Touch: the backend only uses `fs::read_to_string`, nothing is ever written
+- Zero-Touch: the backend only uses `fs::read_to_string`, nothing is ever written (except the AppImage
+  replacing itself when you accept an update)
 
 ## Install
 
-Packages for x86_64 are attached to each [release](https://github.com/be-spex/Marq/releases)
-(built against glibc 2.39: Ubuntu 24.04+, Debian 13+, Fedora 40+, current Arch).
+Each [release](https://github.com/be-spex/Marq/releases) has a `.deb` and an AppImage for x86_64,
+built on Ubuntu 24.04 (glibc 2.39: Ubuntu 24.04+, Linux Mint 22+, Debian 13+).
 
 ```sh
-# Debian / Ubuntu
-sudo apt install ./Marq_0.1.1_amd64.deb
+# Debian / Ubuntu / Mint
+sudo apt install ./marq_0.1.1_amd64.deb
 
-# Fedora / openSUSE
-sudo dnf install ./Marq-0.1.1-1.x86_64.rpm
-
-# Arch (AUR, package marq-bin) – or build locally from packaging/aur:
-cd packaging/aur && makepkg -si
+# any distribution: the AppImage runs as it is and offers updates itself
+chmod +x Marq_0.1.1_amd64.AppImage && ./Marq_0.1.1_amd64.AppImage
 ```
+
+Releases are built by [`.github/workflows/release.yml`](.github/workflows/release.yml): bump the version
+(`package.json`, `src-tauri/tauri.conf.json`, `src-tauri/Cargo.toml`), commit, tag `v<version>` and push the tag.
 
 ## Build
 
 ```sh
 npm install
 npm run tauri dev -- -- path/to/file.md   # development
-npm run tauri build                         # .deb/.rpm/AppImage (Linux), .msi (Windows), .dmg (macOS)
+npm run tauri build                         # .deb and AppImage (Linux)
 ```
 
 Layout: `src-tauri/src/lib.rs` (commands + watcher), `src/main.ts` (rendering, drag & drop, links),

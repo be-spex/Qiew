@@ -2,11 +2,14 @@
 //!
 //! Zero-Touch-Policy: this backend never writes to the file system. The only
 //! file access is `fs::read_to_string`; the watcher merely observes.
+//! Exception: as an AppImage, an accepted update replaces the image file
+//! (see updates.rs).
 
 #[cfg(target_os = "linux")]
 mod default_handler;
 #[cfg(target_os = "linux")]
 mod migrate;
+mod updates;
 mod window_layout;
 
 use std::fs;
@@ -151,6 +154,7 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(ViewerState::default())
         .invoke_handler(tauri::generate_handler![open_file, initial_file])
@@ -162,6 +166,7 @@ pub fn run() {
             }
             #[cfg(target_os = "linux")]
             default_handler::offer(app.handle());
+            updates::check_in_background(app.handle());
             Ok(())
         })
         .build(tauri::generate_context!())
