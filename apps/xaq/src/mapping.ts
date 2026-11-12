@@ -7,10 +7,11 @@
  * relative xsl:include/xsl:import and document() cannot be resolved.
  */
 import { invoke } from "@tauri-apps/api/core";
-import { open as openDialog } from "@tauri-apps/plugin-dialog";
+import { open as openDialog, save as saveDialog } from "@tauri-apps/plugin-dialog";
+import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { initFold } from "./fold";
-import { isMapping, setXmlScrollTop, xmlScrollTop } from "./scroll";
-import { scrollShadow } from "./toolbar";
+import { isMapping, restoreXmlAnchor, xmlAnchor, type XmlAnchor } from "./scroll";
+import { flashDone } from "./toolbar";
 import { parseXml, renderXml } from "./xml";
 
 const XSL_NS = "http://www.w3.org/1999/XSL/Transform";
@@ -35,8 +36,18 @@ let source: () => string | null;
 let editor: HTMLTextAreaElement;
 let result: HTMLElement;
 let duration: HTMLElement;
+/** Last transformation result as shown (formatted if it is XML), with a file extension to save it under. */
+let output: { text: string; ext: string } | null = null;
+/** Where the XML view stood before the mapping layout was opened. */
+let before: XmlAnchor | null = null;
+
+function setOutput(o: typeof output) {
+  output = o;
+  for (const id of ["result-save-btn", "result-copy-btn"]) ($(id) as HTMLButtonElement).disabled = !o;
+}
 
 function showError(text: string) {
+  setOutput(null);
   duration.textContent = "";
   result.innerHTML = "";
   const box = document.createElement("div");
@@ -45,10 +56,13 @@ function showError(text: string) {
   result.append(box);
 }
 
+const outputMethod = (xsl: Document) =>
+  xsl.getElementsByTagNameNS(XSL_NS, "output")[0]?.getAttribute("method") ?? "xml";
+
 /** The result document as text, the way the stylesheet's xsl:output asks for it. */
 function serialize(doc: Document, xsl: Document): string {
   const output = xsl.getElementsByTagNameNS(XSL_NS, "output")[0];
-  const method = output?.getAttribute("method") ?? "xml";
+  const method = outputMethod(xsl);
   // WebKit wraps text output into an XHTML document with a single <pre>.
   if (method === "text") return doc.getElementsByTagName("pre")[0]?.textContent ?? doc.documentElement?.textContent ?? "";
   const body = new XMLSerializer().serializeToString(doc);
@@ -86,6 +100,50 @@ function run() {
   const view = renderXml(out);
   result.innerHTML = view.html;
   result.scrollTop = 0;
+  const method = outputMethod(xsl);
+  setOutput({ text: view.ok ? view.text : out, ext: method === "text" ? "txt" : method === "html" ? "html" : "xml" });
+}
+
+/** Re-indents the stylesheet; text content (xsl:text, literal text) stays as written. */
+function prettyPrint() {
+  const view = renderXml(editor.value, true);
+  if (!view.ok) return showError(`XSLT ist nicht wohlgeformt: ${view.error}`);
+  if (view.text === editor.value) return;
+  editor.focus();
+  editor.select();
+  // execCommand keeps the change on the undo stack (Ctrl+Z restores the old layout).
+  if (!document.execCommand("insertText", false, view.text)) editor.value = view.text;
+  editor.scrollTop = 0;
+  editor.setSelectionRange(0, 0);
+}
+
+async function saveResult() {
+  if (!output) return;
+  const { text, ext } = output;
+  const path = await saveDialog({
+    defaultPath: `transformed.${ext}`,
+    filters: [
+      { name: ext.toUpperCase(), extensions: [ext] },
+      { name: "All Files", extensions: ["*"] },
+    ],
+  });
+  if (!path) return;
+  try {
+    await invoke("save_text", { path, content: text });
+    flashDone($("result-save-btn"));
+  } catch (err) {
+    showError(`Ergebnis konnte nicht gespeichert werden:\n${err}`);
+  }
+}
+
+async function copyResult() {
+  if (!output) return;
+  try {
+    await writeText(output.text);
+    flashDone($("result-copy-btn"));
+  } catch (err) {
+    console.error("xaq: copy failed", err);
+  }
 }
 
 async function loadStylesheet() {
@@ -108,14 +166,33 @@ async function loadStylesheet() {
   }
 }
 
+/**
+ * Keeps the XML view on `anchor` while the layout and then the window size
+ * change: line wrapping moves the content, so a plain scrollTop would drift.
+ */
+function holdXmlPosition(anchor: XmlAnchor, resized: Promise<unknown>) {
+  restoreXmlAnchor(anchor);
+  const onResize = () => restoreXmlAnchor(anchor);
+  window.addEventListener("resize", onResize);
+  // The window manager may apply the new size a little after the call returns.
+  resized.finally(() =>
+    setTimeout(() => {
+      window.removeEventListener("resize", onResize);
+      restoreXmlAnchor(anchor);
+    }, 700),
+  );
+}
+
 function setActive(on: boolean) {
-  const scroll = xmlScrollTop();
+  // Leaving goes back to where the XML view stood before the mapping was opened.
+  const anchor = on ? (before = xmlAnchor()) : (before ?? xmlAnchor());
+  if (!on) before = null;
   document.body.classList.toggle("mapping", on);
   $("pane-xslt").hidden = !on;
   $("pane-result").hidden = !on;
   $("mapping-btn").setAttribute("aria-pressed", String(on));
-  setXmlScrollTop(scroll);
-  invoke("set_wide", { wide: on }).catch((e) => console.error("xaq: resize failed", e));
+  const resized = invoke("set_wide", { wide: on }).catch((e) => console.error("xaq: resize failed", e));
+  holdXmlPosition(anchor, resized);
   if (on) editor.focus();
 }
 
@@ -143,10 +220,13 @@ export function initMapping(getSource: () => string | null) {
 
   initFold(result);
   initEditorKeys();
-  scrollShadow($("xslt-toolbar"), editor);
-  scrollShadow($("result-toolbar"), $("pane-result"));
+  setOutput(null);
 
   $("mapping-btn").addEventListener("click", () => setActive(!isMapping()));
+  $("mapping-close-btn").addEventListener("click", () => setActive(false));
   $("xslt-load-btn").addEventListener("click", () => loadStylesheet());
   $("xslt-run-btn").addEventListener("click", run);
+  $("xslt-format-btn").addEventListener("click", prettyPrint);
+  $("result-save-btn").addEventListener("click", () => saveResult());
+  $("result-copy-btn").addEventListener("click", () => copyResult());
 }

@@ -1,7 +1,8 @@
 //! Xaq – read-only XML source viewer.
 //!
-//! Zero-Touch-Policy: this backend never writes to the file system. The only
-//! file access is `fs::read_to_string`; the watcher merely observes.
+//! Zero-Touch-Policy: this backend never writes to the files it shows; the
+//! watcher merely observes. The only write is `save_text`, to a path the user
+//! picked in the save dialog (the mapping view's "Save Result").
 
 #[cfg(target_os = "linux")]
 mod default_handler;
@@ -141,6 +142,12 @@ fn read_text(path: String) -> Result<Document, String> {
     load(Path::new(&path))
 }
 
+/// Saves the mapping result to a path the user chose in the save dialog.
+#[tauri::command]
+fn save_text(path: String, content: String) -> Result<(), String> {
+    fs::write(&path, content).map_err(|e| e.to_string())
+}
+
 /// Mapping layout: stretches the window to the full width of the work area,
 /// or restores the size and position it had before.
 #[tauri::command]
@@ -187,7 +194,7 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(ViewerState::default())
-        .invoke_handler(tauri::generate_handler![open_file, initial_file, read_text, set_wide])
+        .invoke_handler(tauri::generate_handler![open_file, initial_file, read_text, save_text, set_wide])
         .setup(|app| {
             // The window starts hidden so it appears directly at its final
             // size and position.

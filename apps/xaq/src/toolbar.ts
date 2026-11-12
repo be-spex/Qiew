@@ -60,15 +60,19 @@ function initViewMenu() {
   });
 }
 
+/** Shows the button's check mark for a moment (copied, saved). */
+export function flashDone(btn: HTMLElement) {
+  btn.classList.add("done");
+  clearTimeout(Number(btn.dataset.doneTimer));
+  btn.dataset.doneTimer = String(window.setTimeout(() => btn.classList.remove("done"), 1400));
+}
+
 function initCopy() {
   const btn = $("copy-btn");
-  let timer: number | undefined;
   btn.addEventListener("click", async () => {
     try {
       await writeText(source);
-      btn.classList.add("done");
-      clearTimeout(timer);
-      timer = window.setTimeout(() => btn.classList.remove("done"), 1400);
+      flashDone(btn);
     } catch (err) {
       console.error("xaq: copy failed", err);
     }
@@ -83,20 +87,7 @@ function initScrollShadow() {
   update();
 }
 
-/** Same separator for the toolbar of a column that scrolls by itself. */
-export function scrollShadow(bar: HTMLElement, scroller: HTMLElement) {
-  const update = () => bar.classList.toggle("scrolled", scroller.scrollTop > 2);
-  scroller.addEventListener("scroll", update, { passive: true });
-  update();
-}
-
-/** The back button follows the webview history (see main.ts). */
-export function setBackEnabled(enabled: boolean) {
-  ($("back-btn") as HTMLButtonElement).disabled = !enabled;
-}
-
 export function initToolbar() {
-  $("back-btn").addEventListener("click", () => history.back());
   initViewMenu();
   initCopy();
   initScrollShadow();

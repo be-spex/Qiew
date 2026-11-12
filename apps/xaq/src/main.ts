@@ -2,7 +2,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { getCurrentWebview } from "@tauri-apps/api/webview";
 import "./styles.css";
-import { initToolbar, setBackEnabled, updateToolbar } from "./toolbar";
+import { initToolbar, updateToolbar } from "./toolbar";
 import { closeSearch, initSearch, refreshSearch } from "./search";
 import { collapsedPaths, initFold, restoreFolds, setAllCollapsed } from "./fold";
 import { renderXml } from "./xml";
@@ -90,7 +90,7 @@ function showMessage(text: string, isError = false) {
 /*
  * Navigation history. Every opened file becomes an entry in the webview's own
  * history (pushState), so the context menu's "Back", the mouse back button,
- * Alt+Left and the toolbar button all go the same way. Entries carry the
+ * and Alt+Left all go the same way. Entries carry the
  * scroll position, kept up to date while reading.
  */
 interface NavState {
@@ -122,7 +122,6 @@ async function open(path: string, mode: "push" | "replace" | "none" = "push", sc
     current = null;
     showMessage(`Datei konnte nicht gelesen werden:\n${err}`, true);
   }
-  setBackEnabled(navIdx > 0);
 }
 
 window.addEventListener("popstate", (e) => {

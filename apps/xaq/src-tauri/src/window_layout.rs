@@ -71,6 +71,7 @@ fn place(window: &WebviewWindow) {
 }
 
 /// Outer position and inner size of a window, to put it back later.
+#[derive(Clone, Copy)]
 pub struct Geometry {
     position: PhysicalPosition<i32>,
     size: PhysicalSize<u32>,
@@ -94,7 +95,34 @@ pub fn widen(window: &WebviewWindow) -> Option<Geometry> {
     Some(Geometry { position, size })
 }
 
+/// Puts the window back. The position is only set once the old size has
+/// arrived: while the window still spans the full width, the window manager
+/// would push it back to the left edge. A remaining offset (frame handling of
+/// the window manager) is corrected once.
 pub fn restore(window: &WebviewWindow, geometry: Geometry) {
     let _ = window.set_size(geometry.size);
-    let _ = window.set_position(geometry.position);
+    let window = window.clone();
+    std::thread::spawn(move || {
+        for _ in 0..25 {
+            if window.inner_size().map(|s| s == geometry.size).unwrap_or(false) {
+                break;
+            }
+            std::thread::sleep(Duration::from_millis(20));
+        }
+        move_to(&window, geometry.position);
+        std::thread::sleep(Duration::from_millis(150));
+        if let Ok(actual) = window.outer_position() {
+            if actual != geometry.position {
+                let target = geometry.position;
+                move_to(&window, PhysicalPosition::new(2 * target.x - actual.x, 2 * target.y - actual.y));
+            }
+        }
+    });
+}
+
+fn move_to(window: &WebviewWindow, position: PhysicalPosition<i32>) {
+    let w = window.clone();
+    let _ = window.run_on_main_thread(move || {
+        let _ = w.set_position(position);
+    });
 }

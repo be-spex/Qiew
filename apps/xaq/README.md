@@ -18,14 +18,16 @@ yourself in the mapping view.
   colour scheme (right)
 - XSLT mapping: the button next to the element count widens the window to the full screen width and splits it
   into XML | XSLT | Transformed XML. The XSLT column starts with an identity transform, is editable
-  (Tab indents) and can load a stylesheet file; ▶ or Ctrl+Enter runs the transformation, the result column
-  shows the output and the duration. Engine is the webview's XSLTProcessor (libxslt, XSLT 1.0); since the
+  (Tab indents), can load a stylesheet file and pretty-print it (text content such as `xsl:text` stays as
+  written); Run or Ctrl+Enter runs the transformation, the result column shows the output and the duration
+  and can save it to a file or copy it to the clipboard. Engine is the webview's XSLTProcessor (libxslt, XSLT 1.0); since the
   stylesheet comes from the editor, relative `xsl:include`/`xsl:import` and `document()` are not resolved.
-  Clicking the button again restores the previous window size
+  Clicking the button again restores the previous window size and the previous position in the XML
 - Search: Ctrl+F, ↑/↓, Enter/Shift+Enter or F3; matches in folded nodes unfold them
 - Colour schemes: Soft Light, Soft Dark, Sepia, Slate / Nord; the choice is kept
 - Default handler on Linux: asks once on first start for XML; or run `xaq --register-default`
-- Zero-Touch: the backend only reads (`fs::read`), nothing is ever written
+- Zero-Touch: the files shown are only read (`fs::read`), never written; the only write is saving a
+  mapping result to a file chosen in the save dialog
 
 ## Install
 

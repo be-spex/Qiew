@@ -428,7 +428,7 @@ body.mapping .pane-title {
   padding: 0 40px;
   display: flex;
   align-items: center;
-  gap: 9px;
+  justify-content: center;
   background: var(--surface);
   border-bottom: 1px solid var(--border-soft);
   color: var(--fg);
@@ -438,14 +438,8 @@ body.mapping .pane-title {
   white-space: nowrap;
   user-select: none;
 }
-body.mapping .pane-title::before {
-  content: "";
-  flex: none;
-  width: 3px;
-  height: 14px;
-  border-radius: 2px;
-  background: var(--accent);
-}
+/* Columns scroll independently, so the bars are always set off from the content. */
+body.mapping .toolbar { border-bottom-color: var(--border-soft); }
 
 /* The drop target stays inside the XML column. */
 body.mapping .empty {
@@ -480,7 +474,27 @@ body.mapping .pane-xslt {
 }
 .xslt-editor::selection { background: color-mix(in srgb, var(--accent) 25%, transparent); }
 
-.tb-btn.run { color: var(--accent); }
+/* Buttons with a text label: Run, Back to XML. */
+.tb-btn.run,
+.tb-btn.labeled {
+  display: inline-flex;
+  gap: 5px;
+  width: auto;
+  padding: 0 11px 0 7px;
+  color: var(--accent);
+  font: 600 12.5px/1 var(--sans);
+  white-space: nowrap;
+}
+.tb-btn.run svg,
+.tb-btn.labeled svg { width: 15px; height: 15px; }
+.tb-btn.labeled {
+  padding: 0 11px 0 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--bg));
+  height: 28px;
+}
+.tb-btn.labeled:hover { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--bg)); }
+/* "Back to XML" only exists in the mapping layout. */
+body:not(.mapping) #mapping-close-btn { display: none; }
 .tb-btn.run:hover { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--bg)); }
 #mapping-btn[aria-pressed="true"] { color: var(--accent); background: var(--surface); }
 

@@ -87,9 +87,25 @@ function dedent(s: string): string {
   return lines.map((l, i) => (i === 0 ? l : l.slice(Math.min(min, l.length - l.trimStart().length)))).join("\n");
 }
 
+const XML_NS = "http://www.w3.org/XML/1998/namespace";
+const XSL_NS = "http://www.w3.org/1999/XSL/Transform";
+
+/** True if whitespace inside `el` is significant: xsl:text, or xml:space="preserve" in effect. */
+function keepsSpace(el: Element): boolean {
+  if (el.namespaceURI === XSL_NS && el.localName === "text") return true;
+  for (let e: Element | null = el; e; e = e.parentElement) {
+    const v = e.getAttributeNS(XML_NS, "space");
+    if (v) return v === "preserve";
+  }
+  return false;
+}
+
 class Builder {
   lines: string[] = [];
   elements = 0;
+
+  /** `exact`: text content is copied verbatim (no trimming, dedenting or re-indenting). */
+  constructor(private exact = false) {}
 
   /** Children on one line, in source order; used for text-only and mixed content. */
   inline(nodes: Node[], tidy: boolean): S {
@@ -99,9 +115,11 @@ class Builder {
       switch (n.nodeType) {
         case Node.TEXT_NODE: {
           let d = n.nodeValue ?? "";
-          if (i === 0) d = d.trimStart();
-          if (i === last) d = d.trimEnd();
-          parts.push(textS(tidy ? dedent(d) : d));
+          if (!this.exact) {
+            if (i === 0) d = d.trimStart();
+            if (i === last) d = d.trimEnd();
+          }
+          parts.push(textS(tidy && !this.exact ? dedent(d) : d));
           break;
         }
         case Node.CDATA_SECTION_NODE:
@@ -145,6 +163,9 @@ class Builder {
     const kids = Array.from(el.childNodes);
 
     if (kids.length === 0) return this.line(openTag(el, true), depth);
+    if (this.exact && keepsSpace(el)) {
+      return this.line(cat(openTag(el, false), this.inline(kids, false), closeTag(el)), depth);
+    }
 
     const texts = kids.filter(isText);
     const others = kids.filter((n) => !isText(n));
@@ -158,6 +179,9 @@ class Builder {
     }
 
     if (others.length === 0) {
+      if (this.exact && realText) {
+        return this.line(cat(openTag(el, false), this.inline(kids, false), closeTag(el)), depth);
+      }
       if (!realText) return this.line(cat(openTag(el, false), closeTag(el)), depth);
       const body = this.inline(kids, true);
       if (!body.t.includes("\n")) {
@@ -268,12 +292,16 @@ export function parseXml(src: string): Document | string {
   return err ? parseErrorText(err) : doc;
 }
 
-export function renderXml(src: string): ViewResult {
+/**
+ * `exact` is for re-indenting a document that is used further (the XSLT editor):
+ * text content stays byte for byte, only whitespace between elements changes.
+ */
+export function renderXml(src: string, exact = false): ViewResult {
   try {
     const doc = parseXml(src);
     if (typeof doc === "string") return raw(src, doc);
 
-    const b = new Builder();
+    const b = new Builder(exact);
     let html = "";
     const decl = src.match(XML_DECL);
     if (decl) html += b.leaf(lit("x-pi", decl[1]), 0);
