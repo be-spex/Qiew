@@ -1,4 +1,4 @@
-//! Xtaq – read-only XML source viewer.
+//! Xaq – read-only XML source viewer.
 //!
 //! Zero-Touch-Policy: this backend never writes to the file system. The only
 //! file access is `fs::read_to_string`; the watcher merely observes.
@@ -34,6 +34,8 @@ struct ViewerState {
     watcher: Mutex<Option<RecommendedWatcher>>,
     /// File handed over by the OS before the frontend was listening (macOS).
     pending: Mutex<Option<String>>,
+    /// Window geometry before the mapping layout widened it.
+    narrow: Mutex<Option<window_layout::Geometry>>,
 }
 
 /// Decodes file contents to text. XML is not always UTF-8: a BOM or the
@@ -124,13 +126,33 @@ fn open_file(
     let mut slot = state.watcher.lock().unwrap();
     *slot = None; // stop the previous watcher first
     *slot = watch(&app, &path)
-        .map_err(|e| eprintln!("xtaq: watcher unavailable: {e}"))
+        .map_err(|e| eprintln!("xaq: watcher unavailable: {e}"))
         .ok();
 
     if let Some(name) = path.file_name() {
-        let _ = window.set_title(&format!("{} – Xtaq", name.to_string_lossy()));
+        let _ = window.set_title(&format!("{} – Xaq", name.to_string_lossy()));
     }
     Ok(doc)
+}
+
+/// Reads a text file once, without watching it (XSLT for the mapping view).
+#[tauri::command]
+fn read_text(path: String) -> Result<Document, String> {
+    load(Path::new(&path))
+}
+
+/// Mapping layout: stretches the window to the full width of the work area,
+/// or restores the size and position it had before.
+#[tauri::command]
+fn set_wide(wide: bool, window: WebviewWindow, state: State<'_, ViewerState>) {
+    let mut narrow = state.narrow.lock().unwrap();
+    if wide {
+        if narrow.is_none() {
+            *narrow = window_layout::widen(&window);
+        }
+    } else if let Some(geometry) = narrow.take() {
+        window_layout::restore(&window, geometry);
+    }
 }
 
 /// The file to show at startup: one handed over by the OS (macOS), else the
@@ -147,14 +169,14 @@ fn initial_file(state: State<'_, ViewerState>) -> Option<String> {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    // `xtaq --register-default`: set up the file association without asking
+    // `xaq --register-default`: set up the file association without asking
     // (e.g. from a setup script) and exit.
     #[cfg(target_os = "linux")]
     if std::env::args().any(|a| a == "--register-default") {
         match default_handler::register() {
-            Ok(()) => println!("Xtaq ist jetzt Standard für XML-Dateien."),
+            Ok(()) => println!("Xaq ist jetzt Standard für XML-Dateien."),
             Err(e) => {
-                eprintln!("xtaq: {e}");
+                eprintln!("xaq: {e}");
                 std::process::exit(1);
             }
         }
@@ -165,7 +187,7 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(ViewerState::default())
-        .invoke_handler(tauri::generate_handler![open_file, initial_file])
+        .invoke_handler(tauri::generate_handler![open_file, initial_file, read_text, set_wide])
         .setup(|app| {
             // The window starts hidden so it appears directly at its final
             // size and position.
@@ -177,7 +199,7 @@ pub fn run() {
             Ok(())
         })
         .build(tauri::generate_context!())
-        .expect("error while building Xtaq")
+        .expect("error while building Xaq")
         .run(|_app, _event| {
             // macOS delivers "Open With…" as an event, not as argv.
             #[cfg(target_os = "macos")]

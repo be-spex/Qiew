@@ -8,7 +8,7 @@ export const VIEWS = [
 ] as const;
 export type ViewId = (typeof VIEWS)[number]["id"];
 
-const STORAGE_KEY = "xtaq.view";
+const STORAGE_KEY = "xaq.view";
 const systemDark = matchMedia("(prefers-color-scheme: dark)");
 
 export function storedView(): ViewId | null {

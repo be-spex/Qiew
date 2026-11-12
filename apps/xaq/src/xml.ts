@@ -259,13 +259,19 @@ function raw(src: string, error: string): ViewResult {
   };
 }
 
-export function renderXml(src: string): ViewResult {
+/** Parses decoded XML text; returns the parser's message if it is not well-formed. */
+export function parseXml(src: string): Document | string {
   // The text is already decoded; a declared charset (e.g. UTF-16) would only confuse the parser.
   const parseSrc = src.replace(/^(﻿?\s*<\?xml\b[^?]*?)\sencoding\s*=\s*("[^"]*"|'[^']*')/, "$1");
+  const doc = new DOMParser().parseFromString(parseSrc, "application/xml");
+  const err = doc.getElementsByTagNameNS("*", "parsererror")[0];
+  return err ? parseErrorText(err) : doc;
+}
+
+export function renderXml(src: string): ViewResult {
   try {
-    const doc = new DOMParser().parseFromString(parseSrc, "application/xml");
-    const err = doc.getElementsByTagNameNS("*", "parsererror")[0];
-    if (err) return raw(src, parseErrorText(err));
+    const doc = parseXml(src);
+    if (typeof doc === "string") return raw(src, doc);
 
     const b = new Builder();
     let html = "";

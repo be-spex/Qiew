@@ -69,3 +69,32 @@ fn place(window: &WebviewWindow) {
         area.position.y + ((area_h - outer_h) / 2.0) as i32,
     ));
 }
+
+/// Outer position and inner size of a window, to put it back later.
+pub struct Geometry {
+    position: PhysicalPosition<i32>,
+    size: PhysicalSize<u32>,
+}
+
+/// Stretches the window over the full width of its monitor's work area,
+/// keeping height and vertical position. Returns the previous geometry, or
+/// None if nothing was changed (maximized window, unknown monitor).
+pub fn widen(window: &WebviewWindow) -> Option<Geometry> {
+    if window.is_maximized().unwrap_or(false) {
+        return None;
+    }
+    let monitor = window.current_monitor().ok().flatten()?;
+    let area = monitor.work_area();
+    let position = window.outer_position().ok()?;
+    let size = window.inner_size().ok()?;
+    let frame_w = window.outer_size().ok()?.width.saturating_sub(size.width);
+
+    let _ = window.set_size(PhysicalSize::new(area.size.width.saturating_sub(frame_w), size.height));
+    let _ = window.set_position(PhysicalPosition::new(area.position.x, position.y));
+    Some(Geometry { position, size })
+}
+
+pub fn restore(window: &WebviewWindow, geometry: Geometry) {
+    let _ = window.set_size(geometry.size);
+    let _ = window.set_position(geometry.position);
+}

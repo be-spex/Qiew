@@ -1,9 +1,10 @@
-# Xtaq
+# Xaq (read: Zack)
 
-Read-only XML source viewer, binary `xtaq` (Tauri 2 + Vanilla TS). Sibling of [Marq](https://github.com/Skrrytch/Marq),
-built on the same frame. It shows the *source*, nothing is rendered or executed.
+Read-only XML source viewer, binary `xaq` (Tauri 2 + Vanilla TS). Sibling of [Marq](https://github.com/Skrrytch/Marq),
+built on the same frame. It shows the *source*, nothing is rendered or executed – except an XSLT you run
+yourself in the mapping view.
 
-- Open: drag & drop (any file), CLI argument (`xtaq pom.xml`), file association
+- Open: drag & drop (any file), CLI argument (`xaq pom.xml`), file association
   (`.xml`, `.wsdl`, `.xsd`, `.xsl`, `.xslt`; `.html`/`.xhtml` under "Open with" only)
 - Pretty print: re-indented tree, namespaces/attributes/CDATA/comments/PIs/DOCTYPE highlighted;
   text content stays as written, mixed content (`<p>a <b>b</b></p>`) is kept on one line
@@ -13,23 +14,30 @@ built on the same frame. It shows the *source*, nothing is rendered or executed.
   unchanged, only highlighted, with the parser's message in a banner
 - Encodings: UTF-8, BOM (UTF-16/8), or the charset from the XML declaration (else Windows-1252)
 - Live reload when another program changes the file (incl. atomic saves)
-- Toolbar: back (left); element count (centre); fold/unfold, search, copy (formatted XML), colour scheme (right)
+- Toolbar: back (left); element count and mapping view (centre); fold/unfold, search, copy (formatted XML),
+  colour scheme (right)
+- XSLT mapping: the button next to the element count widens the window to the full screen width and splits it
+  into XML | XSLT | Transformed XML. The XSLT column starts with an identity transform, is editable
+  (Tab indents) and can load a stylesheet file; ▶ or Ctrl+Enter runs the transformation, the result column
+  shows the output and the duration. Engine is the webview's XSLTProcessor (libxslt, XSLT 1.0); since the
+  stylesheet comes from the editor, relative `xsl:include`/`xsl:import` and `document()` are not resolved.
+  Clicking the button again restores the previous window size
 - Search: Ctrl+F, ↑/↓, Enter/Shift+Enter or F3; matches in folded nodes unfold them
 - Colour schemes: Soft Light, Soft Dark, Sepia, Slate / Nord; the choice is kept
-- Default handler on Linux: asks once on first start for XML; or run `xtaq --register-default`
+- Default handler on Linux: asks once on first start for XML; or run `xaq --register-default`
 - Zero-Touch: the backend only reads (`fs::read`), nothing is ever written
 
 ## Install
 
-Packages for x86_64 are attached to each [release](https://github.com/Skrrytch/Xtaq/releases)
+Packages for x86_64 are attached to each [release](https://github.com/Skrrytch/Xaq/releases)
 (built against glibc 2.39: Ubuntu 24.04+, Debian 13+, Fedora 40+, current Arch).
 
 ```sh
 # Debian / Ubuntu
-sudo apt install ./Xtaq_0.1.0_amd64.deb
+sudo apt install ./Xaq_0.1.0_amd64.deb
 
 # Fedora / openSUSE
-sudo dnf install ./Xtaq-0.1.0-1.x86_64.rpm
+sudo dnf install ./Xaq-0.1.0-1.x86_64.rpm
 ```
 
 ## Build
@@ -41,7 +49,8 @@ npm run tauri build                         # .deb/.rpm/AppImage (Linux), .msi (
 ```
 
 Layout: `src/xml.ts` (parse, pretty print, highlighting, raw fallback), `src/fold.ts` (folding),
-`src/main.ts` (rendering, drag & drop, history), `src-tauri/src/lib.rs` (commands, decoding, watcher),
+`src/main.ts` (rendering, drag & drop, history),
+`src/mapping.ts` (XSLT mapping view), `src/scroll.ts` (scrolling in either layout), `src-tauri/src/lib.rs` (commands, decoding, watcher),
 `src-tauri/tauri.conf.json` (window, CSP, file association).
 
 The app icon's SVG source is `src-tauri/icons/icon.svg`.

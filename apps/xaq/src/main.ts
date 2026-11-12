@@ -6,6 +6,8 @@ import { initToolbar, setBackEnabled, updateToolbar } from "./toolbar";
 import { closeSearch, initSearch, refreshSearch } from "./search";
 import { collapsedPaths, initFold, restoreFolds, setAllCollapsed } from "./fold";
 import { renderXml } from "./xml";
+import { initMapping } from "./mapping";
+import { onXmlScroll, setXmlScrollTop, xmlScrollTop } from "./scroll";
 
 initToolbar();
 
@@ -24,6 +26,7 @@ const article = document.getElementById("doc")!;
 let current: Doc | null = null;
 
 initSearch(article);
+initMapping(() => current?.content ?? null);
 initFold(article);
 document.getElementById("fold-btn")!.addEventListener("click", () => setAllCollapsed(article, true));
 document.getElementById("unfold-btn")!.addEventListener("click", () => setAllCollapsed(article, false));
@@ -50,7 +53,7 @@ async function showLoading(doc: Doc) {
 
 /** `keepState` (live reload): keep scroll position and folded nodes. */
 function render(doc: Doc, keepState: boolean) {
-  const scroll = keepState ? window.scrollY : 0;
+  const scroll = keepState ? xmlScrollTop() : 0;
   const folds = keepState ? collapsedPaths(article) : null;
 
   const view = renderXml(doc.content);
@@ -70,7 +73,7 @@ function render(doc: Doc, keepState: boolean) {
     view.ok ? plural(view.elements, "Element") : `Raw · ${plural(view.lines, "Line")}`,
     view.ok,
   );
-  window.scrollTo(0, scroll);
+  setXmlScrollTop(scroll);
   refreshSearch();
 }
 
@@ -114,7 +117,7 @@ async function open(path: string, mode: "push" | "replace" | "none" = "push", sc
     await showLoading(doc);
     current = doc;
     render(doc, false);
-    window.scrollTo(0, scroll);
+    setXmlScrollTop(scroll);
   } catch (err) {
     current = null;
     showMessage(`Datei konnte nicht gelesen werden:\n${err}`, true);
@@ -130,12 +133,12 @@ window.addEventListener("popstate", (e) => {
 });
 
 let scrollTimer: number | undefined;
-window.addEventListener("scroll", () => {
+onXmlScroll(() => {
   clearTimeout(scrollTimer);
   scrollTimer = window.setTimeout(() => {
-    if (history.state) history.replaceState({ ...history.state, scroll: window.scrollY }, "");
+    if (history.state) history.replaceState({ ...history.state, scroll: xmlScrollTop() }, "");
   }, 150);
-}, { passive: true });
+});
 
 document.addEventListener("keydown", (e) => {
   if (e.altKey && e.key === "ArrowLeft") history.back();

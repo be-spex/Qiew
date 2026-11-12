@@ -9,6 +9,7 @@
  * jump to the first match below (or last above) the visible area's edge.
  */
 import { unfoldAround } from "./fold";
+import { scrollXmlBy } from "./scroll";
 
 const $ = (id: string) => document.getElementById(id)!;
 const DEBOUNCE_MS = 80;
@@ -114,7 +115,7 @@ function reveal(r: Range) {
   const rect = r.getBoundingClientRect();
   const v = viewport();
   // Place the match at about a third of the visible height.
-  window.scrollBy({ top: rect.top - v.top - (v.bottom - v.top) / 3 });
+  scrollXmlBy(rect.top - v.top - (v.bottom - v.top) / 3);
 }
 
 function step(dir: 1 | -1) {
@@ -186,7 +187,7 @@ export function initSearch(doc: HTMLElement) {
   box = $("search");
   input = $("search-input") as HTMLInputElement;
   count = $("search-count");
-  if (!supported) console.warn("xtaq: CSS Custom Highlight API unavailable, search cannot highlight");
+  if (!supported) console.warn("xaq: CSS Custom Highlight API unavailable, search cannot highlight");
 
   $("search-btn").addEventListener("click", () => (box.hidden ? openSearch() : closeSearch()));
   $("search-next").addEventListener("click", () => step(1));

@@ -72,6 +72,9 @@
 }
 
 :root {
+  --mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", system-ui, sans-serif;
+  --title-h: 0px; /* column headings, only in the mapping layout */
   --muted: color-mix(in srgb, var(--fg) 70%, var(--bg));
   --border: color-mix(in srgb, var(--fg) 20%, var(--bg));
   --border-soft: color-mix(in srgb, var(--fg) 12%, var(--bg));
@@ -91,7 +94,6 @@ html, body {
    Source view: monospace, full width, soft wrapping.
    --------------------------------------------------------------------------- */
 .xml {
-  --mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
   padding: 8px 24px 72px 40px; /* left room for the fold triangles */
   font: 13.5px/1.55 var(--mono);
   tab-size: 4;
@@ -169,7 +171,7 @@ html, body {
 /* Banner shown while the raw fallback is displayed. */
 .notice {
   position: sticky;
-  top: 40px;
+  top: calc(var(--title-h) + 40px);
   z-index: 9;
   padding: 8px 24px 8px 40px;
   background: color-mix(in srgb, #d1242f 10%, var(--bg));
@@ -208,7 +210,7 @@ body.dragging .xml { opacity: .35; }
    --------------------------------------------------------------------------- */
 .toolbar {
   position: sticky;
-  top: 0;
+  top: var(--title-h);
   z-index: 10;
   background: color-mix(in srgb, var(--bg) 97%, transparent);
   backdrop-filter: blur(8px);
@@ -236,7 +238,7 @@ body.dragging .xml { opacity: .35; }
 
 .tb-group { display: flex; align-items: center; gap: 4px; }
 .tb-right { justify-self: end; }
-.tb-center { display: flex; justify-content: center; min-width: 0; }
+.tb-center { display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; }
 
 .tb-btn {
   display: grid;
@@ -339,7 +341,7 @@ body.dragging .xml { opacity: .35; }
 .tb-btn.small svg { width: 15px; height: 15px; }
 
 /* While searching the stats make room; the search button shows as pressed. */
-body.searching .tb-stats { display: none; }
+body.searching #stats { display: none; }
 body.searching #search-btn { color: var(--fg); background: var(--surface); }
 
 ::highlight(search) {
@@ -394,3 +396,99 @@ body.searching #search-btn { color: var(--fg); background: var(--surface); }
 }
 .check { margin-left: auto; color: var(--accent); visibility: hidden; }
 .tb-item[aria-checked="true"] .check { visibility: visible; }
+
+/* ---------------------------------------------------------------------------
+   Mapping layout: XML | XSLT | Transformed XML, each column scrolls by itself.
+   --------------------------------------------------------------------------- */
+.pane-title { display: none; }
+
+body.mapping {
+  --title-h: 34px;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+body.mapping .pane {
+  position: relative;
+  height: 100vh;
+  min-width: 0;
+  overflow: auto;
+  border-left: 1px solid var(--border);
+}
+body.mapping .pane:first-child { border-left: 0; }
+
+body.mapping .pane-title {
+  position: sticky;
+  top: 0;
+  z-index: 11;
+  box-sizing: border-box;
+  height: var(--title-h);
+  margin: 0;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-soft);
+  color: var(--fg);
+  font: 600 12.5px/1 var(--sans);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+}
+body.mapping .pane-title::before {
+  content: "";
+  flex: none;
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+/* The drop target stays inside the XML column. */
+body.mapping .empty {
+  position: absolute;
+  inset: calc(var(--title-h) + 56px) 16px 16px;
+}
+body.mapping .tb-search { width: min(320px, 100%); }
+
+/* XSLT editor fills its column and scrolls by itself. */
+body.mapping .pane-xslt {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.xslt-editor {
+  flex: 1;
+  min-height: 0;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 8px 24px 72px 40px;
+  border: 0;
+  outline: none;
+  resize: none;
+  background: var(--bg);
+  color: var(--fg);
+  caret-color: var(--accent);
+  font: 13.5px/1.55 var(--mono);
+  tab-size: 4;
+  white-space: pre;
+  overflow: auto;
+}
+.xslt-editor::selection { background: color-mix(in srgb, var(--accent) 25%, transparent); }
+
+.tb-btn.run { color: var(--accent); }
+.tb-btn.run:hover { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--bg)); }
+#mapping-btn[aria-pressed="true"] { color: var(--accent); background: var(--surface); }
+
+.result-error {
+  margin: 0 -24px 0 -40px; /* full column width despite the article's padding */
+  padding: 8px 24px 8px 40px;
+  background: color-mix(in srgb, #d1242f 10%, var(--bg));
+  border-bottom: 1px solid color-mix(in srgb, #d1242f 35%, var(--bg));
+  font: 12.5px/1.4 var(--sans);
+  white-space: pre-wrap;
+}

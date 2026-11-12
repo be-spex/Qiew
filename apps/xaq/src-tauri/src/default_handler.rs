@@ -1,4 +1,4 @@
-//! Registers Xtaq as the default application for XML files on Linux
+//! Registers Xaq as the default application for XML files on Linux
 //! desktops that follow the freedesktop.org MIME specs (Cinnamon, KDE, GNOME,
 //! XFCE …). The work is delegated to `xdg-mime`, which knows each desktop's
 //! quirks; afterwards the result is verified instead of assumed.
@@ -8,7 +8,7 @@
 //! XML files are never touched.
 //!
 //! HTML is deliberately not registered: the browser stays its default viewer,
-//! Xtaq only shows up under "Open with".
+//! Xaq only shows up under "Open with".
 
 use std::env;
 use std::fs;
@@ -21,10 +21,10 @@ use tauri_plugin_dialog::{DialogExt, MessageDialogButtons, MessageDialogKind};
 
 const MIME_TYPES: &[&str] = &["application/xml", "text/xml", "application/xslt+xml"];
 /// Entry installed by the .deb/.rpm package.
-const SYSTEM_ENTRY: &str = "Xtaq.desktop";
-const SYSTEM_EXE: &str = "/usr/bin/xtaq";
+const SYSTEM_ENTRY: &str = "Xaq.desktop";
+const SYSTEM_EXE: &str = "/usr/bin/xaq";
 /// Entry written for AppImage or self-built binaries.
-const USER_ENTRY: &str = "xtaq.desktop";
+const USER_ENTRY: &str = "xaq.desktop";
 const DECLINED_MARKER: &str = "default-handler-declined";
 
 fn data_home() -> PathBuf {
@@ -43,7 +43,7 @@ fn launch_target() -> io::Result<PathBuf> {
 }
 
 /// Returns the id of a desktop entry that launches this binary, creating a
-/// user-local one when Xtaq is not installed as a system package.
+/// user-local one when Xaq is not installed as a system package.
 fn ensure_desktop_entry() -> io::Result<&'static str> {
     let exe = launch_target()?;
     if exe == Path::new(SYSTEM_EXE) && Path::new("/usr/share/applications").join(SYSTEM_ENTRY).exists() {
@@ -56,15 +56,15 @@ fn ensure_desktop_entry() -> io::Result<&'static str> {
     let entry = format!(
         "[Desktop Entry]\n\
          Type=Application\n\
-         Name=Xtaq\n\
+         Name=Xaq\n\
          GenericName=XML Viewer\n\
          Comment=Read-only XML source viewer\n\
          Exec=\"{exec}\" %f\n\
-         Icon=xtaq\n\
+         Icon=xaq\n\
          Terminal=false\n\
          Categories=Utility;Viewer;TextTools;Development;\n\
          MimeType={};\n\
-         StartupWMClass=xtaq\n",
+         StartupWMClass=xaq\n",
         MIME_TYPES.join(";")
     );
     fs::write(dir.join(USER_ENTRY), entry)?;
@@ -109,7 +109,7 @@ pub fn register() -> Result<(), String> {
     }
 }
 
-/// Asks once whether Xtaq should become the default XML viewer. Runs on
+/// Asks once whether Xaq should become the default XML viewer. Runs on
 /// a background thread because the dialog blocks until answered.
 pub fn offer(app: &AppHandle) {
     if cfg!(debug_assertions) || is_default() {
@@ -125,8 +125,8 @@ pub fn offer(app: &AppHandle) {
     std::thread::spawn(move || {
         let mut dialog = app
             .dialog()
-            .message("Soll Xtaq XML-Dateien (.xml, .xsd, .xsl …) künftig standardmäßig öffnen?")
-            .title("Xtaq als Standard festlegen")
+            .message("Soll Xaq XML-Dateien (.xml, .xsd, .xsl …) künftig standardmäßig öffnen?")
+            .title("Xaq als Standard festlegen")
             .kind(MessageDialogKind::Info)
             .buttons(MessageDialogButtons::OkCancelCustom("Ja".into(), "Nein, nicht mehr fragen".into()));
         if let Some(window) = app.get_webview_window("main") {

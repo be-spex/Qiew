@@ -1,9 +1,9 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Xtaq",
-  "mainBinaryName": "xtaq",
+  "productName": "Xaq",
+  "mainBinaryName": "xaq",
   "version": "0.1.0",
-  "identifier": "de.lab.xtaq",
+  "identifier": "de.lab.xaq",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -14,7 +14,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "Xtaq",
+        "title": "Xaq",
         "width": 920,
         "height": 1000,
         "minWidth": 360,
@@ -77,10 +77,10 @@
     ],
     "linux": {
       "deb": {
-        "desktopTemplate": "xtaq.desktop"
+        "desktopTemplate": "xaq.desktop"
       },
       "rpm": {
-        "desktopTemplate": "xtaq.desktop"
+        "desktopTemplate": "xaq.desktop"
       }
     }
   }

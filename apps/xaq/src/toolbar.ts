@@ -1,4 +1,5 @@
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
+import { onXmlScroll, xmlScrollTop } from "./scroll";
 import { VIEWS, applyView, effectiveView, onSystemThemeChange, saveView, storedView } from "./views";
 
 const $ = (id: string) => document.getElementById(id)!;
@@ -69,7 +70,7 @@ function initCopy() {
       clearTimeout(timer);
       timer = window.setTimeout(() => btn.classList.remove("done"), 1400);
     } catch (err) {
-      console.error("xtaq: copy failed", err);
+      console.error("xaq: copy failed", err);
     }
   });
 }
@@ -77,8 +78,15 @@ function initCopy() {
 /** Separator line appears only once the document scrolls under the bar. */
 function initScrollShadow() {
   const bar = $("toolbar");
-  const update = () => bar.classList.toggle("scrolled", window.scrollY > 2);
-  window.addEventListener("scroll", update, { passive: true });
+  const update = () => bar.classList.toggle("scrolled", xmlScrollTop() > 2);
+  onXmlScroll(update);
+  update();
+}
+
+/** Same separator for the toolbar of a column that scrolls by itself. */
+export function scrollShadow(bar: HTMLElement, scroller: HTMLElement) {
+  const update = () => bar.classList.toggle("scrolled", scroller.scrollTop > 2);
+  scroller.addEventListener("scroll", update, { passive: true });
   update();
 }
 

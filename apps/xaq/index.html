@@ -3,10 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Xtaq</title>
+    <title>Xaq</title>
     <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
+    <section class="pane pane-xml" id="pane-xml">
+    <h2 class="pane-title">XML</h2>
     <header class="toolbar" id="toolbar">
       <div class="toolbar-inner">
         <div class="tb-group tb-left">
@@ -16,6 +18,11 @@
         </div>
         <div class="tb-center">
           <span class="tb-stats" id="stats" hidden></span>
+          <button class="tb-btn" id="mapping-btn" title="XSLT Mapping (XML · XSLT · Result)" aria-label="XSLT Mapping" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3.5" y="5" width="17" height="14" rx="2" /><path d="M9.2 5v14M14.8 5v14" />
+            </svg>
+          </button>
           <div class="tb-search" id="search" role="search" hidden>
           <svg viewBox="0 0 24 24" aria-hidden="true" class="tb-search-icon">
             <circle cx="11" cy="11" r="6.5" /><path d="m20 20-4.4-4.4" />
@@ -77,5 +84,40 @@
     <div id="notice" class="notice" role="status" hidden></div>
     <div id="empty" class="empty">Drop XML File Here</div>
     <article id="doc" class="xml" hidden></article>
+    </section>
+
+    <section class="pane pane-xslt" id="pane-xslt" hidden>
+      <h2 class="pane-title">XSLT</h2>
+      <header class="toolbar" id="xslt-toolbar">
+        <div class="toolbar-inner">
+          <div class="tb-group tb-left">
+            <button class="tb-btn" id="xslt-load-btn" title="Load XSLT File" aria-label="Load XSLT File">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3.5 7v10.5A1.5 1.5 0 0 0 5 19h14a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 19 8h-7l-2-2.5H5A1.5 1.5 0 0 0 3.5 7Z" />
+              </svg>
+            </button>
+          </div>
+          <div class="tb-center"></div>
+          <div class="tb-group tb-right">
+            <button class="tb-btn run" id="xslt-run-btn" title="Run Transformation (Ctrl+Enter)" aria-label="Run Transformation">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5Z" class="fill" /></svg>
+            </button>
+          </div>
+        </div>
+      </header>
+      <textarea id="xslt-editor" class="xslt-editor" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="XSLT"></textarea>
+    </section>
+
+    <section class="pane pane-result" id="pane-result" hidden>
+      <h2 class="pane-title">Transformed XML</h2>
+      <header class="toolbar" id="result-toolbar">
+        <div class="toolbar-inner">
+          <div class="tb-group tb-left"></div>
+          <div class="tb-center"><span class="tb-stats" id="duration" aria-live="polite"></span></div>
+          <div class="tb-group tb-right"></div>
+        </div>
+      </header>
+      <article id="result" class="xml"></article>
+    </section>
   </body>
 </html>
