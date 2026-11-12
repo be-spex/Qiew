@@ -2,12 +2,14 @@
 //!
 //! Zero-Touch-Policy: this backend never writes to the files it shows; the
 //! watcher merely observes. The only write is `save_text`, to a path the user
-//! picked in the save dialog (the mapping view's "Save Result").
+//! picked in the save dialog (the mapping view's "Save Result"). As an
+//! AppImage, an accepted update replaces the image file (see updates.rs).
 
 #[cfg(target_os = "linux")]
 mod default_handler;
 #[cfg(target_os = "linux")]
 mod migrate;
+mod updates;
 mod window_layout;
 
 use std::fs;
@@ -197,6 +199,7 @@ pub fn run() {
 
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(ViewerState::default())
         .invoke_handler(tauri::generate_handler![open_file, initial_file, read_text, save_text, set_wide])
@@ -208,6 +211,7 @@ pub fn run() {
             }
             #[cfg(target_os = "linux")]
             default_handler::offer(app.handle());
+            updates::check_in_background(app.handle());
             Ok(())
         })
         .build(tauri::generate_context!())

@@ -27,27 +27,30 @@ yourself in the mapping view.
 - Colour schemes: Soft Light, Soft Dark, Sepia, Slate / Nord; the choice is kept
 - Default handler on Linux: asks once on first start for XML; or run `xaq --register-default`
 - Zero-Touch: the files shown are only read (`fs::read`), never written; the only write is saving a
-  mapping result to a file chosen in the save dialog
+  mapping result to a file chosen in the save dialog (and the AppImage replacing itself when you accept an update)
 
 ## Install
 
-Packages for x86_64 are attached to each [release](https://github.com/be-spex/Xaq/releases)
-(built against glibc 2.39: Ubuntu 24.04+, Debian 13+, Fedora 40+, current Arch).
+Each [release](https://github.com/be-spex/Xaq/releases) has a `.deb` and an AppImage for x86_64,
+built on Ubuntu 24.04 (glibc 2.39: Ubuntu 24.04+, Linux Mint 22+, Debian 13+).
 
 ```sh
-# Debian / Ubuntu
-sudo apt install ./Xaq_0.3.0_amd64.deb
+# Debian / Ubuntu / Mint
+sudo apt install ./xaq_0.3.0_amd64.deb
 
-# Fedora / openSUSE
-sudo dnf install ./Xaq-0.3.0-1.x86_64.rpm
+# any distribution: the AppImage runs as it is and offers updates itself
+chmod +x Xaq_0.3.0_amd64.AppImage && ./Xaq_0.3.0_amd64.AppImage
 ```
+
+Releases are built by [`.github/workflows/release.yml`](.github/workflows/release.yml): bump the version
+(`package.json`, `src-tauri/tauri.conf.json`, `src-tauri/Cargo.toml`), commit, tag `v<version>` and push the tag.
 
 ## Build
 
 ```sh
 npm install
 npm run tauri dev -- -- path/to/file.xml   # development
-npm run tauri build                         # .deb/.rpm/AppImage (Linux), .msi (Windows), .dmg (macOS)
+npm run tauri build                         # .deb and AppImage (Linux)
 ```
 
 Layout: `src/xml.ts` (parse, pretty print, highlighting, raw fallback), `src/fold.ts` (folding),
