@@ -2069,7 +2069,7 @@ dependencies = [
 
 [[package]]
 name = "jayq"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "jaq-core",
  "jaq-json",
@@ -2388,7 +2388,7 @@ dependencies = [
 
 [[package]]
 name = "marq"
-version = "0.1.3"
+version = "0.1.4"
 dependencies = [
  "qiew-frame",
  "serde",
@@ -5906,7 +5906,7 @@ checksum = "ea6fc2961e4ef194dcbfe56bb845534d0dc8098940c7e5c012a258bfec6701bd"
 
 [[package]]
 name = "xaq"
-version = "0.3.2"
+version = "0.3.3"
 dependencies = [
  "qiew-frame",
  "serde_json",
