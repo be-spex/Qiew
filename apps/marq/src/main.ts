@@ -62,6 +62,19 @@ function render(doc: Doc, keepScroll: boolean) {
     const src = img.getAttribute("src")!;
     if (!ABSOLUTE.test(src)) img.src = convertFileSrc(joinPath(doc.dir, src));
   });
+  // The same for <picture><source srcset="…">, e.g. a separate image for dark mode: a candidate is
+  // "<url> [descriptor]", several are separated by commas.
+  article.querySelectorAll<HTMLSourceElement>("source[srcset]").forEach((source) => {
+    source.srcset = source
+      .getAttribute("srcset")!
+      .split(",")
+      .map((candidate) => {
+        const [url, ...descriptor] = candidate.trim().split(/\s+/);
+        const resolved = ABSOLUTE.test(url) ? url : convertFileSrc(joinPath(doc.dir, url));
+        return [resolved, ...descriptor].join(" ");
+      })
+      .join(", ");
+  });
 
   empty.hidden = true;
   article.hidden = false;
