@@ -7,6 +7,7 @@ import { openUrl } from "@tauri-apps/plugin-opener";
 import "github-markdown-css/github-markdown.css";
 import "./styles.css";
 import { setApp } from "@qiew/frame/app";
+import { openInitial } from "@qiew/frame/reveal";
 import { closeSearch, initSearch, refreshSearch } from "@qiew/frame/search";
 import { initToolbar, setBackEnabled, updateToolbar } from "./toolbar";
 
@@ -196,6 +197,4 @@ listen<Doc>("file-changed", ({ payload }) => {
 });
 listen<string>("open-file", ({ payload }) => open(payload));
 
-invoke<string | null>("initial_file").then((path) => {
-  if (path) open(path, "replace");
-});
+openInitial(empty, (path) => open(path, "replace"));

@@ -1,6 +1,7 @@
 //! State of the viewer window, managed by Tauri (`.manage(Viewer::default())`).
 
 use std::path::Path;
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::mpsc;
 use std::sync::Mutex;
 use std::thread;
@@ -24,6 +25,8 @@ pub struct Viewer {
     pending: Mutex<Option<String>>,
     /// Window geometry before a split layout widened it.
     narrow: Mutex<Option<Geometry>>,
+    /// The hidden start window has been placed and shown.
+    shown: AtomicBool,
 }
 
 impl Viewer {
@@ -55,6 +58,16 @@ impl Viewer {
     #[cfg_attr(not(target_os = "macos"), allow(dead_code))]
     pub(crate) fn set_pending(&self, path: String) {
         *self.pending.lock().unwrap() = Some(path);
+    }
+
+    /// Places and shows the window that starts hidden; later calls do
+    /// nothing. Called by the frontend once colour scheme and first document
+    /// are in place, so neither the light default nor the drop target flash
+    /// up first (and by a fallback in [`crate::setup`]).
+    pub fn show(&self, window: &WebviewWindow) {
+        if !self.shown.swap(true, Ordering::SeqCst) {
+            window_layout::place_and_show(window);
+        }
     }
 
     /// Split layout: stretches the window to the full width of the work

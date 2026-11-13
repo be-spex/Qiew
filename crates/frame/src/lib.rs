@@ -20,6 +20,8 @@ pub mod window_layout;
 
 pub use viewer::Viewer;
 
+use std::time::Duration;
+
 use tauri::{App, Manager};
 
 /// What an app is called and which files it opens.
@@ -59,13 +61,24 @@ pub fn handle_cli(info: &AppInfo) -> bool {
     false
 }
 
-/// To be called from Tauri's `setup`: shows the window, offers the file
-/// association once and looks for an update.
+/// Shows the window anyway if the frontend has not done so by then (see
+/// [`Viewer::show`]), e.g. after a script error or while a file is still read
+/// from a slow drive.
+const SHOW_FALLBACK: Duration = Duration::from_secs(3);
+
+/// To be called from Tauri's `setup`: offers the file association once and
+/// looks for an update.
+///
+/// The window starts hidden; the frontend shows it via [`Viewer::show`] once
+/// the colour scheme is applied and the first document rendered, so it
+/// appears at its final size and position without flashing the light default
+/// or the drop target.
 pub fn setup(app: &App, info: &'static AppInfo) {
-    // The window starts hidden so it appears directly at its final size and
-    // position.
     if let Some(window) = app.get_webview_window("main") {
-        window_layout::place_and_show(&window);
+        std::thread::spawn(move || {
+            std::thread::sleep(SHOW_FALLBACK);
+            window.state::<Viewer>().show(&window);
+        });
     }
     #[cfg(target_os = "linux")]
     default_handler::offer(app.handle(), info);

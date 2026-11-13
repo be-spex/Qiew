@@ -68,6 +68,12 @@ fn initial_file(viewer: State<'_, Viewer>) -> Option<String> {
     viewer.initial_file()
 }
 
+/// The frontend is ready to be seen (colour scheme applied, first file shown).
+#[tauri::command]
+fn show_window(window: WebviewWindow, viewer: State<'_, Viewer>) {
+    viewer.show(&window);
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     // Identifier until 0.3 (de.lab.xaq, de.lab.xtaq); keeps settings and the colour scheme.
@@ -82,7 +88,7 @@ pub fn run() {
         .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(Viewer::default())
-        .invoke_handler(tauri::generate_handler![open_file, initial_file, read_text, save_text, set_wide])
+        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, read_text, save_text, set_wide])
         .setup(|app| {
             qiew_frame::setup(app, &INFO);
             Ok(())

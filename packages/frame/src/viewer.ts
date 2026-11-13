@@ -14,6 +14,7 @@ import { collapsedPaths, initFold, restoreFolds, setAllCollapsed } from "./fold"
 import { formatNumber, plural, type ViewResult } from "./fragment";
 import { docScrollTop, onDocScroll, setDocScrollTop } from "./scroll";
 import { closeSearch, initSearch, refreshSearch } from "./search";
+import { openInitial, reveal } from "./reveal";
 import { initToolbar, updateToolbar } from "./toolbar";
 
 export interface ViewerOptions {
@@ -75,6 +76,8 @@ export function initViewer(opts: ViewerOptions): () => string | null {
     empty.classList.add("loading");
     empty.textContent = `Lade ${formatNumber(Math.round(doc.content.length / 1000))} KB …`;
     empty.hidden = false;
+    // A hidden window may not paint at all; show it with the hint.
+    reveal();
     await new Promise<void>((done) => requestAnimationFrame(() => setTimeout(done, 0)));
   }
 
@@ -186,9 +189,7 @@ export function initViewer(opts: ViewerOptions): () => string | null {
   });
   listen<string>("open-file", ({ payload }) => open(payload));
 
-  invoke<string | null>("initial_file").then((path) => {
-    if (path) open(path, "replace");
-  });
+  openInitial(empty, (path) => open(path, "replace"));
 
   return () => current?.content ?? null;
 }

@@ -67,6 +67,12 @@ fn initial_file(viewer: State<'_, Viewer>) -> Option<String> {
     viewer.initial_file()
 }
 
+/// The frontend is ready to be seen (colour scheme applied, first file shown).
+#[tauri::command]
+fn show_window(window: WebviewWindow, viewer: State<'_, Viewer>) {
+    viewer.show(&window);
+}
+
 /// Runs a jq filter over the JSON text. Not on the main thread: it waits for
 /// the worker process.
 #[tauri::command(async)]
@@ -90,7 +96,7 @@ pub fn run() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(Viewer::default())
         .manage(jq::Runner::default())
-        .invoke_handler(tauri::generate_handler![open_file, initial_file, read_text, save_text, set_wide, run_jq])
+        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, read_text, save_text, set_wide, run_jq])
         .setup(|app| {
             qiew_frame::setup(app, &INFO);
             Ok(())
