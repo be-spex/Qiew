@@ -1,6 +1,6 @@
 [package]
 name = "jayq"
-version = "0.1.0"
+version = "0.1.1"
 description = "Read-only JSON source viewer with a jq filter view"
 authors.workspace = true
 edition.workspace = true
