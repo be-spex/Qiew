@@ -2,11 +2,15 @@
 Type=Application
 Name=Xaq
 GenericName=XML Viewer
-Comment=Read-only XML source viewer
+GenericName[de]=XML-Viewer
+Comment=XML viewer with XSLT mapping, read-only – by be-spex
+Comment[de]=XML-Viewer mit XSLT-Mapping, nur lesend – by be-spex
+Keywords=xml;xslt;html;viewer;be-spex;bespex;spex;
+Keywords[de]=xml;xslt;html;betrachter;be-spex;bespex;spex;
 Exec=xaq %f
 TryExec=xaq
 Icon=xaq
 Terminal=false
-Categories=Utility;Viewer;TextTools;Development;
+Categories=Utility;Viewer;TextTools;
 MimeType=application/xml;text/xml;application/xslt+xml;application/xsd;application/xhtml+xml;text/html;
 StartupWMClass=xaq

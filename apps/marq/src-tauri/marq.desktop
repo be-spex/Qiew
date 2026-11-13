@@ -2,7 +2,11 @@
 Type=Application
 Name=Marq
 GenericName=Markdown Viewer
-Comment=Read-only Markdown viewer
+GenericName[de]=Markdown-Viewer
+Comment=Markdown viewer, read-only – by be-spex
+Comment[de]=Markdown-Viewer, nur lesend – by be-spex
+Keywords=markdown;md;viewer;be-spex;bespex;spex;
+Keywords[de]=markdown;md;betrachter;be-spex;bespex;spex;
 Exec=marq %f
 TryExec=marq
 Icon=marq

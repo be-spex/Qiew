@@ -1,7 +1,7 @@
 [package]
 name = "marq"
-version = "0.1.4"
-description = "Read-only Markdown viewer"
+version = "0.1.5"
+description = "Markdown viewer, read-only – by be-spex"
 authors.workspace = true
 edition.workspace = true
 license.workspace = true

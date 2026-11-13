@@ -2,11 +2,15 @@
 Type=Application
 Name=Jayq
 GenericName=JSON Viewer
-Comment=Read-only JSON source viewer with jq filters
+GenericName[de]=JSON-Viewer
+Comment=JSON viewer with jq filters, read-only – by be-spex
+Comment[de]=JSON-Viewer mit jq-Filtern, nur lesend – by be-spex
+Keywords=json;jq;viewer;be-spex;bespex;spex;
+Keywords[de]=json;jq;betrachter;be-spex;bespex;spex;
 Exec=jayq %f
 TryExec=jayq
 Icon=jayq
 Terminal=false
-Categories=Utility;Viewer;TextTools;Development;
+Categories=Utility;Viewer;TextTools;
 MimeType=application/json;application/x-ndjson;application/geo+json;
 StartupWMClass=jayq
