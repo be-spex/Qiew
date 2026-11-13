@@ -1,0 +1,43 @@
+{
+  "network": "Harz Weather Net",
+  "updated": "2026-11-12T06:00:00Z",
+  "unit": "metric",
+  "stations": [
+    {
+      "id": "BRK",
+      "name": "Brocken",
+      "altitude": 1141,
+      "online": true,
+      "temp": -2.5,
+      "wind": { "speed": 61, "gust": 88, "dir": "W" },
+      "tags": ["summit", "exposed"]
+    },
+    {
+      "id": "TOR",
+      "name": "Torfhaus",
+      "altitude": 811,
+      "online": true,
+      "temp": 1.0,
+      "wind": { "speed": 24, "gust": 41, "dir": "SW" },
+      "tags": ["pass"]
+    },
+    {
+      "id": "WNG",
+      "name": "Wernigerode",
+      "altitude": 234,
+      "online": false,
+      "temp": null,
+      "wind": { "speed": 0, "gust": 0, "dir": null },
+      "tags": []
+    },
+    {
+      "id": "BAD",
+      "name": "Bad Harzburg",
+      "altitude": 299,
+      "online": true,
+      "temp": 5.5,
+      "wind": { "speed": 9, "gust": 17, "dir": "S" },
+      "tags": ["valley", "spa"]
+    }
+  ]
+}

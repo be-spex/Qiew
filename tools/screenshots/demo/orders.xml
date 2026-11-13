@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Orders of the week -->
+<orders week="2026-W46">
+  <order id="1001" status="shipped">
+    <customer id="C-17">
+      <name>Anna Fischer</name>
+      <city>Goslar</city>
+    </customer>
+    <items>
+      <item sku="TR-100" qty="2" price="39.90">Trekking poles</item>
+      <item sku="SK-020" qty="1" price="12.50">Map case</item>
+    </items>
+  </order>
+  <order id="1002" status="open">
+    <customer id="C-23">
+      <name>Jonas Weber</name>
+      <city>Wernigerode</city>
+    </customer>
+    <items>
+      <item sku="BT-330" qty="1" price="149.00">Hiking boots</item>
+    </items>
+    <note>Leave at the neighbour's door.</note>
+  </order>
+  <order id="1003" status="open">
+    <customer id="C-31">
+      <name>Mia Becker</name>
+      <city>Bad Harzburg</city>
+    </customer>
+    <items>
+      <item sku="TH-050" qty="3" price="24.00">Thermos</item>
+    </items>
+  </order>
+</orders>
