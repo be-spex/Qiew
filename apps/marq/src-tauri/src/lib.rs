@@ -18,6 +18,7 @@ static INFO: AppInfo = AppInfo {
     comment: "Read-only Markdown viewer",
     categories: "Utility;Viewer;TextTools;",
     mime_types: &["text/markdown", "text/x-markdown"],
+    open_with: &[],
     files: "Markdown-Dateien (.md)",
 };
 

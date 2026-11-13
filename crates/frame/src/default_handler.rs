@@ -74,7 +74,7 @@ fn ensure_desktop_entry(info: &AppInfo) -> io::Result<String> {
         comment = info.comment,
         bin = info.bin,
         categories = info.categories,
-        mime = info.mime_types.join(";")
+        mime = [info.mime_types, info.open_with].concat().join(";")
     );
     let user = user_entry(info);
     fs::write(dir.join(&user), entry)?;

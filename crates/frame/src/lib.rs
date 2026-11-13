@@ -34,6 +34,9 @@ pub struct AppInfo {
     pub categories: &'static str,
     /// MIME types the app becomes the default for; the first one is checked.
     pub mime_types: &'static [&'static str],
+    /// MIME types the app merely offers itself for ("Open with"), without
+    /// ever becoming their default.
+    pub open_with: &'static [&'static str],
     /// The files in words, for dialogs: "XML-Dateien (.xml, .xsd, .xsl …)".
     pub files: &'static str,
 }

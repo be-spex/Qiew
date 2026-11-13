@@ -21,6 +21,7 @@ static INFO: AppInfo = AppInfo {
     comment: "Read-only JSON source viewer with jq filters",
     categories: "Utility;Viewer;TextTools;Development;",
     mime_types: &["application/json", "application/x-ndjson", "application/geo+json"],
+    open_with: &[],
     files: "JSON-Dateien (.json, .jsonl, .geojson …)",
 };
 

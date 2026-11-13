@@ -12,15 +12,17 @@ use qiew_frame::text::{self, Document};
 use qiew_frame::{AppInfo, Viewer};
 use tauri::{AppHandle, State, WebviewWindow};
 
-/// HTML is deliberately not registered: the browser stays its default viewer,
-/// Xaq only shows up under "Open with".
+/// HTML is deliberately not among the defaults: the browser stays its default
+/// viewer, Xaq only shows up under "Open with". Both lists together are the
+/// `MimeType` line of `xaq.desktop`.
 static INFO: AppInfo = AppInfo {
     name: "Xaq",
     bin: "xaq",
     generic_name: "XML Viewer",
     comment: "Read-only XML source viewer",
     categories: "Utility;Viewer;TextTools;Development;",
-    mime_types: &["application/xml", "text/xml", "application/xslt+xml"],
+    mime_types: &["application/xml", "text/xml", "application/xslt+xml", "application/xsd"],
+    open_with: &["application/xhtml+xml", "text/html"],
     files: "XML-Dateien (.xml, .xsd, .xsl …)",
 };
 
