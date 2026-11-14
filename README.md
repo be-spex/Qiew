@@ -9,10 +9,10 @@ double-click, show it nicely, follow the file when it changes – and never writ
 
 | App | Shows | |
 | --- | --- | --- |
+| [Tusq](apps/tusq/README.md) | TSX/JSX: a React component, running – no Node.js, no project | Tailwind, imports, live reload, error display |
 | [Marq](apps/marq/README.md) | Markdown, rendered | links, images, back/forward |
-| [Xaq](apps/xaq/README.md) | XML source, pretty-printed and foldable | XSLT mapping view |
 | [Jayq](apps/jayq/README.md) | JSON source, pretty-printed and foldable | jq filter view |
-| [Tusq](apps/tusq/README.md) | TSX/JSX components, running | React, Tailwind, imports, error display |
+| [Xaq](apps/xaq/README.md) | XML source, pretty-printed and foldable | XSLT mapping view |
 
 All of them: copy, live reload, file association. Marq, Xaq and Jayq also search (Ctrl+F) and have four colour
 schemes; Tusq takes its colours and its width from the component.
@@ -36,15 +36,15 @@ sudo apt install ./be-spex-archive-keyring.deb && sudo apt update
 Then:
 
 ```sh
-sudo apt install marq xaq jayq
+sudo apt install tusq marq jayq xaq
 ```
 
 Updates arrive with `sudo apt upgrade`.
 
 ### AppImage
 
-Each app has its own AppImage in the [releases](https://github.com/be-spex/Qiew/releases) (tags `marq-v…`,
-`xaq-v…`, `jayq-v…`). It runs as it is and updates itself; see the README of the app for details.
+Each app has its own AppImage in the [releases](https://github.com/be-spex/Qiew/releases) (tags `tusq-v…`,
+`marq-v…`, `jayq-v…`, `xaq-v…`). It runs as it is and updates itself; see the README of the app for details.
 
 ### Other ways
 
