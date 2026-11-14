@@ -7,8 +7,10 @@ import { openUrl } from "@tauri-apps/plugin-opener";
 import "github-markdown-css/github-markdown.css";
 import "./styles.css";
 import { setApp } from "@qiew/frame/app";
+import { setExportContent } from "@qiew/frame/export";
 import { openInitial } from "@qiew/frame/reveal";
 import { closeSearch, initSearch, refreshSearch } from "@qiew/frame/search";
+import { effectiveView } from "@qiew/frame/views";
 import { initToolbar, setBackEnabled, updateToolbar } from "./toolbar";
 
 setApp("marq");
@@ -41,6 +43,8 @@ md.core.ruler.push("heading_ids", (state) => {
 const empty = document.getElementById("empty")!;
 const article = document.getElementById("doc")!;
 let current: Doc | null = null;
+/** The local images of the document shown: the file and the address as written. */
+const localImages = new Map<HTMLImageElement, { file: string; src: string }>();
 
 initSearch(article);
 
@@ -57,11 +61,15 @@ function joinPath(dir: string, rel: string): string {
 function render(doc: Doc, keepScroll: boolean) {
   const scroll = keepScroll ? window.scrollY : 0;
   article.innerHTML = DOMPurify.sanitize(md.render(doc.content));
+  localImages.clear();
 
   // Relative images resolve against the Markdown file, served via asset://.
   article.querySelectorAll<HTMLImageElement>("img[src]").forEach((img) => {
     const src = img.getAttribute("src")!;
-    if (!ABSOLUTE.test(src)) img.src = convertFileSrc(joinPath(doc.dir, src));
+    if (ABSOLUTE.test(src)) return;
+    const file = joinPath(doc.dir, src);
+    localImages.set(img, { file, src });
+    img.src = convertFileSrc(file);
   });
   // The same for <picture><source srcset="…">, e.g. a separate image for dark mode: a candidate is
   // "<url> [descriptor]", several are separated by commas.
@@ -83,6 +91,37 @@ function render(doc: Doc, keepScroll: boolean) {
   window.scrollTo(0, scroll);
   refreshSearch();
 }
+
+/**
+ * What the HTML export is made of: the document as rendered, the styles and
+ * the colour scheme. Local images are numbered; the backend embeds them.
+ */
+function exportContent(): string {
+  const shown = [...article.querySelectorAll("img")];
+  const copy = article.cloneNode(true) as HTMLElement;
+  const images: { file: string; src: string }[] = [];
+  copy.querySelectorAll("img").forEach((img, i) => {
+    const local = localImages.get(shown[i]);
+    if (!local) return;
+    img.setAttribute("src", `qiew-embed:${images.length}`);
+    images.push(local);
+  });
+  // A <source> for another image of the same picture would point into the app; the <img> stands for it.
+  copy.querySelectorAll("source[srcset]").forEach((source) => {
+    if (!/^(https?:|data:)/i.test(source.getAttribute("srcset")!.trim())) source.remove();
+  });
+  const css = [...document.styleSheets]
+    .flatMap((sheet) => {
+      try {
+        return [...sheet.cssRules].map((rule) => rule.cssText);
+      } catch {
+        return []; // a sheet that may not be read
+      }
+    })
+    .join("\n");
+  return JSON.stringify({ html: copy.innerHTML, css, view: effectiveView(), images });
+}
+setExportContent(exportContent);
 
 function showMessage(text: string, isError = false) {
   article.hidden = true;

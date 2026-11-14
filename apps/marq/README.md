@@ -59,11 +59,13 @@ Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
 - **Back and forward** – toolbar, context menu, Alt+←/→ or the mouse buttons take you back through the
   documents you followed.
 - **Copy the source** – one click puts the Markdown itself on the clipboard.
+- **Export as HTML** – the document as you see it, in one file with its images and the colour scheme you
+  chose: for readers without a Markdown viewer.
 - **Live reload** – when another program changes the file (including atomic saves), Marq follows.
 - **Search and colour schemes** – Ctrl+F with match count; Soft Light, Soft Dark, Sepia and Slate / Nord, the
   choice is kept.
-- **Read-only** – files are only read, nothing is ever written (except the AppImage replacing itself when
-  you accept an update).
+- **Read-only** – the files shown are only read, never written. The only writes are an export to a file you
+  choose and the AppImage replacing itself when you accept an update.
 
 ## Usage
 
@@ -72,7 +74,7 @@ Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
   Markdown, naming the app it would replace; later, run `marq --register-default` (uses `xdg-mime`; works on
   Cinnamon, KDE and GNOME). Answering no also means it will not ask again; to be asked once more, delete
   `~/.config/net.spex.marq/default-handler-declined`.
-- **Toolbar:** back on the left, character and word count in the centre, search, copy, colour scheme and
+- **Toolbar:** back on the left, character and word count in the centre, search, copy, export, colour scheme and
   About on the right.
 - **Search:** Ctrl+F or the toolbar icon, then ↑/↓, Enter/Shift+Enter or F3; Esc closes.
 - **Back and forward:** Alt+←/→, the mouse buttons, the toolbar or the context menu.

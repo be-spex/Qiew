@@ -2216,7 +2216,7 @@ dependencies = [
 
 [[package]]
 name = "jayq"
-version = "0.1.4"
+version = "0.2.0"
 dependencies = [
  "jaq-core",
  "jaq-json",
@@ -2544,7 +2544,7 @@ dependencies = [
 
 [[package]]
 name = "marq"
-version = "0.1.6"
+version = "0.2.0"
 dependencies = [
  "qiew-frame",
  "serde",
@@ -3841,6 +3841,7 @@ checksum = "d55d956fa96f5ec02be2e13af0e20391a5aa83d6a074e3ad368959d0fab299ea"
 name = "qiew-frame"
 version = "0.1.0"
 dependencies = [
+ "base64 0.22.1",
  "encoding_rs",
  "notify",
  "serde",
@@ -5612,8 +5613,9 @@ checksum = "e421abadd41a4225275504ea4d6566923418b7f05506fbc9c0fe86ba7396114b"
 
 [[package]]
 name = "tusq"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
+ "base64 0.22.1",
  "notify",
  "oxc",
  "percent-encoding",
@@ -6564,7 +6566,7 @@ checksum = "ea6fc2961e4ef194dcbfe56bb845534d0dc8098940c7e5c012a258bfec6701bd"
 
 [[package]]
 name = "xaq"
-version = "0.3.5"
+version = "0.4.0"
 dependencies = [
  "qiew-frame",
  "serde_json",

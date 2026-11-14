@@ -74,7 +74,7 @@ Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
 - **Live reload** – when another program changes the file (including atomic saves), Xaq follows.
 - **Search, copy, colour schemes** – Soft Light, Soft Dark, Sepia and Slate / Nord; the choice is kept.
 - **Read-only** – the files shown are only read, never written. The only writes are saving a mapping result
-  to a file you choose and the AppImage replacing itself when you accept an update.
+  or the formatted XML to a file you choose and the AppImage replacing itself when you accept an update.
 
 ## Usage
 
@@ -86,7 +86,8 @@ Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
 - **Fold:** click the triangle (or the `…` of a folded node); Alt+click folds the whole subtree. The toolbar
   expands or collapses everything (the root stays open).
 - **Search:** Ctrl+F, then ↑/↓, Enter/Shift+Enter or F3. Matches in folded nodes unfold them.
-- **Copy:** the toolbar copies the formatted XML.
+- **Copy and export:** the toolbar copies the formatted XML or saves it as a file of its own
+  (`orders-formatted.xml`); never over the file shown.
 - **Mapping view:** the button next to the element count widens the window to the full screen width and
   splits it into XML | XSLT | Transformed XML. The XSLT column starts with an identity transform, is editable
   (Tab indents), can load a stylesheet file and pretty-print it. Run or Ctrl+Enter runs the transformation;

@@ -1,9 +1,10 @@
 //! Jayq – read-only JSON source viewer with a jq filter view.
 //!
 //! Zero-Touch-Policy: this backend never writes to the files it shows; the
-//! watcher merely observes. The only write is `save_text`, to a path the user
-//! picked in the save dialog (the filter view's "Save Result"). As an
-//! AppImage, an accepted update replaces the image file.
+//! watcher merely observes. The only writes go to a path the user picked in a
+//! save dialog: `save_text` (the filter view's "Save Result") and the export
+//! of the formatted document. As an AppImage, an accepted update replaces the
+//! image file.
 
 mod jq;
 
@@ -99,8 +100,9 @@ pub fn run() {
         .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(Viewer::default())
+        .manage(qiew_frame::export::Exporter::formatted("formatted JSON"))
         .manage(jq::Runner::default())
-        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, read_text, save_text, set_wide, run_jq, qiew_frame::about::about_info, qiew_frame::about::open_about_link])
+        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, read_text, save_text, set_wide, run_jq, qiew_frame::about::about_info, qiew_frame::about::open_about_link, qiew_frame::export::export_info, qiew_frame::export::export_file])
         .setup(|app| {
             qiew_frame::setup(app, &INFO);
             Ok(())

@@ -1,13 +1,15 @@
 //! Tusq – read-only viewer for TSX/JSX components.
 //!
-//! Zero-Touch-Policy: this backend never writes to the file system. Files are
-//! only read (and transpiled in memory); the watcher merely observes.
-//! Exception: as an AppImage, an accepted update replaces the image file.
+//! Zero-Touch-Policy: this backend never writes to the files it shows. They
+//! are only read (and transpiled in memory); the watcher merely observes.
+//! The only write is the export, to a path the user picked in the save dialog
+//! ([`export`]). As an AppImage, an accepted update replaces the image file.
 //!
 //! The component runs in a frame of its own origin (`tusq://`, see
 //! [`protocol`]), apart from the window with the toolbar and from the
 //! commands below.
 
+mod export;
 mod protocol;
 mod transpile;
 mod watch;
@@ -59,7 +61,7 @@ fn open_file(
         .map(|bytes| qiew_frame::text::decode(&bytes))
         .map_err(|e| format!("{}: {e}", path.display()))?;
 
-    preview.set_root(protocol::root_of(&path));
+    preview.open(path.clone(), protocol::root_of(&path));
     preview.watch.start(&app, &path);
 
     if let Some(name) = path.file_name() {
@@ -104,9 +106,13 @@ pub fn run() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(Viewer::default())
         .manage(Preview::default())
+        .manage(export::exporter())
         .register_uri_scheme_protocol("tusq", |ctx, request| protocol::handle(ctx.app_handle(), &request))
-        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, fit_width, qiew_frame::about::about_info, qiew_frame::about::open_about_link])
+        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, fit_width, qiew_frame::about::about_info, qiew_frame::about::open_about_link, qiew_frame::export::export_info, qiew_frame::export::export_file])
         .setup(|app| {
+            if let Some(code) = export::from_command_line(app.handle()) {
+                std::process::exit(code);
+            }
             qiew_frame::setup(app, &INFO);
             Ok(())
         })

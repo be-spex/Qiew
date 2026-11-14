@@ -10,7 +10,7 @@ import "@tailwindcss/browser";
 import { Component, createElement, type ComponentType, type ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 
-const FILE = decodeURIComponent(location.pathname.split("/").pop() ?? "");
+const FILE = (window as { __TUSQ_FILE__?: string }).__TUSQ_FILE__ ?? decodeURIComponent(location.pathname.split("/").pop() ?? "");
 const SCROLL_KEY = `tusq.scroll:${location.pathname}`;
 
 const STYLE = `
@@ -44,6 +44,11 @@ interface Position {
 }
 
 const root = document.getElementById("root")!;
+
+/** In Tusq the page is a frame of the app; an exported page stands on its own. */
+const IN_APP = parent !== window;
+/** What to import: the component file at the page's own address, or what an export names. */
+const ENTRY = (window as { __TUSQ_ENTRY__?: string }).__TUSQ_ENTRY__ ?? location.pathname;
 
 /** The app asks for the component's width when it opens a file (not on reloads). */
 const MEASURE = new URLSearchParams(location.search).has("measure");
@@ -228,27 +233,38 @@ function pick(module: Record<string, unknown>): ComponentType | null {
 }
 
 function restoreScroll() {
-  const y = Number(sessionStorage.getItem(SCROLL_KEY));
+  let y = 0;
+  try {
+    y = Number(sessionStorage.getItem(SCROLL_KEY));
+  } catch {
+    return; // no storage (an exported page opened from disk, in some browsers)
+  }
   if (!y) return;
   // Tailwind writes its styles after the first render; the page is only then as long as it was.
   const restore = () => window.scrollTo(0, y);
   requestAnimationFrame(restore);
   setTimeout(restore, 120);
 }
-window.addEventListener("pagehide", () => sessionStorage.setItem(SCROLL_KEY, String(window.scrollY)));
+window.addEventListener("pagehide", () => {
+  try {
+    sessionStorage.setItem(SCROLL_KEY, String(window.scrollY));
+  } catch {
+    /* see above */
+  }
+});
 
 window.addEventListener("error", (e) => showError("Error", e.error ?? e.message));
 window.addEventListener("unhandledrejection", (e) => showError("Unhandled promise rejection", e.reason));
 
 // Web links open in the browser, not in the frame.
-document.addEventListener("click", (e) => {
+if (IN_APP) document.addEventListener("click", (e) => {
   const a = (e.target as Element).closest?.("a[href]");
   const href = a?.getAttribute("href") ?? "";
   if (!a || href.startsWith("#")) return;
   e.preventDefault();
   if (/^https?:/i.test(href)) parent.postMessage({ tusq: "open-url", url: href }, "*");
 });
-document.addEventListener("keydown", (e) => {
+if (IN_APP) document.addEventListener("keydown", (e) => {
   if (e.key === "F5" || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "r")) {
     e.preventDefault();
     parent.postMessage({ tusq: "reload" }, "*");
@@ -256,7 +272,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 try {
-  const module = (await import(/* @vite-ignore */ location.pathname)) as Record<string, unknown>;
+  const module = (await import(/* @vite-ignore */ ENTRY)) as Record<string, unknown>;
   const component = pick(module);
   if (component) {
     createRoot(root).render(createElement(Boundary, null, createElement(component)));

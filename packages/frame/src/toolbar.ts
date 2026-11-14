@@ -1,6 +1,7 @@
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { initAbout } from "./about";
 import { appId } from "./app";
+import { initExport } from "./export";
 import { docScrollTop, onDocScroll } from "./scroll";
 import { VIEWS, applyView, effectiveView, onSystemThemeChange, saveView, storedView } from "./views";
 
@@ -94,6 +95,7 @@ export function initToolbar() {
   initViewMenu();
   initCopy();
   initScrollShadow();
+  initExport();
   initAbout();
 }
 

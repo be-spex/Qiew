@@ -73,8 +73,8 @@ Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
 - **Live reload** – when another program changes the file (including atomic saves), Jayq follows. Fold state
   survives.
 - **Search, copy, colour schemes** – Soft Light, Soft Dark, Sepia and Slate / Nord; the choice is kept.
-- **Read-only** – the files shown are only read, never written. The only writes are saving a filter result to a
-  file you choose and the AppImage replacing itself when you accept an update.
+- **Read-only** – the files shown are only read, never written. The only writes are saving a filter result or
+  the formatted JSON to a file you choose and the AppImage replacing itself when you accept an update.
 
 ## Usage
 
@@ -86,7 +86,8 @@ Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
 - **Fold:** click the triangle (or the `…` of a folded node); Alt+click folds the whole subtree. The toolbar
   expands or collapses everything (the outermost level stays open).
 - **Search:** Ctrl+F, then ↑/↓, Enter/Shift+Enter or F3. Matches in folded nodes unfold them.
-- **Copy:** the toolbar copies the formatted JSON.
+- **Copy and export:** the toolbar copies the formatted JSON or saves it as a file of its own
+  (`data-formatted.json`); never over the file shown.
 - **Filter view:** the button next to the value count widens the window to the full screen width and splits it
   into JSON | jq | Result. The jq column starts with the identity filter `.` and is editable (Tab indents).
   Run or Ctrl+Enter applies the filter to every value of the input; the result column shows all outputs and

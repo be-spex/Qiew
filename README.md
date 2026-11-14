@@ -75,11 +75,12 @@ tools/screenshots/     takes the screenshots for the READMEs and the website
 
 The frame is what makes a new viewer cheap:
 
-- `packages/frame`: colour schemes (`views`), toolbar and copy (`toolbar`), About box (`about`), search (`search`), page and
+- `packages/frame`: colour schemes (`views`), toolbar and copy (`toolbar`), About box (`about`), export button (`export`), search (`search`), page and
   toolbar styles (`base.css`); for source views also the markup fragments (`fragment`), folding (`fold`),
   the viewer itself – open, drop, live reload, history – (`viewer`), the split view with editor and result
   (`split`) and their styles (`source.css`). An app adds its parser and highlighter.
-- `crates/frame`: window placement and widening, file watcher, reading text in any encoding,
+- `crates/frame`: window placement and widening, file watcher, reading text in any encoding, export
+  (button, save dialog and writing; an app only says what its export is),
   default-handler registration, moving the directories of an old identifier, AppImage update check.
 
 ## Release

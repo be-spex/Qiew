@@ -25,7 +25,7 @@ use crate::transpile::{Diagnostic, transpile};
 use crate::watch::Watch;
 
 /// Packages that come with Tusq, by import specifier and runtime file.
-const BUILT_IN: &[(&str, &str)] = &[
+pub(crate) const BUILT_IN: &[(&str, &str)] = &[
     ("react", "react.js"),
     ("react/jsx-runtime", "react-jsx-runtime.js"),
     ("react-dom", "react-dom.js"),
@@ -35,12 +35,12 @@ const BUILT_IN: &[(&str, &str)] = &[
 ];
 
 /// Everything else is loaded from esm.sh, sharing the built-in React.
-const CDN: &str = "https://esm.sh";
+pub(crate) const CDN: &str = "https://esm.sh";
 
-const SCRIPTS: &[&str] = &["tsx", "ts", "jsx", "js", "mjs", "mts"];
+pub(crate) const SCRIPTS: &[&str] = &["tsx", "ts", "jsx", "js", "mjs", "mts"];
 /// Imports of these become modules (`?module`): a style sheet applies itself,
 /// JSON exports its content, the others export their URL.
-const ASSETS: &[&str] = &[
+pub(crate) const ASSETS: &[&str] = &[
     "css", "json", "svg", "png", "jpg", "jpeg", "gif", "webp", "avif", "ico", "bmp", "woff", "woff2", "ttf", "otf",
     "mp3", "wav", "ogg", "mp4", "webm",
 ];
@@ -62,12 +62,20 @@ const PATH: &AsciiSet = &NON_ALPHANUMERIC.remove(b'/').remove(b'-').remove(b'_')
 pub struct Preview {
     /// Files outside this directory are not handed out.
     root: Mutex<Option<PathBuf>>,
+    /// The file being shown.
+    entry: Mutex<Option<PathBuf>>,
     pub watch: Watch,
 }
 
 impl Preview {
-    pub fn set_root(&self, root: PathBuf) {
+    pub fn open(&self, entry: PathBuf, root: PathBuf) {
         *self.root.lock().unwrap() = Some(root);
+        *self.entry.lock().unwrap() = Some(entry);
+    }
+
+    /// The file being shown and the directory it may take files from.
+    pub fn current(&self) -> Option<(PathBuf, PathBuf)> {
+        Some((self.entry.lock().unwrap().clone()?, self.root.lock().unwrap().clone()?))
     }
 }
 
@@ -175,15 +183,7 @@ pub fn handle(app: &AppHandle, request: &Request<Vec<u8>>) -> Response<Vec<u8>> 
     if param("module").is_some() {
         let json = |s: &str| serde_json::to_string(s).unwrap_or_default();
         return script(match ext.as_str() {
-            "css" => format!(
-                "const style = document.createElement(\"style\");\n\
-                 style.dataset.file = {};\n\
-                 style.textContent = {};\n\
-                 document.head.append(style);\n\
-                 export default {{}};\n",
-                json(&shown),
-                json(&qiew_frame::text::decode(&bytes))
-            ),
+            "css" => style_module(&shown, &qiew_frame::text::decode(&bytes)),
             "json" => format!("export default {};\n", qiew_frame::text::decode(&bytes)),
             _ => format!("export default {};\n", json(&fs_path(&found))),
         });
@@ -191,13 +191,27 @@ pub fn handle(app: &AppHandle, request: &Request<Vec<u8>>) -> Response<Vec<u8>> 
     respond(StatusCode::OK, mime(&ext), bytes)
 }
 
-fn extension(path: &Path) -> Option<String> {
+/// A style sheet as a module: importing it applies it.
+pub(crate) fn style_module(file: &str, css: &str) -> String {
+    let json = |s: &str| serde_json::to_string(s).unwrap_or_default();
+    format!(
+        "const style = document.createElement(\"style\");\n\
+         style.dataset.file = {};\n\
+         style.textContent = {};\n\
+         document.head.append(style);\n\
+         export default {{}};\n",
+        json(file),
+        json(css)
+    )
+}
+
+pub(crate) fn extension(path: &Path) -> Option<String> {
     path.extension().map(|e| e.to_string_lossy().to_lowercase())
 }
 
 /// Finds the file an import means: imports usually leave out the extension,
 /// or name a directory with an index file.
-fn resolve(requested: &Path) -> Option<PathBuf> {
+pub(crate) fn resolve(requested: &Path) -> Option<PathBuf> {
     if requested.is_file() {
         return Some(requested.to_path_buf());
     }
@@ -220,7 +234,7 @@ fn track_missing(watch: &Watch, requested: &Path) {
 }
 
 /// Resolves `.` and `..` without asking the file system.
-fn normalize(path: &Path) -> PathBuf {
+pub(crate) fn normalize(path: &Path) -> PathBuf {
     let mut out = PathBuf::new();
     for part in path.components() {
         match part {
@@ -291,7 +305,7 @@ fn page(file: &Path) -> String {
     )
 }
 
-fn mime(ext: &str) -> &'static str {
+pub(crate) fn mime(ext: &str) -> &'static str {
     match ext {
         "html" | "htm" => "text/html",
         "css" => "text/css",

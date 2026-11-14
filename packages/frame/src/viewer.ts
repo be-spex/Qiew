@@ -10,6 +10,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { getCurrentWebview } from "@tauri-apps/api/webview";
+import { setExportAvailable, setExportContent } from "./export";
 import { collapsedPaths, initFold, restoreFolds, setAllCollapsed } from "./fold";
 import { formatNumber, plural, type ViewResult } from "./fragment";
 import { docScrollTop, onDocScroll, setDocScrollTop } from "./scroll";
@@ -56,6 +57,10 @@ export function initViewer(opts: ViewerOptions): () => string | null {
   const notice = document.getElementById("notice")!;
   const article = document.getElementById("doc")!;
   let current: Doc | null = null;
+  let formatted = ""; // the document as shown, re-indented; empty if it could not be parsed
+
+  // The export, for apps that register one: the text as it is shown.
+  setExportContent(() => formatted);
 
   initSearch(article);
   initFold(article);
@@ -89,6 +94,9 @@ export function initViewer(opts: ViewerOptions): () => string | null {
     const view = opts.render(doc.content);
     article.innerHTML = view.html;
     if (view.ok && folds) restoreFolds(article, folds);
+
+    formatted = view.ok ? view.text : "";
+    setExportAvailable(view.ok);
 
     notice.hidden = view.ok;
     if (!view.ok) notice.textContent = `${opts.invalid} ${view.error}`.trim();

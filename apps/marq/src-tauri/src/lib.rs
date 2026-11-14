@@ -1,8 +1,11 @@
 //! Marq – read-only Markdown viewer.
 //!
-//! Zero-Touch-Policy: this backend never writes to the file system. The only
-//! file access is `fs::read_to_string`; the watcher merely observes.
-//! Exception: as an AppImage, an accepted update replaces the image file.
+//! Zero-Touch-Policy: this backend never writes to the files it shows; they
+//! are only read, the watcher merely observes. The only write is the HTML
+//! export, to a path the user picked in the save dialog ([`export`]). As an
+//! AppImage, an accepted update replaces the image file.
+
+mod export;
 
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -95,7 +98,8 @@ pub fn run() {
         .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(Viewer::default())
-        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, qiew_frame::about::about_info, qiew_frame::about::open_about_link])
+        .manage(export::exporter())
+        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, qiew_frame::about::about_info, qiew_frame::about::open_about_link, qiew_frame::export::export_info, qiew_frame::export::export_file])
         .setup(|app| {
             qiew_frame::setup(app, &INFO);
             Ok(())

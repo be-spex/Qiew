@@ -1,6 +1,6 @@
 //! State of the viewer window, managed by Tauri (`.manage(Viewer::default())`).
 
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::mpsc;
 use std::sync::Mutex;
@@ -21,6 +21,8 @@ const DEBOUNCE: Duration = Duration::from_millis(120);
 pub struct Viewer {
     /// Dropping the watcher stops it, which also ends its debounce thread.
     watcher: Mutex<Option<RecommendedWatcher>>,
+    /// The file being shown (the one watched).
+    current: Mutex<Option<PathBuf>>,
     /// File handed over by the OS before the frontend was listening (macOS).
     pending: Mutex<Option<String>>,
     /// Window geometry before a split layout widened it.
@@ -40,11 +42,17 @@ impl Viewer {
         D: Serialize + Clone + Send + 'static,
         L: Fn(&Path) -> Result<D, String> + Send + 'static,
     {
+        *self.current.lock().unwrap() = Some(path.to_path_buf());
         let mut slot = self.watcher.lock().unwrap();
         *slot = None; // stop the previous watcher first
         *slot = watch(app, path, load)
             .map_err(|e| eprintln!("{}: watcher unavailable: {e}", app.package_info().name))
             .ok();
+    }
+
+    /// The file being shown, once one has been opened.
+    pub fn current(&self) -> Option<PathBuf> {
+        self.current.lock().unwrap().clone()
     }
 
     /// The file to show at startup: one handed over by the OS (macOS), else

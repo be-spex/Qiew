@@ -26,10 +26,13 @@ viewer: it never writes to your files.
 - **Errors where they are** – syntax errors with file, line and the lines around it; missing imports and
   errors while rendering are shown instead of a blank page.
 - **Copy the source** – one click puts the file's text on the clipboard.
+- **Export as HTML** – one file that runs in any browser, without Tusq: the component, the files it imports
+  and the built-in packages it uses, Tailwind included. Works offline; only packages that Tusq itself fetches
+  from esm.sh stay links.
 - **Fits the component** – the window opens as wide as the component is made for (its widest part with a
   maximum width, such as a centred column); a layout that takes any width gets 1280 px. The toolbar takes on
   the colour of the page, so there is no colour scheme to choose.
-- **Read-only and apart** – files are only read. The component runs in a frame of its own: it gets no access
+- **Read-only and apart** – files are only read; the only thing Tusq writes is an export, where you say. The component runs in a frame of its own: it gets no access
   to the app, only to files of its own project folder, and cannot call the network apart from loading
   packages, images, fonts and styles.
 
@@ -41,7 +44,11 @@ viewer: it never writes to your files.
   not ask again; to be asked once more, delete `~/.config/net.spex.tusq/default-handler-declined`.
 - **What is shown:** the default export of the file; without one, the first exported component. A file that
   mounts itself into `#root` works too.
-- **Toolbar:** reload (F5) on the left, line count in the centre, copy and About on the right.
+- **Toolbar:** reload (F5) on the left, line count in the centre, copy, export and About on the right.
+- **Export:** the toolbar button asks where to save; `tusq App.tsx --export-html App.html` does the same
+  without a window. The exported page is a snapshot: it does not follow the file, and in a browser the
+  component is not kept apart as it is in Tusq. Images that the component names by a relative path in the
+  markup (rather than importing them) are not included.
 - **Project folder:** the nearest directory above the file with a `package.json` or `.git`, else the file's
   own directory. Imports may reach anywhere inside it, not outside.
 
@@ -60,9 +67,9 @@ Built with Tauri 2, TypeScript, oxc, React and Tailwind CSS. Layout:
 - `runtime/host.ts` – runs inside the frame: mounts the component, shows errors; `runtime/build.mjs` bundles
   it with the built-in packages into `dist/runtime/`
 - `src-tauri/src/protocol.rs` – `tusq://localhost/…`, the address the frame loads everything from;
-  `transpile.rs` (oxc), `watch.rs` (live reload), `lib.rs` (commands)
+  `transpile.rs` (oxc), `watch.rs` (live reload), `export.rs` (HTML export), `lib.rs` (commands)
 
-Toolbar and window handling come from the frame.
+Toolbar, export button and dialog, and window handling come from the frame.
 
 ## License
 

@@ -13,7 +13,7 @@ use oxc::codegen::Codegen;
 use oxc::diagnostics::OxcDiagnostic;
 use oxc::parser::Parser;
 use oxc::semantic::SemanticBuilder;
-use oxc::span::SourceType;
+pub use oxc::span::SourceType;
 use oxc::transformer::{TransformOptions, Transformer};
 
 /// What is wrong with a source file, and where.
@@ -38,40 +38,8 @@ pub fn transpile(
     // Unknown extensions are read as TSX, the most permissive of the lot.
     let source_type = SourceType::from_path(path).unwrap_or_else(|_| SourceType::tsx());
 
-    // First pass: find the specifiers to replace. Replacing them in the text
-    // (rather than in the syntax tree) keeps this independent of how oxc
-    // stores string literals; lines stay where they are.
-    let patched = {
-        let allocator = Allocator::default();
-        let parsed = Parser::new(&allocator, source, source_type).parse();
-        if let Some(error) = first_error(parsed.fatal_error, &parsed.diagnostics) {
-            return Err(diagnostic(error, source));
-        }
-        let mut edits: Vec<(usize, usize, String)> = Vec::new();
-        for statement in &parsed.program.body {
-            let literal = match statement {
-                Statement::ImportDeclaration(d) => Some(&d.source),
-                Statement::ExportAllDeclaration(d) => Some(&d.source),
-                Statement::ExportFromDeclaration(d) => Some(&d.source),
-                _ => None,
-            };
-            if let Some(literal) = literal
-                && let Some(specifier) = literal.value.as_str()
-            {
-                let start = literal.span.start as usize;
-                let Some(replacement) = rewrite(specifier).map_err(|message| at(message, source, start))? else {
-                    continue;
-                };
-                let quoted = serde_json::to_string(&replacement).unwrap_or_default();
-                edits.push((start, literal.span.end as usize, quoted));
-            }
-        }
-        let mut text = source.to_owned();
-        for (start, end, quoted) in edits.into_iter().rev() {
-            text.replace_range(start..end, &quoted);
-        }
-        text
-    };
+    // First pass: the specifiers. Second pass: the translation.
+    let patched = patch_imports(source, source_type, rewrite)?;
 
     let allocator = Allocator::default();
     let parsed = Parser::new(&allocator, &patched, source_type).parse();
@@ -91,6 +59,46 @@ pub fn transpile(
         return Err(diagnostic(error, &patched));
     }
     Ok(Codegen::new().build(&program).code)
+}
+
+/// Replaces static import/export specifiers and changes nothing else; also
+/// used on its own for JavaScript that needs no translation. Replacing them
+/// in the text (rather than in the syntax tree) keeps this independent of how
+/// oxc stores string literals; lines stay where they are.
+pub fn patch_imports(
+    source: &str,
+    source_type: SourceType,
+    rewrite: impl Fn(&str) -> Result<Option<String>, String>,
+) -> Result<String, Diagnostic> {
+    let allocator = Allocator::default();
+    let parsed = Parser::new(&allocator, source, source_type).parse();
+    if let Some(error) = first_error(parsed.fatal_error, &parsed.diagnostics) {
+        return Err(diagnostic(error, source));
+    }
+    let mut edits: Vec<(usize, usize, String)> = Vec::new();
+    for statement in &parsed.program.body {
+        let literal = match statement {
+            Statement::ImportDeclaration(d) => Some(&d.source),
+            Statement::ExportAllDeclaration(d) => Some(&d.source),
+            Statement::ExportFromDeclaration(d) => Some(&d.source),
+            _ => None,
+        };
+        if let Some(literal) = literal
+            && let Some(specifier) = literal.value.as_str()
+        {
+            let start = literal.span.start as usize;
+            let Some(replacement) = rewrite(specifier).map_err(|message| at(message, source, start))? else {
+                continue;
+            };
+            let quoted = serde_json::to_string(&replacement).unwrap_or_default();
+            edits.push((start, literal.span.end as usize, quoted));
+        }
+    }
+    let mut text = source.to_owned();
+    for (start, end, quoted) in edits.into_iter().rev() {
+        text.replace_range(start..end, &quoted);
+    }
+    Ok(text)
 }
 
 fn first_error(panicked: bool, diagnostics: &[OxcDiagnostic]) -> Option<&OxcDiagnostic> {

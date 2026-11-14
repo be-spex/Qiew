@@ -1,6 +1,6 @@
 [package]
 name = "tusq"
-version = "0.1.0"
+version = "0.2.0"
 description = "TSX/JSX viewer, read-only – by be-spex"
 authors.workspace = true
 edition.workspace = true
@@ -28,3 +28,4 @@ serde = { workspace = true }
 notify = { workspace = true }
 oxc = { version = "0.158", features = ["semantic", "transformer", "codegen"] }
 percent-encoding = "2"
+base64 = "0.22"

@@ -9,8 +9,10 @@
 //!   directories of an older identifier
 //! - [`updates`]: update check of the AppImage
 //! - [`about`]: what the About box shows
+//! - [`export`]: saving the document in another form, for apps that offer one
 
 pub mod about;
+pub mod export;
 #[cfg(target_os = "linux")]
 pub mod default_handler;
 #[cfg(target_os = "linux")]

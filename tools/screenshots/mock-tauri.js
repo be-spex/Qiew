@@ -16,6 +16,11 @@
     },
     read_text: ({ path }) => ({ path, content: demo.files[path] ?? '' }),
     save_text: () => null,
+    // The export each app offers (its button shows in the toolbar).
+    export_info: () => {
+      const file = demo.file ?? ''
+      return { label: file.endsWith('.md') ? 'HTML' : file.endsWith('.json') ? 'formatted JSON' : 'formatted XML' }
+    },
     set_wide: () => null,
     run_jq: ({ filter }) => {
       const hit = demo.jq[filter]
