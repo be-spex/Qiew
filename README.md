@@ -13,10 +13,11 @@ double-click, show it nicely, follow the file when it changes – and never writ
 | [Marq](apps/marq/README.md) | Markdown, rendered | links, images, back/forward |
 | [Jayq](apps/jayq/README.md) | JSON source, pretty-printed and foldable | jq filter view |
 | [Xaq](apps/xaq/README.md) | XML source, pretty-printed and foldable | XSLT mapping view |
+| [Hyqe](apps/hyqe/README.md) | HTML pages, rendered like in a browser – without one | JavaScript, source view |
+| [Cusq](apps/cusq/README.md) | CSV/TSV as a table | sort, filter, full-text search |
+| [Dirq](apps/dirq/README.md) | diffs and patches, side by side | metadata header, word-level changes |
+| [Maiqe](apps/maiqe/README.md) | Mermaid diagrams, one card each | zoom, text view |
 
-Built, not released yet (they work from source; each README says what they do): [Hyqe](apps/hyqe/README.md) for
-HTML pages, [Cusq](apps/cusq/README.md) for CSV tables, [Dirq](apps/dirq/README.md) for diffs and patches,
-[Maiqe](apps/maiqe/README.md) for Mermaid diagrams.
 
 All of them: copy, live reload, file association. Marq, Xaq and Jayq also search (Ctrl+F) and have four colour
 schemes; Trisq takes its colours and its width from the component.

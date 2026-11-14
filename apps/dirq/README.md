@@ -2,14 +2,49 @@
 
 **Diffs and patches, side by side – like a diff tool.**
 
-> **Not released yet.** The viewer works from source (`apps/dirq/run.sh apps/dirq/example.patch`); there is no release and no
-> package so far.
-
 Dirq (read: Dirk) shows a diff or patch file the way a diff tool would: old and new text next to each other,
 the changed words marked, the files in a list on the left and the patch's own data – subject, author, message –
 in a header on top.
 
 say “Dirk” /dɜːk/ · part of [Qiew](../../README.md) and [be spex](https://be-spex.github.io) – small, focused apps for Linux
+
+## Install
+
+### With APT (Debian, Ubuntu, Linux Mint)
+
+Once, add the be spex repository:
+
+```sh
+curl -fsSLO https://be-spex.github.io/packages/be-spex-archive-keyring.deb
+sudo apt install ./be-spex-archive-keyring.deb && sudo apt update
+```
+
+Then:
+
+```sh
+sudo apt install dirq
+```
+
+Updates arrive with `sudo apt upgrade`.
+
+### AppImage
+
+Download `Dirq_*_amd64.AppImage` from the [latest Dirq release](https://github.com/be-spex/Qiew/releases?q=dirq-v),
+make it executable (`chmod +x Dirq_*_amd64.AppImage`) and start it.
+
+Dirq updates itself: it checks for a newer version and offers to replace the AppImage in place. That update
+is built into Dirq and does not use zsync, so tools that rely on AppImageUpdate cannot update it.
+
+An AppImage has no menu entry of its own. To get one (and a file association), use an AppImage manager such
+as [Gear Lever](https://flathub.org/apps/it.mijorus.gearlever),
+[AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) or
+[appimaged](https://github.com/probonopd/go-appimage). With APT you get both without extra tools.
+
+### Other ways
+
+Take the `.deb` from the same release and run `sudo apt install ./dirq_*_amd64.deb`.
+
+Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
 
 ## Features
 

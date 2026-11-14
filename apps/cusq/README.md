@@ -2,13 +2,48 @@
 
 **CSV and TSV files as a tidy table – no spreadsheet needed.**
 
-> **Not released yet.** The viewer works from source (`apps/cusq/run.sh apps/cusq/example.csv`); there is no release and no
-> package so far.
-
 Cusq lays a CSV or TSV file out as a table you can sort, filter and search. Whoever just wants to look at the
 data does not have to start a spreadsheet program. The window takes the width the table needs.
 
 say “Cask” /kɑːsk/ · part of [Qiew](../../README.md) and [be spex](https://be-spex.github.io) – small, focused apps for Linux
+
+## Install
+
+### With APT (Debian, Ubuntu, Linux Mint)
+
+Once, add the be spex repository:
+
+```sh
+curl -fsSLO https://be-spex.github.io/packages/be-spex-archive-keyring.deb
+sudo apt install ./be-spex-archive-keyring.deb && sudo apt update
+```
+
+Then:
+
+```sh
+sudo apt install cusq
+```
+
+Updates arrive with `sudo apt upgrade`.
+
+### AppImage
+
+Download `Cusq_*_amd64.AppImage` from the [latest Cusq release](https://github.com/be-spex/Qiew/releases?q=cusq-v),
+make it executable (`chmod +x Cusq_*_amd64.AppImage`) and start it.
+
+Cusq updates itself: it checks for a newer version and offers to replace the AppImage in place. That update
+is built into Cusq and does not use zsync, so tools that rely on AppImageUpdate cannot update it.
+
+An AppImage has no menu entry of its own. To get one (and a file association), use an AppImage manager such
+as [Gear Lever](https://flathub.org/apps/it.mijorus.gearlever),
+[AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) or
+[appimaged](https://github.com/probonopd/go-appimage). With APT you get both without extra tools.
+
+### Other ways
+
+Take the `.deb` from the same release and run `sudo apt install ./cusq_*_amd64.deb`.
+
+Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
 
 ## Features
 

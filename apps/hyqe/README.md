@@ -2,14 +2,49 @@
 
 **HTML pages, shown as pages – without starting a browser.**
 
-> **Not released yet.** The viewer works from source (`apps/hyqe/run.sh apps/hyqe/example.html`); there is no release and no
-> package so far.
-
 Hyqe shows an HTML file the way a browser would – styles, scripts and images next to it included – but starts in a
 blink and is nothing more than a viewer: a report, a dashboard or a prototype an AI assistant wrote. One click
 switches to the (coloured) source.
 
 say “HY-kuh” /ˈhaɪkə/ · part of [Qiew](../../README.md) and [be spex](https://be-spex.github.io) – small, focused apps for Linux
+
+## Install
+
+### With APT (Debian, Ubuntu, Linux Mint)
+
+Once, add the be spex repository:
+
+```sh
+curl -fsSLO https://be-spex.github.io/packages/be-spex-archive-keyring.deb
+sudo apt install ./be-spex-archive-keyring.deb && sudo apt update
+```
+
+Then:
+
+```sh
+sudo apt install hyqe
+```
+
+Updates arrive with `sudo apt upgrade`.
+
+### AppImage
+
+Download `Hyqe_*_amd64.AppImage` from the [latest Hyqe release](https://github.com/be-spex/Qiew/releases?q=hyqe-v),
+make it executable (`chmod +x Hyqe_*_amd64.AppImage`) and start it.
+
+Hyqe updates itself: it checks for a newer version and offers to replace the AppImage in place. That update
+is built into Hyqe and does not use zsync, so tools that rely on AppImageUpdate cannot update it.
+
+An AppImage has no menu entry of its own. To get one (and a file association), use an AppImage manager such
+as [Gear Lever](https://flathub.org/apps/it.mijorus.gearlever),
+[AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) or
+[appimaged](https://github.com/probonopd/go-appimage). With APT you get both without extra tools.
+
+### Other ways
+
+Take the `.deb` from the same release and run `sudo apt install ./hyqe_*_amd64.deb`.
+
+Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
 
 ## Features
 

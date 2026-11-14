@@ -1,6 +1,6 @@
 [package]
 name = "maiqe"
-version = "0.0.1"
+version = "0.1.0"
 description = "Mermaid diagram viewer, read-only – by be-spex"
 authors.workspace = true
 edition.workspace = true
