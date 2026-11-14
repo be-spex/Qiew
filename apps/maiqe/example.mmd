@@ -1,0 +1,47 @@
+---
+title: Order flow
+---
+flowchart TD
+    A[Customer places order] --> B{In stock?}
+    B -- yes --> C[Reserve items]
+    B -- no --> D[Notify customer]
+    C --> E[Take payment]
+    E --> F{Payment ok?}
+    F -- yes --> G[Ship order]
+    F -- no --> H[Release items]
+    G --> I((Done))
+    D --> I
+    H --> I
+
+%% Opening a file
+sequenceDiagram
+    participant U as User
+    participant V as Viewer
+    participant F as File
+    U->>V: open example.mmd
+    V->>F: read
+    F-->>V: text
+    loop while open
+        F-->>V: changed
+        V->>V: redraw
+    end
+    V-->>U: diagram
+
+%% Life of an order
+stateDiagram-v2
+    [*] --> Placed
+    Placed --> Paid: payment received
+    Placed --> Cancelled: timeout
+    Paid --> Shipped
+    Shipped --> Delivered
+    Shipped --> Returned: refused
+    Delivered --> [*]
+    Returned --> [*]
+    Cancelled --> [*]
+
+%% Where orders come from
+pie showData
+    "Web shop" : 62
+    "App" : 27
+    "Phone" : 8
+    "Other" : 3

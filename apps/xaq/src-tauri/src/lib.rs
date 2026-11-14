@@ -19,6 +19,7 @@ use tauri::{AppHandle, State, WebviewWindow};
 static INFO: AppInfo = AppInfo {
     name: "Xaq",
     bin: "xaq",
+    version: env!("CARGO_PKG_VERSION"),
     say: "Zack",
     ipa: "zæk",
     generic_name: "XML Viewer",
@@ -29,6 +30,14 @@ static INFO: AppInfo = AppInfo {
     mime_definition: None,
     files: "XML-Dateien (.xml, .xsd, .xsl …)",
     extensions: &[".xml", ".wsdl", ".xsd", ".xsl", ".xslt"],
+    features: &[
+        "Shows XML re-indented, syntax-coloured and foldable, whatever the file looked like.",
+        "Mapping view: the XML, an XSLT stylesheet and the transformed result side by side.",
+        "Shows files that are not well-formed as written, with the parser's message.",
+        "Search (Ctrl+F), copy, four colour schemes; exports the formatted XML.",
+    ],
+    usage: &[],
+    options: &[],
 };
 
 /// Reads a file and starts watching it for changes.
@@ -94,7 +103,7 @@ pub fn run() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(Viewer::default())
         .manage(qiew_frame::export::Exporter::formatted("formatted XML"))
-        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, read_text, save_text, set_wide, qiew_frame::about::about_info, qiew_frame::about::open_about_link, qiew_frame::export::export_info, qiew_frame::export::export_file])
+        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, read_text, save_text, set_wide, qiew_frame::about::about_info, qiew_frame::about::open_about_link, qiew_frame::export::export_info, qiew_frame::export::export_file, qiew_frame::launch::take_line])
         .setup(|app| {
             qiew_frame::setup(app, &INFO);
             Ok(())

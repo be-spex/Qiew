@@ -8,6 +8,7 @@ import "github-markdown-css/github-markdown.css";
 import "./styles.css";
 import { setApp } from "@qiew/frame/app";
 import { setExportContent } from "@qiew/frame/export";
+import { onRevealRequest, revealElement, revealLaunchLine } from "@qiew/frame/launch";
 import { openInitial } from "@qiew/frame/reveal";
 import { closeSearch, initSearch, refreshSearch } from "@qiew/frame/search";
 import { effectiveView } from "@qiew/frame/views";
@@ -38,6 +39,13 @@ md.core.ruler.push("heading_ids", (state) => {
     seen.set(base, n + 1);
     tok.attrSet("id", n ? `${base}-${n}` : base);
   });
+});
+
+// Blocks remember the line of the Markdown file they start on, so a line can be shown (--line).
+md.core.ruler.push("source_lines", (state) => {
+  for (const tok of state.tokens) {
+    if (tok.map && tok.nesting !== -1) tok.attrSet("data-line", String(tok.map[0] + 1));
+  }
 });
 
 const empty = document.getElementById("empty")!;
@@ -123,6 +131,17 @@ function exportContent(): string {
 }
 setExportContent(exportContent);
 
+/** Shows the block that holds line `n` of the Markdown file. */
+function revealLine(n: number) {
+  let hit: Element | null = null;
+  for (const el of article.querySelectorAll("[data-line]")) {
+    if (Number(el.getAttribute("data-line")) > n) break;
+    hit = el;
+  }
+  if (hit) revealElement(hit);
+}
+onRevealRequest(revealLine);
+
 function showMessage(text: string, isError = false) {
   article.hidden = true;
   updateToolbar(null, article);
@@ -162,6 +181,7 @@ async function open(path: string, mode: "push" | "replace" | "none" = "push", sc
     current = doc;
     render(doc, false);
     window.scrollTo(0, scroll);
+    revealLaunchLine(revealLine);
   } catch (err) {
     current = null;
     showMessage(`Datei konnte nicht gelesen werden:\n${err}`, true);

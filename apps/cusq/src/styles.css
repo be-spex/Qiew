@@ -1,0 +1,85 @@
+@import "@qiew/frame/base.css";
+
+html, body { height: 100%; }
+body { display: flex; flex-direction: column; overflow: hidden; }
+.toolbar { flex: none; border-bottom-color: var(--border-soft); }
+
+/* The table scrolls by itself; only the rows in view exist (see main.ts). */
+#grid {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  font-size: 13px;
+}
+#grid[hidden] { display: none; }
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  font-variant-numeric: tabular-nums;
+}
+th, td {
+  height: 27px;
+  padding: 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid var(--border-soft);
+  border-right: 1px solid var(--border-soft);
+  box-sizing: border-box;
+}
+td.num, th.num { text-align: right; }
+td.n, th.n {
+  width: 56px;
+  text-align: right;
+  color: var(--muted);
+  background: var(--surface);
+  padding: 0 8px;
+}
+tbody tr:nth-child(even) td:not(.n) { background: color-mix(in srgb, var(--fg) 3%, var(--bg)); }
+tbody tr:hover td:not(.n) { background: color-mix(in srgb, var(--accent) 9%, var(--bg)); }
+tbody tr.sel td { background: color-mix(in srgb, var(--accent) 18%, var(--bg)) !important; }
+tr.spacer td { padding: 0; border: 0; background: none !important; }
+
+thead th {
+  position: sticky;
+  z-index: 2;
+  background: var(--bg);
+}
+thead tr.names th { top: 0; font-weight: 600; cursor: pointer; user-select: none; position: sticky; }
+thead tr.names th:hover { background: var(--surface); }
+thead tr.names th .arrow { display: inline-block; width: 1em; color: var(--accent); }
+thead tr.names th.num .arrow { order: -1; }
+thead tr.filters th {
+  top: 27px;
+  padding: 2px 4px;
+  height: 30px;
+  font-weight: normal;
+  border-bottom: 1px solid var(--border);
+}
+thead tr.filters input {
+  width: 100%;
+  height: 24px;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  font-size: 12px;
+  outline: none;
+}
+thead tr.filters input:focus { border-color: color-mix(in srgb, var(--accent) 60%, var(--border)); }
+thead tr.filters input.bad { border-color: #d1242f; }
+thead tr.filters input::placeholder { color: var(--muted); opacity: .7; }
+thead th.n { z-index: 3; }
+
+mark {
+  background: color-mix(in srgb, #e3b341 55%, transparent);
+  color: inherit;
+  border-radius: 2px;
+}
+
+#search-prev, #search-next { display: none; }
+#header-btn[aria-pressed="true"] { color: var(--accent); background: var(--surface); }
+.launch-line td { background: color-mix(in srgb, var(--accent) 26%, var(--bg)) !important; }

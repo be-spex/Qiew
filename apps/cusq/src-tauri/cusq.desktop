@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=Cusq
+GenericName=CSV Viewer
+GenericName[de]=CSV-Viewer
+Comment=CSV viewer, read-only – by be-spex
+Comment[de]=CSV-Viewer, nur lesend – by be-spex
+Keywords=csv;tsv;table;data;spreadsheet;viewer;be-spex;bespex;spex;
+Keywords[de]=csv;tsv;tabelle;daten;betrachter;be-spex;bespex;spex;
+Exec=cusq %f
+TryExec=cusq
+Icon=cusq
+Terminal=false
+Categories=Utility;Viewer;TextTools;Development;
+MimeType=text/csv;text/tab-separated-values;
+StartupWMClass=cusq

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hyqe example page</title>
+  <style>
+    :root { color-scheme: light dark; --accent: #0b6bcb; }
+    body { font: 16px/1.6 system-ui, sans-serif; max-width: 52rem; margin: 2rem auto; padding: 0 1.2rem; }
+    h1 { margin-bottom: .2em; }
+    .lead { color: #6b7280; margin-top: 0; }
+    section { margin: 2rem 0; padding: 1.2rem 1.4rem; border: 1px solid #8884; border-radius: 12px; }
+    button { font: inherit; padding: .4em 1em; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+    button.ghost { background: transparent; color: var(--accent); }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { padding: .4em .7em; border-bottom: 1px solid #8884; text-align: left; }
+    td.n, th.n { text-align: right; }
+    #bars { display: flex; align-items: flex-end; gap: 10px; height: 120px; }
+    #bars div { flex: 1; background: var(--accent); border-radius: 6px 6px 0 0; transition: height .4s; }
+    code { background: #8882; padding: .1em .35em; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Hyqe example page</h1>
+  <p class="lead">Everything on this page – styles, scripts, SVG – is in this one file. Use the toolbar to switch to the source (Ctrl+U), reload (F5) or search (Ctrl+F).</p>
+
+  <section id="script">
+    <h2>JavaScript runs</h2>
+    <p>Clicks so far: <strong id="count">0</strong> <small id="saved"></small></p>
+    <button id="plus">Count up</button>
+    <button id="reset" class="ghost">Reset</button>
+    <p>It is <span id="clock">…</span> – the clock ticks once a second.</p>
+  </section>
+
+  <section id="data">
+    <h2>Generated content</h2>
+    <div id="bars" aria-label="Bar chart"></div>
+    <table>
+      <thead><tr><th>Month</th><th class="n">Visitors</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </section>
+
+  <section id="media">
+    <h2>Graphics and forms</h2>
+    <svg width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="Circle with a check mark">
+      <circle cx="60" cy="60" r="54" fill="none" stroke="#2da44e" stroke-width="8"/>
+      <path d="M34 62l18 18 34-38" fill="none" stroke="#2da44e" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <form onsubmit="event.preventDefault(); document.getElementById('hello').textContent = 'Hello, ' + (this.name.value || 'stranger') + '!'">
+      <label>Your name <input name="name" placeholder="Ada"></label>
+      <button>Greet</button> <strong id="hello"></strong>
+    </form>
+  </section>
+
+  <section id="links">
+    <h2>Links</h2>
+    <p><a href="#script">Jump to the first section</a> (stays in the page) ·
+       <a href="https://be-spex.github.io">be spex website</a> (opens in your browser).</p>
+  </section>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    let count = Number(localStorage.getItem("hyqe-example-count") || 0);
+    const show = () => { $("count").textContent = count; localStorage.setItem("hyqe-example-count", count); $("saved").textContent = "(remembered in localStorage)"; };
+    $("plus").onclick = () => { count++; show(); };
+    $("reset").onclick = () => { count = 0; show(); };
+    show();
+    setInterval(() => ($("clock").textContent = new Date().toLocaleTimeString()), 1000);
+
+    const data = [["Jan", 120], ["Feb", 180], ["Mar", 150], ["Apr", 240], ["May", 310], ["Jun", 280]];
+    const max = Math.max(...data.map((d) => d[1]));
+    $("bars").innerHTML = data.map(([m, v]) => `<div title="${m}: ${v}" style="height:${(v / max) * 100}%"></div>`).join("");
+    $("rows").innerHTML = data.map(([m, v]) => `<tr><td>${m}</td><td class="n">${v.toLocaleString()}</td></tr>`).join("");
+  </script>
+</body>
+</html>

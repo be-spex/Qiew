@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=Trisq
+GenericName=TSX/JSX Viewer
+GenericName[de]=TSX/JSX-Viewer
+Comment=TSX/JSX viewer, read-only – by be-spex
+Comment[de]=TSX/JSX-Viewer, nur lesend – by be-spex
+Keywords=tsx;jsx;react;component;preview;viewer;be-spex;bespex;spex;
+Keywords[de]=tsx;jsx;react;komponente;vorschau;betrachter;be-spex;bespex;spex;
+Exec=trisq %f
+TryExec=trisq
+Icon=trisq
+Terminal=false
+Categories=Utility;Viewer;Development;
+MimeType=text/tsx;text/jsx;
+StartupWMClass=trisq

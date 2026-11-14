@@ -17,6 +17,7 @@ use tauri::{AppHandle, Manager, State, WebviewWindow};
 static INFO: AppInfo = AppInfo {
     name: "Marq",
     bin: "marq",
+    version: env!("CARGO_PKG_VERSION"),
     say: "Marc",
     ipa: "mɑːk",
     generic_name: "Markdown Viewer",
@@ -27,6 +28,14 @@ static INFO: AppInfo = AppInfo {
     mime_definition: None,
     files: "Markdown-Dateien (.md)",
     extensions: &[".md", ".markdown"],
+    features: &[
+        "Renders Markdown as a page: headings, lists, tables, quotes, code, images.",
+        "Links to other Markdown files open in place, with back and forward; web links open in the browser.",
+        "Search (Ctrl+F), copy the source, four colour schemes.",
+        "Exports the page as one HTML file.",
+    ],
+    usage: &[],
+    options: &[],
 };
 
 #[derive(Clone, Serialize)]
@@ -99,7 +108,7 @@ pub fn run() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(Viewer::default())
         .manage(export::exporter())
-        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, qiew_frame::about::about_info, qiew_frame::about::open_about_link, qiew_frame::export::export_info, qiew_frame::export::export_file])
+        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, qiew_frame::about::about_info, qiew_frame::about::open_about_link, qiew_frame::export::export_info, qiew_frame::export::export_file, qiew_frame::launch::take_line])
         .setup(|app| {
             qiew_frame::setup(app, &INFO);
             Ok(())

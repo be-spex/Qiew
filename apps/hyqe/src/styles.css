@@ -1,0 +1,39 @@
+@import "@qiew/frame/base.css";
+
+/* The page fills the window below the toolbar and scrolls by itself. */
+html, body { height: 100%; }
+body {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.toolbar { flex: none; border-bottom-color: var(--border-soft); }
+#page {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  border: 0;
+  display: block;
+  background: #fff; /* a page without a background colour is white in every browser */
+}
+
+/* The source view scrolls by itself (the page behind it does not). */
+.plain {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  margin: 0;
+  padding: 12px 40px 72px;
+  font: 13px/1.55 var(--mono);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 2;
+}
+.plain[hidden], #page[hidden] { display: none; }
+.plain .t { color: var(--accent); }
+.plain .a { color: color-mix(in srgb, var(--accent) 55%, var(--fg)); }
+.plain .s { color: color-mix(in srgb, #2da44e 70%, var(--fg)); }
+.plain .c { color: var(--muted); font-style: italic; }
+.plain .d { color: var(--muted); }
+
+#source-btn[aria-pressed="true"] { color: var(--accent); background: var(--surface); }

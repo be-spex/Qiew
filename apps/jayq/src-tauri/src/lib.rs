@@ -18,6 +18,7 @@ use tauri::{AppHandle, State, WebviewWindow};
 static INFO: AppInfo = AppInfo {
     name: "Jayq",
     bin: "jayq",
+    version: env!("CARGO_PKG_VERSION"),
     say: "Jake",
     ipa: "dʒeɪk",
     generic_name: "JSON Viewer",
@@ -28,6 +29,14 @@ static INFO: AppInfo = AppInfo {
     mime_definition: None,
     files: "JSON-Dateien (.json, .jsonl, .geojson …)",
     extensions: &[".json", ".jsonl", ".ndjson", ".geojson"],
+    features: &[
+        "Shows JSON and JSON Lines as a coloured, foldable tree; values stay exactly as written.",
+        "Filter view: the JSON, a jq filter and its result side by side (jq is built in).",
+        "Names line and column if the file is not valid JSON.",
+        "Search (Ctrl+F), copy, four colour schemes; exports the formatted JSON.",
+    ],
+    usage: &[],
+    options: &[],
 };
 
 /// Reads a file and starts watching it for changes.
@@ -102,7 +111,7 @@ pub fn run() {
         .manage(Viewer::default())
         .manage(qiew_frame::export::Exporter::formatted("formatted JSON"))
         .manage(jq::Runner::default())
-        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, read_text, save_text, set_wide, run_jq, qiew_frame::about::about_info, qiew_frame::about::open_about_link, qiew_frame::export::export_info, qiew_frame::export::export_file])
+        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, read_text, save_text, set_wide, run_jq, qiew_frame::about::about_info, qiew_frame::about::open_about_link, qiew_frame::export::export_info, qiew_frame::export::export_file, qiew_frame::launch::take_line])
         .setup(|app| {
             qiew_frame::setup(app, &INFO);
             Ok(())

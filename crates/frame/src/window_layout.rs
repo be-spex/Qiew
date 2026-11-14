@@ -7,6 +7,8 @@ use std::time::Duration;
 
 use tauri::{Monitor, PhysicalPosition, PhysicalSize, WebviewWindow};
 
+use crate::launch::Placement;
+
 /// Share of the work area's height the whole window (incl. title bar) uses.
 const HEIGHT_SHARE: f64 = 0.95;
 /// Width relative to height. 0.9 leaves room for the 750 px reading column
@@ -37,9 +39,10 @@ fn frame_height(window: &WebviewWindow) -> u32 {
 /// known after mapping, so the first pass can only guess it as 0.
 ///
 /// `width` is the content width in logical pixels, if the app has one in
-/// mind; else the reading width is used.
-pub fn place_and_show(window: &WebviewWindow, width: Option<f64>) {
-    place(window, width);
+/// mind; else the reading width is used. `placement` (the command line's
+/// `--geometry`) overrules size, position or both.
+pub fn place_and_show(window: &WebviewWindow, width: Option<f64>, placement: Option<Placement>) {
+    place(window, width, placement);
     let _ = window.show();
 
     let window = window.clone();
@@ -48,16 +51,18 @@ pub fn place_and_show(window: &WebviewWindow, width: Option<f64>) {
             std::thread::sleep(Duration::from_millis(20));
             if frame_height(&window) > 0 {
                 let w = window.clone();
-                let _ = window.run_on_main_thread(move || place(&w, width));
+                let _ = window.run_on_main_thread(move || place(&w, width, placement));
                 return;
             }
         }
     });
 }
 
-fn place(window: &WebviewWindow, preferred: Option<f64>) {
+fn place(window: &WebviewWindow, preferred: Option<f64>, placement: Option<Placement>) {
+    let placement = placement.unwrap_or_default();
     let Some(monitor) = target_monitor(window) else {
         let _ = window.center();
+        apply(window, placement);
         return;
     };
     let area = monitor.work_area();
@@ -68,11 +73,23 @@ fn place(window: &WebviewWindow, preferred: Option<f64>) {
     let scale = window.scale_factor().unwrap_or(1.0);
     let width = preferred.map_or(outer_h * ASPECT, |w| w * scale).min(area_w * MAX_WIDTH_SHARE).round();
 
-    let _ = window.set_size(PhysicalSize::new(width as u32, inner_h as u32));
-    let _ = window.set_position(PhysicalPosition::new(
-        area.position.x + ((area_w - width) / 2.0) as i32,
-        area.position.y + ((area_h - outer_h) / 2.0) as i32,
-    ));
+    let size = placement.size.unwrap_or(PhysicalSize::new(width as u32, inner_h as u32));
+    let _ = window.set_size(size);
+    // Centred, with the size it now has, unless a position was given.
+    let _ = window.set_position(placement.position.unwrap_or(PhysicalPosition::new(
+        area.position.x + ((area_w - size.width as f64) / 2.0) as i32,
+        area.position.y + ((area_h - size.height as f64 - frame_height(window) as f64) / 2.0) as i32,
+    )));
+}
+
+/// Moves and sizes a window as far as `placement` says.
+pub fn apply(window: &WebviewWindow, placement: Placement) {
+    if let Some(size) = placement.size {
+        let _ = window.set_size(size);
+    }
+    if let Some(position) = placement.position {
+        let _ = window.set_position(position);
+    }
 }
 
 /// Gives a window that is already shown another content width (logical

@@ -267,6 +267,16 @@ body.searching #search-btn { color: var(--fg); background: var(--surface); }
   color: var(--bg);
 }
 
+/* The line asked for on the command line (--line), marked for a moment. */
+::highlight(launch-line) {
+  background-color: color-mix(in srgb, var(--accent) 28%, transparent);
+}
+.launch-line {
+  background-color: color-mix(in srgb, var(--accent) 20%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 20%, transparent);
+  border-radius: 3px;
+}
+
 .tb-menu { position: relative; }
 .tb-dropdown {
   position: absolute;

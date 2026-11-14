@@ -1,0 +1,25 @@
+{
+  "name": "example-service",
+  "version": "2.4.1",
+  "private": false,
+  "description": "A JSON file with the usual suspects: nesting, arrays, numbers, nulls.",
+  "maintainers": [
+    { "name": "Ada Example", "email": "ada@example.org", "active": true },
+    { "name": "Grace Hopper", "email": "grace@example.org", "active": false }
+  ],
+  "limits": { "requestsPerMinute": 600, "timeoutSeconds": 2.5, "maxPayload": 9007199254740993 },
+  "ratios": [1.0, 1, 0.50, 1e-7, -0.0],
+  "features": ["search", "export", "live-reload"],
+  "deprecated": null,
+  "environments": {
+    "dev": { "url": "http://localhost:8080", "debug": true },
+    "test": { "url": "https://test.example.org", "debug": true },
+    "prod": { "url": "https://example.org", "debug": false, "replicas": 3 }
+  },
+  "orders": [
+    { "id": 1001, "customer": "Anna Müller", "total": 120.50, "items": [{ "sku": "A-1", "qty": 2 }, { "sku": "B-7", "qty": 1 }] },
+    { "id": 1002, "customer": "Ben Schmidt", "total": 89.90, "items": [{ "sku": "C-3", "qty": 5 }] },
+    { "id": 1003, "customer": "Clara Weber", "total": 15, "items": [] }
+  ],
+  "unicode": "Grüße – こんにちは – 🙂"
+}

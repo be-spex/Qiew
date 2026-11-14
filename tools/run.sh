@@ -27,4 +27,6 @@ fi
   fi
 ) >&2
 
-exec "$root/target/$profile/$app" "$@"
+# Where cargo builds to: target/ here, unless configured otherwise (CARGO_TARGET_DIR, build.target-dir).
+target=$(cd "$root" && cargo metadata --format-version 1 --no-deps | sed -n 's/.*"target_directory":"\([^"]*\)".*/\1/p')
+exec "${target:-$root/target}/$profile/$app" "$@"

@@ -1,4 +1,4 @@
-//! The frame the Qiew viewers (Marq, Xaq, Jayq, Tusq) are built on: everything
+//! The frame the Qiew viewers (Marq, Xaq, Jayq, Trisq) are built on: everything
 //! that does not depend on the kind of document shown.
 //!
 //! - [`Viewer`]: state of the one window – file watcher, the file handed over
@@ -9,10 +9,13 @@
 //!   directories of an older identifier
 //! - [`updates`]: update check of the AppImage
 //! - [`about`]: what the About box shows
+//! - [`launch`]: the command line every app understands (file, line, placement, reuse)
 //! - [`export`]: saving the document in another form, for apps that offer one
 
 pub mod about;
 pub mod export;
+pub mod help;
+pub mod launch;
 #[cfg(target_os = "linux")]
 pub mod default_handler;
 #[cfg(target_os = "linux")]
@@ -34,6 +37,8 @@ pub struct AppInfo {
     pub name: &'static str,
     /// Binary, icon and window class, e.g. "xaq".
     pub bin: &'static str,
+    /// The app's version: `env!("CARGO_PKG_VERSION")`.
+    pub version: &'static str,
     /// How to say the name: a word that sounds the same, and the phonetic
     /// spelling (IPA, without slashes).
     pub say: &'static str,
@@ -54,11 +59,21 @@ pub struct AppInfo {
     pub files: &'static str,
     /// The file endings the app is made for, for the About box: `[".xml", ".xsd"]`.
     pub extensions: &'static [&'static str],
+    /// What the app can do, one line each, for `--help`.
+    pub features: &'static [&'static str],
+    /// Further ways to call it, for `--help`: `"trisq <file> --export-html <out.html>"`.
+    pub usage: &'static [&'static str],
+    /// The app's own options with what they do, for `--help`.
+    pub options: &'static [(&'static str, &'static str)],
 }
 
-/// Handles `--register-default` (set up the file association without asking,
-/// e.g. from a setup script). Returns true if the process should exit.
+/// Reads the command line (see [`launch`]), answers `--help` and `--version` ([`help`]) and handles `--register-default`
+/// (set up the file association without asking, e.g. from a setup script).
+/// Returns true if the process should exit.
 pub fn handle_cli(info: &AppInfo) -> bool {
+    if help::handle(info) {
+        return true;
+    }
     #[cfg(target_os = "linux")]
     if std::env::args().any(|a| a == "--register-default") {
         match default_handler::register(info) {
@@ -70,8 +85,7 @@ pub fn handle_cli(info: &AppInfo) -> bool {
         }
         return true;
     }
-    let _ = info;
-    false
+    launch::init(info)
 }
 
 /// Shows the window anyway if the frontend has not done so by then (see
@@ -88,6 +102,7 @@ const SHOW_FALLBACK: Duration = Duration::from_secs(3);
 /// or the drop target.
 pub fn setup(app: &App, info: &'static AppInfo) {
     app.manage(info);
+    launch::listen(app.handle(), info);
     if let Some(window) = app.get_webview_window("main") {
         std::thread::spawn(move || {
             std::thread::sleep(SHOW_FALLBACK);
@@ -100,9 +115,14 @@ pub fn setup(app: &App, info: &'static AppInfo) {
     updates::check_in_background(app.handle());
 }
 
-/// To be called from Tauri's run loop: macOS delivers "Open With…" as an
-/// event, not as argv.
+/// To be called from Tauri's run loop: tidies up on exit; macOS delivers
+/// "Open With…" as an event, not as argv.
 pub fn on_run_event(_app: &tauri::AppHandle, _event: &tauri::RunEvent) {
+    if let tauri::RunEvent::Exit = _event
+        && let Some(info) = _app.try_state::<&'static AppInfo>()
+    {
+        launch::clean_up(&info);
+    }
     #[cfg(target_os = "macos")]
     if let tauri::RunEvent::Opened { urls } = _event {
         use tauri::Emitter;

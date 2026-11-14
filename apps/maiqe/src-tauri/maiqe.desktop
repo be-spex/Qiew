@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=Maiqe
+GenericName=Mermaid Diagram Viewer
+GenericName[de]=Mermaid-Diagramm-Viewer
+Comment=Mermaid diagram viewer, read-only – by be-spex
+Comment[de]=Mermaid-Diagramm-Viewer, nur lesend – by be-spex
+Keywords=mermaid;mmd;diagram;flowchart;sequence;viewer;be-spex;bespex;spex;
+Keywords[de]=mermaid;mmd;diagramm;ablauf;sequenz;betrachter;be-spex;bespex;spex;
+Exec=maiqe %f
+TryExec=maiqe
+Icon=maiqe
+Terminal=false
+Categories=Utility;Viewer;TextTools;Development;
+MimeType=text/vnd.mermaid;
+StartupWMClass=maiqe

@@ -49,6 +49,12 @@ impl Exporter {
         Self { label, extension: Some(extension), suffix: None, make: Box::new(make) }
     }
 
+    /// Adds `suffix` to the document's name in the dialog ("view" turns a.csv into a-view.csv).
+    pub fn suffix(mut self, suffix: &'static str) -> Self {
+        self.suffix = Some(suffix);
+        self
+    }
+
     /// The export of the source viewers: the document as they show it –
     /// re-indented – as text of the same kind. The frontend hands over the
     /// text (it is what "Copy" copies); the backend part is the file

@@ -1,0 +1,456 @@
+Nr;Name;Stadt;PLZ;Eintritt;Zuletzt aktiv;Umsatz (EUR);Anteil;Aktiv;Notiz
+1;Rosa Fischer;Hamburg;20095;09.09.2020;25.05.2026 02:01;4052,42;9,6 %;ja;"Neukunde 2025"
+2;Tina Müller;Oldenburg;26122;12.11.2023;02.06.2026 14:02;1309,45;2,2 %;nein;"Rechnung per Post; ""nicht per Mail"""
+3;Sven Wolf;Oldenburg;26122;24.06.2021;18.01.2026 07:02;3372,33;7,5 %;ja;
+4;Olga Schulz;Oldenburg;26122;08.02.2021;16.05.2026 22:03;4100,33;8,9 %;nein;
+5;Katja Richter;Hamburg;20095;12.05.2022;01.04.2026 18:47;18873,99;4,4 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+6;Clara Klein;Hamburg;20095;27.10.2019;13.02.2026 07:40;3062,44;6,2 %;nein;
+7;Paul Richter;Hamburg;20095;05.12.2022;05.08.2026 17:40;2890,27;1,2 %;ja;
+8;Lukas Müller;Oldenburg;26122;22.06.2022;24.08.2026 22:41;4728,88;8,0 %;nein;
+9;Paul Schmidt;Hamburg;20095;19.11.2020;11.08.2026 18:17;5331,42;4,5 %;ja;
+10;Lukas Koch;Hannover;30159;04.07.2023;20.07.2026 09:04;1834,00;7,7 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+11;Felix Weber;Bremen;28195;10.09.2020;31.01.2026 13:07;1345,43;4,2 %;nein;
+12;Rosa Schulz;Oldenburg;26122;19.08.2020;02.06.2026 20:48;3523,79;5,7 %;ja;"Stammkunde"
+13;Clara Fischer;Hannover;30159;09.04.2025;24.05.2026 04:39;2170,10;8,7 %;nein;
+14;Uwe Müller;Bremen;28195;26.03.2020;05.05.2026 03:26;3684,02;10,2 %;ja;
+15;David Wolf;Berlin;10115;01.05.2021;12.08.2026 21:49;1573,61;17,2 %;nein;"Neukunde 2025"
+16;Felix Hoffmann;Hannover;30159;21.05.2024;26.06.2026 11:48;1968,77;13,5 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+17;Clara Richter;Bremen;28195;03.12.2024;13.05.2026 01:02;692,41;0,5 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+18;Uwe Klein;Münster;48143;11.02.2023;03.03.2026 03:38;2099,86;9,7 %;ja;"Neukunde 2025"
+19;Anna Müller;Berlin;10115;07.09.2021;26.10.2026 06:42;1149,49;3,6 %;nein;
+20;David Fischer;Hannover;30159;27.11.2021;12.03.2026 20:05;613,23;17,8 %;nein;"Neukunde 2025"
+21;Lukas Klein;Bremen;28195;15.10.2022;16.03.2026 17:50;324,04;11,0 %;ja;
+22;Katja Schmidt;Berlin;10115;06.05.2020;22.05.2026 19:04;25137,37;8,6 %;nein;"Stammkunde"
+23;Emma Schulz;Hannover;30159;03.07.2023;28.09.2026 23:30;1460,67;2,7 %;nein;
+24;Emma Wagner;Köln;50667;06.12.2022;27.02.2026 02:23;3313,19;0,3 %;ja;
+25;Noah Wolf;Berlin;10115;14.05.2021;11.01.2026 12:36;1537,09;4,3 %;ja;"Neukunde 2025"
+26;Rosa Hoffmann;Oldenburg;26122;20.12.2022;17.06.2026 03:28;15642,32;9,3 %;ja;"Stammkunde"
+27;Katja Koch;Berlin;10115;08.12.2023;11.10.2026 01:12;5896,53;8,5 %;nein;
+28;Uwe Hoffmann;Berlin;10115;10.03.2020;24.07.2026 07:56;2716,68;16,1 %;ja;
+29;Ida Hoffmann;Köln;50667;09.02.2022;15.06.2026 00:39;3228,90;9,1 %;ja;"Rechnung per Post; ""nicht per Mail"""
+30;Greta Koch;Berlin;10115;08.01.2024;20.02.2026 06:17;2301,02;5,7 %;nein;"Rechnung per Post; ""nicht per Mail"""
+31;Emma Becker;Berlin;10115;16.05.2020;11.10.2026 04:56;299,75;11,9 %;ja;"Stammkunde"
+32;Noah Hoffmann;Köln;50667;21.01.2020;26.05.2026 08:01;7098,57;12,0 %;nein;"Rechnung per Post; ""nicht per Mail"""
+33;Olga Richter;Hamburg;20095;22.09.2023;13.03.2026 14:26;2212,64;6,6 %;ja;"Neukunde 2025"
+34;David Schmidt;Hannover;30159;19.09.2022;08.07.2026 17:24;4814,94;1,2 %;nein;"Rechnung per Post; ""nicht per Mail"""
+35;Sven Hoffmann;Hamburg;20095;12.06.2019;11.10.2026 22:59;254,52;14,8 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+36;Anna Koch;Köln;50667;01.09.2022;02.02.2026 21:43;372,28;3,3 %;ja;
+37;Katja Hoffmann;Berlin;10115;03.12.2021;31.01.2026 19:45;3875,88;4,8 %;nein;
+38;Felix Fischer;Hamburg;20095;13.06.2020;17.01.2026 01:32;3186,55;2,0 %;nein;"Stammkunde"
+39;Anna Weber;Köln;50667;03.06.2022;13.07.2026 16:41;5941,23;9,0 %;ja;"Stammkunde"
+40;David Koch;Oldenburg;26122;17.03.2019;25.09.2026 05:45;4847,02;9,3 %;nein;"Rechnung per Post; ""nicht per Mail"""
+41;Katja Fischer;Köln;50667;20.07.2024;19.07.2026 02:12;8437,29;9,1 %;ja;"Rechnung per Post; ""nicht per Mail"""
+42;Mia Wolf;Hannover;30159;24.11.2022;21.01.2026 03:15;21383,31;7,8 %;nein;
+43;Lukas Meyer;Münster;48143;19.09.2021;10.09.2026 12:46;;2,8 %;nein;
+44;Rosa Koch;Bremen;28195;22.05.2019;24.04.2026 00:52;1553,66;6,0 %;ja;
+45;Hans Schmidt;Bremen;28195;29.08.2024;10.10.2026 22:52;821,20;0,8 %;ja;
+46;Rosa Koch;Köln;50667;15.05.2023;06.10.2026 14:39;270,95;11,6 %;nein;
+47;Ben Schneider;Köln;50667;01.09.2024;21.02.2026 01:17;5947,35;0,3 %;nein;"Rechnung per Post; ""nicht per Mail"""
+48;Anna Becker;Oldenburg;26122;23.03.2023;14.06.2026 16:16;4010,66;11,3 %;ja;"Rechnung per Post; ""nicht per Mail"""
+49;Clara Wolf;Köln;50667;22.08.2024;15.07.2026 04:38;587,27;13,4 %;nein;
+50;Uwe Koch;Bremen;28195;20.04.2021;26.03.2026 08:12;2926,33;8,6 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+51;Ben Becker;Oldenburg;26122;26.08.2020;02.05.2026 03:04;;5,5 %;nein;"Stammkunde"
+52;Olga Klein;Köln;50667;12.02.2020;10.09.2026 08:24;1049,65;12,8 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+53;Mia Fischer;Münster;48143;27.03.2021;24.04.2026 19:27;553,95;14,8 %;ja;
+54;Lukas Fischer;Oldenburg;26122;05.01.2020;21.02.2026 22:32;5612,00;6,5 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+55;Katja Schmidt;Hannover;30159;03.06.2023;10.01.2026 09:00;5304,57;13,1 %;nein;
+56;Jonas Weber;Oldenburg;26122;22.08.2022;01.10.2026 16:00;1795,10;16,9 %;nein;"Rechnung per Post; ""nicht per Mail"""
+57;Ben Wolf;Oldenburg;26122;29.05.2023;23.05.2026 09:16;1882,63;5,0 %;nein;
+58;Noah Müller;Köln;50667;01.09.2020;02.04.2026 02:37;14424,96;5,7 %;nein;"Neukunde 2025"
+59;Emma Koch;Münster;48143;27.02.2025;16.03.2026 09:38;4609,70;13,2 %;nein;
+60;Ida Wagner;Hannover;30159;20.07.2019;20.07.2026 14:55;786,46;6,2 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+61;Paul Hoffmann;Hamburg;20095;02.06.2024;23.07.2026 05:57;4281,39;11,6 %;ja;
+62;Sven Schmidt;Hannover;30159;25.09.2022;04.10.2026 18:24;2671,11;3,5 %;nein;
+63;Rosa Fischer;Bremen;28195;17.02.2023;05.04.2026 09:33;6196,19;0,4 %;nein;
+64;Rosa Koch;Hamburg;20095;17.10.2022;02.10.2026 04:02;949,68;17,4 %;ja;"Stammkunde"
+65;Anna Schneider;Oldenburg;26122;15.01.2022;01.04.2026 19:01;1611,60;7,8 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+66;Hans Klein;Hannover;30159;22.04.2024;03.08.2026 02:49;2919,84;16,7 %;ja;
+67;Ben Müller;Bremen;28195;24.09.2020;25.02.2026 16:47;3404,16;16,9 %;ja;
+68;Jonas Hoffmann;Bremen;28195;03.06.2019;24.08.2026 08:30;4943,93;7,9 %;ja;
+69;Hans Hoffmann;Hannover;30159;04.12.2021;23.03.2026 17:41;1617,88;15,1 %;ja;"Rechnung per Post; ""nicht per Mail"""
+70;Hans Koch;Oldenburg;26122;14.08.2023;14.09.2026 21:21;4019,59;3,5 %;nein;
+71;Jonas Richter;Hamburg;20095;17.07.2021;29.06.2026 19:24;789,82;7,6 %;ja;
+72;Jonas Schmidt;Bremen;28195;23.07.2024;15.03.2026 07:14;414,06;4,2 %;nein;"Rechnung per Post; ""nicht per Mail"""
+73;Ben Fischer;Münster;48143;06.02.2021;23.03.2026 15:26;2175,92;1,0 %;ja;"Stammkunde"
+74;Felix Meyer;Münster;48143;04.08.2020;01.06.2026 13:41;412,87;15,9 %;ja;
+75;Olga Schneider;Bremen;28195;19.11.2024;30.09.2026 01:20;2727,65;13,1 %;ja;"Neukunde 2025"
+76;Jonas Wolf;Oldenburg;26122;17.11.2019;13.04.2026 04:59;761,69;15,9 %;nein;"Rechnung per Post; ""nicht per Mail"""
+77;Paul Müller;Oldenburg;26122;21.07.2019;15.09.2026 02:37;2752,24;16,6 %;nein;"Rechnung per Post; ""nicht per Mail"""
+78;Clara Schulz;Bremen;28195;16.07.2023;16.01.2026 03:12;1923,44;14,5 %;nein;
+79;Uwe Klein;Hamburg;20095;20.01.2022;03.05.2026 07:01;611,66;5,7 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+80;Noah Wolf;Oldenburg;26122;15.08.2021;09.02.2026 09:15;1009,04;17,2 %;nein;
+81;Katja Becker;Bremen;28195;26.07.2024;08.03.2026 22:32;892,92;2,7 %;nein;"Rechnung per Post; ""nicht per Mail"""
+82;Paul Hoffmann;Berlin;10115;20.11.2019;06.07.2026 16:55;295,46;4,5 %;nein;
+83;Olga Schulz;Bremen;28195;14.10.2023;08.02.2026 15:26;2951,55;8,0 %;ja;"Rechnung per Post; ""nicht per Mail"""
+84;Ida Meyer;Köln;50667;14.01.2025;10.10.2026 02:12;4243,15;15,1 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+85;Tina Fischer;Köln;50667;02.12.2021;14.03.2026 20:32;2590,36;4,2 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+86;Paul Wolf;Oldenburg;26122;11.06.2023;02.04.2026 22:59;211,40;11,8 %;ja;
+87;Tina Fischer;Berlin;10115;11.01.2024;17.05.2026 10:58;873,04;2,1 %;ja;"Rechnung per Post; ""nicht per Mail"""
+88;Uwe Richter;Hamburg;20095;30.09.2024;07.03.2026 01:16;2618,20;14,0 %;nein;
+89;Greta Wolf;Bremen;28195;03.06.2019;15.05.2026 13:49;2173,62;18,0 %;ja;
+90;Paul Hoffmann;Berlin;10115;02.09.2022;30.05.2026 05:51;;5,6 %;nein;"Rechnung per Post; ""nicht per Mail"""
+91;Mia Richter;Oldenburg;26122;30.07.2023;07.02.2026 05:56;15704,18;2,8 %;nein;
+92;Lukas Koch;Hannover;30159;06.03.2022;01.09.2026 11:25;;6,4 %;ja;
+93;Mia Schulz;Hannover;30159;17.07.2023;16.03.2026 11:40;13017,40;2,8 %;nein;
+94;Felix Schneider;Hannover;30159;27.10.2020;17.02.2026 15:44;56540,85;1,6 %;nein;"Neukunde 2025"
+95;Ben Becker;Hamburg;20095;24.10.2020;10.07.2026 01:57;1223,82;14,3 %;nein;"Rechnung per Post; ""nicht per Mail"""
+96;Hans Schulz;Oldenburg;26122;08.05.2023;01.02.2026 18:03;22229,48;14,8 %;nein;"Stammkunde"
+97;David Schneider;Münster;48143;14.03.2021;22.06.2026 12:44;1386,88;7,2 %;ja;"Stammkunde"
+98;Sven Wolf;Köln;50667;27.02.2021;16.01.2026 07:07;7932,94;5,8 %;nein;
+99;Felix Müller;Köln;50667;17.09.2023;23.04.2026 13:11;3910,86;11,9 %;ja;
+100;Paul Wagner;Münster;48143;27.06.2024;19.06.2026 17:37;360,30;14,0 %;ja;
+101;Emma Schmidt;Oldenburg;26122;10.06.2020;11.05.2026 21:16;;8,0 %;nein;
+102;Clara Schulz;Berlin;10115;26.09.2024;30.01.2026 10:46;;6,8 %;ja;"Stammkunde"
+103;Lukas Schulz;Bremen;28195;23.06.2020;29.06.2026 10:01;358,58;14,3 %;nein;"Rechnung per Post; ""nicht per Mail"""
+104;Ida Schulz;Bremen;28195;19.08.2022;12.08.2026 17:07;297,98;2,6 %;ja;
+105;Mia Schneider;Hamburg;20095;05.03.2023;14.01.2026 17:51;1150,13;11,5 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+106;Sven Koch;Oldenburg;26122;13.12.2024;19.01.2026 00:25;4455,10;15,7 %;nein;
+107;Olga Fischer;Köln;50667;02.03.2023;07.04.2026 17:27;2055,79;2,6 %;ja;"Neukunde 2025"
+108;Ben Fischer;Münster;48143;17.07.2019;19.04.2026 05:50;6691,88;11,5 %;ja;"Neukunde 2025"
+109;Ben Müller;Hamburg;20095;06.11.2023;02.06.2026 09:48;3748,21;2,4 %;ja;"Rechnung per Post; ""nicht per Mail"""
+110;Greta Meyer;Oldenburg;26122;24.12.2022;21.04.2026 22:06;938,68;4,0 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+111;Emma Wolf;Bremen;28195;05.07.2020;06.01.2026 11:18;8859,08;2,7 %;nein;
+112;Anna Müller;Hannover;30159;18.12.2021;05.01.2026 12:27;18553,53;10,4 %;ja;
+113;Sven Koch;Münster;48143;14.04.2019;29.05.2026 03:35;;16,4 %;ja;
+114;Felix Hoffmann;Bremen;28195;20.08.2023;14.03.2026 23:25;3282,72;11,7 %;nein;
+115;Olga Schmidt;Oldenburg;26122;14.05.2022;17.08.2026 05:45;19463,40;0,1 %;nein;
+116;Ida Koch;Bremen;28195;14.07.2021;08.02.2026 15:57;841,60;2,2 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+117;Katja Fischer;Köln;50667;13.11.2024;07.04.2026 22:11;3031,72;16,3 %;nein;"Rechnung per Post; ""nicht per Mail"""
+118;Rosa Richter;Hamburg;20095;06.09.2021;19.05.2026 11:40;23923,23;12,5 %;ja;
+119;Tina Schmidt;Berlin;10115;19.04.2019;09.06.2026 12:26;9157,98;15,9 %;ja;"Rechnung per Post; ""nicht per Mail"""
+120;Anna Müller;Bremen;28195;15.05.2019;11.01.2026 03:04;429,50;2,9 %;ja;"Stammkunde"
+121;Greta Fischer;Köln;50667;24.06.2019;12.09.2026 02:32;3606,35;15,8 %;ja;
+122;Emma Schmidt;Oldenburg;26122;22.05.2019;23.10.2026 23:31;5037,97;13,5 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+123;Lukas Meyer;Hamburg;20095;31.07.2022;03.05.2026 20:31;;4,6 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+124;Ben Hoffmann;Berlin;10115;24.03.2022;14.08.2026 10:34;26838,66;0,6 %;ja;
+125;Ben Müller;Köln;50667;08.01.2020;29.07.2026 12:24;6169,94;0,0 %;nein;"Rechnung per Post; ""nicht per Mail"""
+126;Rosa Weber;Hannover;30159;27.01.2020;29.06.2026 06:39;24565,19;17,4 %;ja;"Neukunde 2025"
+127;Sven Klein;Hamburg;20095;29.05.2021;13.09.2026 00:08;1624,06;16,9 %;ja;
+128;Sven Hoffmann;Köln;50667;30.08.2022;10.05.2026 19:25;1968,56;6,7 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+129;Katja Hoffmann;Hannover;30159;14.08.2021;18.06.2026 03:28;526,04;12,4 %;ja;
+130;Emma Meyer;Berlin;10115;19.01.2024;30.08.2026 09:31;3462,89;8,3 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+131;Hans Richter;Köln;50667;01.09.2021;05.07.2026 04:22;1295,62;12,7 %;nein;"Stammkunde"
+132;David Fischer;Münster;48143;08.11.2024;08.05.2026 06:23;1150,23;3,4 %;nein;
+133;David Weber;Bremen;28195;30.08.2020;17.10.2026 17:50;1751,94;4,9 %;ja;
+134;Emma Weber;Hannover;30159;15.03.2024;13.01.2026 16:29;2555,38;17,7 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+135;Tina Wolf;Oldenburg;26122;19.09.2021;06.06.2026 21:38;7480,84;11,6 %;ja;"Rechnung per Post; ""nicht per Mail"""
+136;Hans Klein;Köln;50667;13.01.2021;22.08.2026 21:51;854,36;4,7 %;nein;
+137;Felix Koch;Köln;50667;02.10.2020;02.04.2026 09:03;10666,36;0,4 %;nein;
+138;David Wolf;Berlin;10115;13.02.2019;22.05.2026 20:35;1105,43;3,9 %;nein;"Rechnung per Post; ""nicht per Mail"""
+139;Noah Richter;Münster;48143;19.04.2021;19.09.2026 11:49;2845,41;14,3 %;nein;"Neukunde 2025"
+140;Ida Weber;Bremen;28195;22.01.2021;24.05.2026 05:39;4388,23;13,1 %;nein;"Neukunde 2025"
+141;Mia Hoffmann;Hannover;30159;09.09.2019;06.01.2026 04:17;6286,96;10,4 %;ja;
+142;Sven Richter;Berlin;10115;25.05.2023;18.06.2026 14:02;1596,94;14,0 %;ja;"Rechnung per Post; ""nicht per Mail"""
+143;Jonas Klein;Berlin;10115;22.08.2020;09.05.2026 21:42;18971,79;14,3 %;ja;
+144;Felix Becker;Berlin;10115;06.04.2024;10.05.2026 11:49;5975,53;12,7 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+145;Clara Koch;Berlin;10115;25.02.2022;11.05.2026 16:03;1496,20;8,6 %;nein;
+146;Ida Schulz;Bremen;28195;26.05.2022;21.05.2026 13:08;3847,24;0,2 %;ja;
+147;Sven Schneider;Münster;48143;07.08.2020;27.03.2026 09:35;1009,93;14,1 %;ja;"Rechnung per Post; ""nicht per Mail"""
+148;Olga Koch;Köln;50667;24.02.2025;15.10.2026 06:17;4301,37;8,9 %;ja;"Rechnung per Post; ""nicht per Mail"""
+149;Emma Richter;Münster;48143;30.04.2020;07.04.2026 15:11;1232,25;8,5 %;nein;
+150;Tina Becker;Bremen;28195;02.08.2024;02.03.2026 06:26;5136,81;0,1 %;nein;"Neukunde 2025"
+151;Ben Koch;Berlin;10115;22.03.2024;17.05.2026 20:25;;6,5 %;nein;
+152;Emma Meyer;Berlin;10115;20.01.2020;06.07.2026 05:54;2635,93;2,6 %;ja;"Rechnung per Post; ""nicht per Mail"""
+153;Katja Wagner;Berlin;10115;08.02.2023;05.05.2026 14:25;2693,81;13,9 %;nein;"Rechnung per Post; ""nicht per Mail"""
+154;Lukas Fischer;Münster;48143;04.08.2019;16.04.2026 14:36;308,32;7,3 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+155;Ben Wagner;Berlin;10115;28.04.2020;01.05.2026 19:24;393,70;2,3 %;nein;
+156;Uwe Koch;Münster;48143;23.07.2019;26.05.2026 09:59;5430,19;14,2 %;ja;
+157;Noah Klein;Bremen;28195;11.06.2019;01.09.2026 04:21;5841,59;3,1 %;ja;"Stammkunde"
+158;Felix Wagner;Köln;50667;24.02.2019;15.05.2026 15:13;6733,60;5,6 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+159;Ben Wolf;Hamburg;20095;25.03.2019;07.06.2026 03:17;4011,10;16,4 %;ja;
+160;Emma Becker;Berlin;10115;21.09.2023;29.07.2026 19:14;5543,31;1,2 %;nein;
+161;Anna Koch;Münster;48143;22.02.2020;31.01.2026 12:36;4214,05;2,7 %;ja;
+162;Felix Müller;Berlin;10115;28.12.2019;21.03.2026 19:03;6638,39;0,3 %;nein;"Rechnung per Post; ""nicht per Mail"""
+163;Ida Müller;Berlin;10115;16.08.2020;24.09.2026 00:24;5957,33;10,0 %;ja;
+164;Uwe Schneider;Oldenburg;26122;06.09.2019;06.01.2026 16:42;29984,98;11,1 %;nein;
+165;David Meyer;Münster;48143;02.09.2019;26.04.2026 11:41;1655,76;7,9 %;ja;"Stammkunde"
+166;Ben Schulz;Köln;50667;08.09.2023;23.06.2026 23:45;1087,11;17,0 %;nein;"Neukunde 2025"
+167;Mia Schulz;Berlin;10115;05.03.2019;25.02.2026 08:30;3928,60;7,7 %;ja;"Rechnung per Post; ""nicht per Mail"""
+168;Ben Weber;Berlin;10115;23.01.2024;14.04.2026 11:35;5036,35;4,8 %;ja;"Stammkunde"
+169;Paul Klein;Berlin;10115;25.08.2020;11.04.2026 00:55;4469,29;9,0 %;nein;
+170;Tina Klein;Bremen;28195;16.08.2021;24.04.2026 00:11;5573,73;8,4 %;ja;"Rechnung per Post; ""nicht per Mail"""
+171;Tina Hoffmann;Berlin;10115;26.04.2023;17.06.2026 17:04;3515,79;6,4 %;nein;
+172;Jonas Meyer;Berlin;10115;07.11.2024;28.04.2026 04:52;2676,89;3,4 %;nein;"Rechnung per Post; ""nicht per Mail"""
+173;Emma Meyer;Hannover;30159;19.10.2024;24.02.2026 14:03;2710,64;6,7 %;ja;
+174;Greta Weber;Hamburg;20095;23.02.2022;09.07.2026 11:04;3726,31;3,7 %;nein;
+175;Katja Fischer;Hannover;30159;02.02.2020;13.06.2026 00:44;48228,09;17,3 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+176;Clara Wolf;Hannover;30159;09.12.2019;11.01.2026 08:28;439,53;15,7 %;nein;
+177;Felix Meyer;Oldenburg;26122;04.01.2020;04.04.2026 23:23;1908,07;1,6 %;ja;
+178;Ben Weber;Köln;50667;27.06.2021;05.03.2026 00:02;925,19;6,3 %;nein;
+179;David Becker;Oldenburg;26122;18.02.2020;23.02.2026 01:15;312,19;10,6 %;nein;
+180;Anna Becker;Hamburg;20095;18.11.2021;23.05.2026 08:17;759,43;3,0 %;ja;"Rechnung per Post; ""nicht per Mail"""
+181;Emma Klein;Berlin;10115;28.05.2019;27.02.2026 11:30;8395,33;16,8 %;nein;"Neukunde 2025"
+182;Lukas Schneider;Oldenburg;26122;27.04.2023;09.01.2026 05:55;4639,32;6,1 %;nein;"Rechnung per Post; ""nicht per Mail"""
+183;Noah Fischer;Bremen;28195;21.08.2019;07.03.2026 22:57;7354,20;2,6 %;ja;"Stammkunde"
+184;Olga Becker;Oldenburg;26122;15.01.2022;28.07.2026 05:23;7807,76;3,0 %;ja;
+185;David Weber;Bremen;28195;04.10.2024;22.01.2026 00:47;9546,30;16,7 %;ja;
+186;Jonas Schneider;Hamburg;20095;05.11.2023;06.04.2026 13:13;1023,77;16,1 %;ja;
+187;Noah Müller;Hannover;30159;10.09.2024;05.05.2026 10:52;3091,89;14,2 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+188;Uwe Richter;Bremen;28195;07.02.2022;28.07.2026 08:26;3143,51;3,2 %;nein;
+189;Greta Müller;Berlin;10115;26.01.2022;06.03.2026 03:57;712,41;12,7 %;ja;"Rechnung per Post; ""nicht per Mail"""
+190;Noah Klein;Köln;50667;29.10.2024;29.05.2026 22:13;3144,46;5,1 %;nein;
+191;Olga Hoffmann;Bremen;28195;26.12.2021;01.04.2026 18:01;2208,78;6,7 %;ja;
+192;Ben Weber;Oldenburg;26122;01.01.2023;18.09.2026 12:10;175,14;16,4 %;ja;
+193;Clara Fischer;Köln;50667;19.07.2024;12.06.2026 21:02;3144,83;9,7 %;ja;
+194;Greta Weber;Bremen;28195;25.02.2020;24.04.2026 21:32;226,92;0,5 %;ja;
+195;Ben Weber;Berlin;10115;15.03.2024;10.07.2026 17:16;1226,20;6,3 %;ja;
+196;Sven Schulz;Hannover;30159;14.07.2024;02.08.2026 15:41;2986,86;2,2 %;ja;
+197;Mia Richter;Berlin;10115;18.07.2021;23.02.2026 22:25;5388,68;7,1 %;nein;
+198;Katja Richter;Münster;48143;22.11.2024;14.01.2026 12:23;104,09;14,0 %;nein;"Neukunde 2025"
+199;Lukas Fischer;Berlin;10115;06.08.2022;25.10.2026 01:57;1944,20;5,8 %;nein;"Stammkunde"
+200;Anna Fischer;Köln;50667;17.02.2019;14.05.2026 00:27;1202,24;5,8 %;ja;"Rechnung per Post; ""nicht per Mail"""
+201;Ben Schulz;Hannover;30159;15.06.2023;11.10.2026 01:51;18398,75;16,5 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+202;Tina Hoffmann;Hamburg;20095;13.05.2020;09.07.2026 18:29;2110,45;1,1 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+203;Clara Richter;Hannover;30159;22.05.2020;06.07.2026 14:42;1113,47;7,3 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+204;Sven Weber;Berlin;10115;04.02.2024;11.08.2026 09:50;4780,73;7,0 %;nein;"Neukunde 2025"
+205;Mia Müller;Hannover;30159;25.06.2022;12.01.2026 14:33;1595,85;9,2 %;nein;
+206;Anna Schneider;Bremen;28195;04.09.2021;29.04.2026 06:44;3678,30;5,1 %;ja;"Rechnung per Post; ""nicht per Mail"""
+207;David Hoffmann;Münster;48143;26.11.2022;10.06.2026 12:39;5520,37;15,0 %;ja;"Neukunde 2025"
+208;Rosa Schmidt;Köln;50667;24.09.2020;02.06.2026 01:37;1853,87;12,2 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+209;Ida Wolf;Hamburg;20095;05.06.2020;31.05.2026 17:08;10001,77;9,0 %;ja;"Stammkunde"
+210;Uwe Wagner;Hannover;30159;27.01.2024;10.09.2026 12:24;2237,57;5,3 %;nein;
+211;Mia Schulz;Oldenburg;26122;08.08.2024;19.05.2026 22:22;2618,96;5,5 %;ja;"Stammkunde"
+212;Ida Schulz;Oldenburg;26122;14.09.2022;29.04.2026 05:59;;17,5 %;nein;
+213;Lukas Müller;Hamburg;20095;06.01.2025;09.10.2026 22:47;1174,37;7,9 %;nein;
+214;Tina Schneider;Hannover;30159;12.02.2019;04.09.2026 15:08;1035,80;7,4 %;ja;
+215;Clara Schneider;Hannover;30159;16.06.2024;27.05.2026 13:35;2206,60;17,9 %;nein;"Neukunde 2025"
+216;Rosa Wagner;Hamburg;20095;10.02.2023;28.01.2026 16:07;10533,13;2,0 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+217;Tina Schulz;Münster;48143;02.04.2022;25.10.2026 11:44;3115,78;3,4 %;ja;"Stammkunde"
+218;Mia Wolf;Hamburg;20095;23.06.2019;10.09.2026 04:30;1356,76;5,5 %;ja;
+219;Noah Schulz;Münster;48143;05.03.2019;01.09.2026 14:00;9626,44;15,7 %;ja;"Stammkunde"
+220;Paul Wolf;Bremen;28195;04.10.2020;09.07.2026 02:03;5157,19;1,8 %;nein;"Stammkunde"
+221;Hans Meyer;Münster;48143;30.10.2023;22.10.2026 00:10;15056,55;12,3 %;nein;"Neukunde 2025"
+222;Olga Schulz;Bremen;28195;15.05.2019;08.04.2026 09:40;16754,94;17,1 %;nein;
+223;Hans Fischer;Oldenburg;26122;12.08.2019;22.03.2026 10:48;17429,36;17,3 %;ja;
+224;Uwe Weber;Oldenburg;26122;14.10.2020;03.08.2026 01:15;7918,03;16,2 %;nein;
+225;Paul Müller;Oldenburg;26122;22.09.2021;04.09.2026 22:10;1424,13;4,0 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+226;Lukas Schmidt;Oldenburg;26122;11.12.2020;04.03.2026 04:49;2146,30;17,5 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+227;Mia Fischer;Münster;48143;29.04.2023;03.05.2026 14:58;2451,68;2,2 %;nein;"Neukunde 2025"
+228;Emma Schmidt;Hamburg;20095;11.11.2022;28.03.2026 16:27;2518,33;0,5 %;ja;"Stammkunde"
+229;Lukas Fischer;Hamburg;20095;09.02.2025;15.10.2026 00:56;844,12;15,1 %;nein;"Rechnung per Post; ""nicht per Mail"""
+230;Ida Schulz;Hannover;30159;02.05.2021;19.04.2026 13:26;16622,57;4,1 %;nein;
+231;Clara Hoffmann;Münster;48143;16.02.2023;14.07.2026 23:56;878,15;3,8 %;nein;
+232;Felix Klein;Köln;50667;26.04.2023;11.01.2026 18:55;5928,84;5,6 %;ja;
+233;Emma Wolf;Hamburg;20095;10.02.2021;30.08.2026 15:11;5454,70;12,9 %;nein;
+234;Felix Müller;Hamburg;20095;28.12.2022;28.05.2026 04:46;10031,06;11,3 %;nein;"Stammkunde"
+235;Uwe Richter;Köln;50667;10.12.2022;31.05.2026 13:05;404,26;1,8 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+236;Felix Schulz;Köln;50667;15.06.2019;28.05.2026 15:59;1316,20;6,9 %;ja;
+237;David Wolf;Münster;48143;01.08.2024;19.09.2026 06:02;5052,84;12,1 %;nein;"Neukunde 2025"
+238;Clara Wagner;Oldenburg;26122;13.07.2019;31.03.2026 08:05;4250,83;5,7 %;nein;"Neukunde 2025"
+239;Rosa Richter;Köln;50667;23.06.2021;13.04.2026 16:51;3226,69;17,1 %;nein;
+240;Greta Müller;Münster;48143;11.08.2019;04.09.2026 16:06;5735,69;9,2 %;nein;"Stammkunde"
+241;Clara Fischer;Bremen;28195;16.02.2025;01.03.2026 22:23;3329,21;1,1 %;nein;"Neukunde 2025"
+242;Olga Schneider;Bremen;28195;13.07.2020;08.09.2026 04:23;;4,3 %;nein;"Rechnung per Post; ""nicht per Mail"""
+243;David Hoffmann;Köln;50667;11.05.2022;18.02.2026 21:39;6946,30;10,1 %;nein;"Neukunde 2025"
+244;David Richter;Berlin;10115;24.11.2020;04.09.2026 19:56;6522,89;8,3 %;nein;
+245;Felix Meyer;Oldenburg;26122;16.01.2023;27.06.2026 12:03;1781,11;12,6 %;nein;
+246;Paul Wagner;Hannover;30159;26.01.2023;16.04.2026 17:44;4993,71;12,9 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+247;Clara Schneider;Bremen;28195;02.02.2025;28.04.2026 12:02;6201,52;16,8 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+248;Jonas Richter;Oldenburg;26122;08.06.2023;23.02.2026 04:13;1859,30;11,5 %;nein;"Stammkunde"
+249;Ida Fischer;Hannover;30159;25.01.2021;25.08.2026 00:14;7354,20;6,6 %;ja;"Neukunde 2025"
+250;Uwe Schulz;Oldenburg;26122;15.03.2020;26.07.2026 17:22;1009,85;7,6 %;ja;"Stammkunde"
+251;Paul Fischer;Bremen;28195;20.07.2021;01.03.2026 21:53;455,29;7,2 %;ja;
+252;Rosa Richter;Köln;50667;06.03.2023;02.01.2026 08:29;10806,55;2,6 %;nein;
+253;Tina Koch;Hamburg;20095;14.09.2019;10.06.2026 01:21;323,96;6,8 %;nein;
+254;Uwe Schulz;Münster;48143;11.03.2021;21.06.2026 00:46;936,50;8,3 %;ja;"Stammkunde"
+255;Paul Koch;Berlin;10115;03.09.2019;21.09.2026 11:38;6987,69;5,3 %;ja;
+256;Tina Meyer;Hamburg;20095;07.11.2022;13.07.2026 10:44;479,43;8,1 %;nein;
+257;Greta Hoffmann;Hamburg;20095;10.12.2024;29.03.2026 19:14;3650,49;2,1 %;ja;"Stammkunde"
+258;Olga Fischer;Bremen;28195;04.11.2021;25.08.2026 20:56;584,68;4,5 %;ja;
+259;Rosa Hoffmann;Köln;50667;03.10.2024;03.08.2026 14:00;6973,45;12,2 %;ja;
+260;Clara Schneider;Köln;50667;11.10.2024;07.02.2026 12:06;2343,88;9,8 %;nein;"Rechnung per Post; ""nicht per Mail"""
+261;David Richter;Berlin;10115;24.08.2019;28.05.2026 13:19;1351,51;0,3 %;ja;"Rechnung per Post; ""nicht per Mail"""
+262;David Fischer;Hannover;30159;26.12.2019;15.08.2026 11:52;1932,82;15,1 %;nein;
+263;Katja Klein;Münster;48143;19.11.2024;11.05.2026 07:09;4617,23;10,9 %;ja;
+264;Anna Becker;Oldenburg;26122;20.09.2021;04.04.2026 00:44;1214,42;0,4 %;ja;
+265;Ida Becker;Oldenburg;26122;24.11.2021;09.03.2026 18:54;25195,52;15,1 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+266;Uwe Wolf;Oldenburg;26122;03.11.2022;25.02.2026 06:52;2844,33;0,6 %;nein;
+267;Rosa Fischer;Berlin;10115;02.05.2024;27.02.2026 23:06;5768,80;4,1 %;nein;
+268;Lukas Meyer;Bremen;28195;28.06.2019;19.03.2026 07:04;1124,02;8,4 %;ja;
+269;Emma Weber;Hamburg;20095;03.06.2024;02.05.2026 20:36;1500,11;15,8 %;nein;
+270;Ben Hoffmann;Hamburg;20095;18.09.2019;02.07.2026 09:04;12602,78;10,3 %;ja;"Stammkunde"
+271;Hans Wolf;Berlin;10115;27.03.2021;10.10.2026 05:55;2153,86;1,8 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+272;Sven Richter;Köln;50667;23.10.2019;22.04.2026 00:21;11234,10;6,5 %;nein;"Rechnung per Post; ""nicht per Mail"""
+273;Hans Klein;Hamburg;20095;05.09.2019;14.09.2026 17:36;1893,38;17,8 %;ja;
+274;Tina Schmidt;Hamburg;20095;09.09.2020;19.02.2026 17:03;5133,67;7,1 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+275;Greta Schulz;Hamburg;20095;17.06.2022;03.04.2026 03:02;7732,37;16,9 %;ja;"Neukunde 2025"
+276;Katja Schneider;Münster;48143;02.01.2021;22.04.2026 02:27;900,95;7,7 %;nein;
+277;Mia Becker;Hamburg;20095;16.02.2025;09.01.2026 17:36;11002,01;4,3 %;ja;
+278;Clara Schmidt;Münster;48143;03.03.2022;03.07.2026 01:48;4221,31;13,2 %;nein;"Stammkunde"
+279;Greta Meyer;Köln;50667;13.07.2020;03.01.2026 04:07;836,52;15,8 %;nein;"Neukunde 2025"
+280;Noah Klein;Berlin;10115;21.04.2019;25.08.2026 14:27;2790,19;14,4 %;ja;"Stammkunde"
+281;Anna Meyer;Oldenburg;26122;02.10.2022;10.10.2026 20:26;2903,10;4,6 %;nein;
+282;Emma Hoffmann;Oldenburg;26122;28.08.2023;12.08.2026 20:55;32933,54;2,8 %;ja;
+283;Uwe Schulz;Hamburg;20095;21.01.2023;04.06.2026 10:15;1188,27;15,6 %;nein;"Stammkunde"
+284;Sven Richter;Bremen;28195;22.11.2021;24.10.2026 12:04;16085,35;14,0 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+285;David Koch;Münster;48143;13.02.2022;12.05.2026 21:34;6280,43;2,4 %;nein;
+286;Sven Hoffmann;Bremen;28195;23.07.2021;27.05.2026 06:37;5074,79;0,5 %;ja;"Stammkunde"
+287;Felix Hoffmann;Münster;48143;14.01.2021;05.04.2026 16:09;11026,84;2,7 %;ja;"Stammkunde"
+288;Mia Becker;Hamburg;20095;20.09.2021;11.06.2026 02:23;18334,41;11,5 %;ja;"Neukunde 2025"
+289;Mia Koch;Hamburg;20095;19.04.2019;09.02.2026 14:00;4945,86;4,1 %;ja;
+290;Noah Koch;Oldenburg;26122;28.10.2021;08.01.2026 21:26;1349,99;4,2 %;nein;"Rechnung per Post; ""nicht per Mail"""
+291;Jonas Schmidt;Hamburg;20095;04.08.2024;21.03.2026 04:45;1562,58;13,8 %;nein;"Stammkunde"
+292;Ben Klein;Oldenburg;26122;11.06.2024;02.04.2026 06:11;398,20;10,8 %;ja;
+293;Katja Koch;Berlin;10115;16.01.2023;18.01.2026 03:36;4883,04;3,0 %;nein;
+294;Uwe Fischer;Hamburg;20095;15.05.2019;02.08.2026 10:12;268,00;12,4 %;nein;
+295;Rosa Wagner;Köln;50667;05.03.2020;23.09.2026 13:46;172,11;2,2 %;ja;
+296;Paul Schmidt;Bremen;28195;06.07.2021;07.09.2026 21:02;3670,36;9,8 %;nein;
+297;Sven Weber;Bremen;28195;06.07.2021;24.09.2026 15:03;9545,27;5,9 %;nein;
+298;Emma Wagner;Köln;50667;08.08.2023;29.09.2026 16:15;5908,02;5,7 %;nein;
+299;Greta Koch;Hannover;30159;08.08.2020;20.08.2026 12:32;8771,72;11,0 %;ja;
+300;Tina Müller;Oldenburg;26122;18.05.2019;19.09.2026 04:05;1168,16;9,9 %;nein;"Neukunde 2025"
+301;Clara Wagner;Köln;50667;11.04.2024;06.07.2026 01:34;1547,65;6,8 %;nein;
+302;Paul Wolf;Münster;48143;12.08.2022;27.01.2026 13:06;5076,34;4,0 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+303;Rosa Schneider;Münster;48143;06.05.2024;28.07.2026 02:54;1614,53;16,7 %;nein;"Neukunde 2025"
+304;Lukas Wolf;Bremen;28195;06.12.2020;25.02.2026 20:11;9186,41;11,5 %;nein;
+305;Clara Weber;Oldenburg;26122;07.08.2023;26.02.2026 08:18;5496,82;6,6 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+306;Emma Müller;Hamburg;20095;02.01.2024;11.09.2026 09:08;401,40;13,2 %;ja;"Stammkunde"
+307;Sven Fischer;Hamburg;20095;25.06.2024;09.07.2026 21:53;6645,31;9,4 %;ja;
+308;Ida Wolf;Münster;48143;29.11.2021;22.01.2026 08:29;3814,34;9,8 %;nein;"Neukunde 2025"
+309;Lukas Müller;Oldenburg;26122;21.11.2024;20.08.2026 22:42;2940,44;2,3 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+310;Mia Wolf;Hannover;30159;12.02.2023;16.01.2026 12:50;5266,37;7,3 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+311;Olga Wagner;Münster;48143;23.02.2021;17.09.2026 12:38;3503,82;3,7 %;nein;
+312;Noah Wagner;Münster;48143;26.08.2023;01.07.2026 03:21;5523,89;10,1 %;nein;
+313;Greta Wagner;Bremen;28195;24.09.2019;10.06.2026 11:21;2384,07;13,6 %;ja;
+314;Clara Schulz;Köln;50667;19.04.2022;21.07.2026 23:36;1766,43;8,3 %;ja;
+315;Paul Wolf;Oldenburg;26122;28.07.2024;02.02.2026 11:08;6888,54;8,2 %;ja;"Rechnung per Post; ""nicht per Mail"""
+316;Greta Hoffmann;Münster;48143;08.09.2023;01.08.2026 22:34;948,79;0,9 %;ja;"Stammkunde"
+317;Rosa Wagner;Bremen;28195;16.01.2025;11.04.2026 08:04;3106,78;6,9 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+318;Lukas Becker;Hamburg;20095;01.06.2022;01.04.2026 19:37;7375,40;3,6 %;nein;
+319;Anna Hoffmann;Köln;50667;01.08.2020;14.05.2026 11:46;10240,02;8,2 %;ja;
+320;Tina Schulz;Hannover;30159;18.08.2022;14.01.2026 04:34;366,65;5,2 %;nein;"Rechnung per Post; ""nicht per Mail"""
+321;Paul Schneider;Hannover;30159;28.12.2023;16.03.2026 13:21;2107,53;0,9 %;ja;
+322;Sven Wolf;Köln;50667;17.04.2025;26.09.2026 17:44;9235,87;12,1 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+323;Emma Wolf;Bremen;28195;27.04.2021;08.07.2026 06:54;1859,51;4,6 %;ja;
+324;Emma Weber;Köln;50667;30.06.2020;16.01.2026 12:52;936,08;13,6 %;nein;"Neukunde 2025"
+325;Jonas Fischer;Hamburg;20095;25.02.2025;20.03.2026 11:01;13212,02;0,6 %;ja;
+326;Lukas Schmidt;Bremen;28195;17.03.2024;24.02.2026 13:17;;12,2 %;ja;
+327;Clara Fischer;Köln;50667;17.11.2024;11.07.2026 23:11;614,03;0,3 %;nein;
+328;Hans Schulz;Hamburg;20095;25.05.2022;06.08.2026 23:27;5707,88;3,6 %;nein;
+329;Katja Richter;Oldenburg;26122;17.02.2020;01.01.2026 19:28;4068,19;6,0 %;nein;
+330;Uwe Wagner;Bremen;28195;25.03.2020;15.10.2026 03:15;6467,03;13,4 %;nein;
+331;Lukas Schmidt;Oldenburg;26122;19.05.2019;15.01.2026 18:07;3065,41;11,6 %;nein;"Stammkunde"
+332;Ida Schmidt;Köln;50667;02.11.2020;12.05.2026 04:48;397,54;15,7 %;ja;
+333;Tina Hoffmann;Bremen;28195;24.04.2020;26.02.2026 01:35;2934,39;2,1 %;ja;
+334;Sven Hoffmann;Münster;48143;15.11.2021;14.05.2026 22:00;9735,81;10,0 %;ja;"Stammkunde"
+335;Hans Schmidt;Oldenburg;26122;03.03.2019;08.02.2026 20:05;15293,75;14,2 %;ja;"Rechnung per Post; ""nicht per Mail"""
+336;Tina Fischer;Bremen;28195;18.12.2021;12.01.2026 14:11;2035,18;2,0 %;ja;
+337;Felix Wolf;Bremen;28195;02.10.2024;17.09.2026 02:58;883,82;1,8 %;nein;"Rechnung per Post; ""nicht per Mail"""
+338;Noah Klein;Hamburg;20095;11.12.2019;23.10.2026 10:42;9879,73;3,3 %;nein;"Neukunde 2025"
+339;Emma Fischer;Oldenburg;26122;27.12.2019;15.10.2026 11:00;488,57;12,2 %;ja;"Stammkunde"
+340;Uwe Koch;Bremen;28195;18.09.2022;16.09.2026 07:49;8583,71;9,0 %;ja;"Neukunde 2025"
+341;Paul Koch;Bremen;28195;26.07.2019;14.05.2026 10:45;5409,57;12,9 %;nein;"Neukunde 2025"
+342;Rosa Weber;Bremen;28195;28.11.2021;10.09.2026 21:27;47055,00;14,4 %;ja;"Stammkunde"
+343;Paul Schulz;Oldenburg;26122;29.10.2021;01.10.2026 15:50;6846,69;3,6 %;ja;
+344;Clara Fischer;Hannover;30159;06.06.2023;17.10.2026 06:59;8586,63;6,2 %;nein;
+345;Paul Wagner;Köln;50667;14.10.2023;17.10.2026 00:53;1760,44;10,9 %;nein;
+346;Uwe Müller;Münster;48143;11.05.2022;16.06.2026 21:33;685,26;1,5 %;nein;
+347;Ben Wagner;Hamburg;20095;27.12.2019;10.04.2026 00:07;2042,24;4,4 %;ja;"Rechnung per Post; ""nicht per Mail"""
+348;Katja Hoffmann;Hannover;30159;16.01.2022;02.05.2026 10:50;11551,86;4,0 %;ja;
+349;Sven Richter;Berlin;10115;26.10.2020;23.05.2026 16:03;1901,18;4,5 %;nein;"Neukunde 2025"
+350;Lukas Weber;Bremen;28195;03.11.2021;31.08.2026 22:17;2151,16;6,0 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+351;David Hoffmann;Münster;48143;02.09.2019;27.08.2026 15:59;2964,35;17,6 %;nein;
+352;Katja Becker;Hannover;30159;28.06.2022;01.10.2026 18:59;;10,9 %;ja;
+353;Sven Müller;Oldenburg;26122;16.01.2022;22.02.2026 22:53;664,60;17,7 %;nein;"Rechnung per Post; ""nicht per Mail"""
+354;Ida Meyer;Münster;48143;28.07.2023;25.08.2026 13:17;5008,95;17,5 %;ja;"Neukunde 2025"
+355;Rosa Schneider;Berlin;10115;23.07.2024;18.01.2026 22:15;6967,13;2,5 %;nein;
+356;Paul Fischer;Oldenburg;26122;04.05.2022;20.05.2026 18:26;6748,82;12,5 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+357;Greta Schulz;Hannover;30159;10.07.2023;09.02.2026 19:27;5099,16;5,8 %;nein;
+358;Ida Wagner;Münster;48143;31.07.2023;21.08.2026 07:10;903,73;9,6 %;nein;
+359;Lukas Weber;Köln;50667;09.06.2023;13.07.2026 01:28;813,03;0,2 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+360;Felix Koch;Oldenburg;26122;24.02.2025;05.02.2026 10:23;13191,48;7,4 %;ja;
+361;Paul Klein;Köln;50667;27.04.2020;10.10.2026 08:38;947,88;14,2 %;nein;"Neukunde 2025"
+362;Katja Koch;Hamburg;20095;30.01.2021;17.09.2026 14:57;13330,58;9,4 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+363;Emma Schneider;Hannover;30159;01.10.2019;03.07.2026 03:43;1237,11;3,9 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+364;Emma Koch;Köln;50667;04.09.2021;02.07.2026 14:03;1111,45;0,6 %;nein;
+365;Hans Weber;Münster;48143;31.01.2022;17.09.2026 13:44;380,49;14,8 %;ja;"Rückruf erbeten;
+Telefon vormittags"
+366;Olga Koch;Hamburg;20095;19.11.2019;12.05.2026 07:14;462,46;2,2 %;ja;"Neukunde 2025"
+367;Olga Schmidt;Hannover;30159;31.01.2022;03.07.2026 14:31;;10,0 %;nein;
+368;Tina Hoffmann;Bremen;28195;19.04.2022;18.08.2026 12:12;3213,93;10,0 %;ja;"Rechnung per Post; ""nicht per Mail"""
+369;Tina Schmidt;Bremen;28195;09.12.2020;11.01.2026 15:55;6642,46;6,7 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+370;Sven Meyer;Hannover;30159;28.09.2024;03.08.2026 16:36;1780,98;15,9 %;nein;
+371;Uwe Fischer;Oldenburg;26122;11.05.2024;29.07.2026 21:41;840,69;12,3 %;ja;
+372;Greta Klein;Hannover;30159;09.11.2020;14.04.2026 05:13;5066,21;16,2 %;ja;
+373;Uwe Richter;Berlin;10115;23.12.2021;15.03.2026 13:52;4361,87;17,5 %;ja;
+374;Felix Schulz;Oldenburg;26122;20.12.2022;17.03.2026 04:55;1162,77;11,5 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+375;Katja Schmidt;Hamburg;20095;06.06.2022;08.02.2026 15:46;199,56;14,5 %;ja;
+376;Rosa Schulz;Hamburg;20095;14.04.2024;27.06.2026 06:54;8621,15;14,8 %;nein;"Stammkunde"
+377;Rosa Wagner;Münster;48143;12.05.2023;18.03.2026 12:47;1335,83;16,9 %;nein;"Rechnung per Post; ""nicht per Mail"""
+378;Ben Fischer;Bremen;28195;24.11.2023;19.02.2026 01:25;7460,93;0,5 %;ja;
+379;Greta Meyer;Berlin;10115;17.08.2022;04.05.2026 13:25;;8,7 %;nein;"Rechnung per Post; ""nicht per Mail"""
+380;Tina Richter;Oldenburg;26122;06.02.2020;04.08.2026 14:10;2288,34;16,6 %;ja;
+381;Paul Richter;Berlin;10115;11.04.2024;03.03.2026 20:30;1676,30;12,8 %;nein;"Rechnung per Post; ""nicht per Mail"""
+382;Hans Müller;Münster;48143;03.08.2020;13.02.2026 10:31;20438,96;1,1 %;nein;"Rechnung per Post; ""nicht per Mail"""
+383;Ben Becker;Münster;48143;07.07.2021;20.08.2026 03:05;10697,22;4,4 %;ja;"Rechnung per Post; ""nicht per Mail"""
+384;Anna Becker;Hannover;30159;11.09.2021;22.03.2026 06:48;3832,55;7,4 %;ja;
+385;Mia Müller;Berlin;10115;31.01.2020;10.03.2026 09:29;713,64;11,1 %;ja;"Neukunde 2025"
+386;Sven Schulz;Berlin;10115;02.05.2019;22.07.2026 17:28;4047,95;10,1 %;nein;
+387;David Schulz;Hannover;30159;14.06.2023;02.09.2026 12:41;8819,31;2,2 %;ja;"Rechnung per Post; ""nicht per Mail"""
+388;Ida Weber;Münster;48143;29.10.2024;09.05.2026 16:26;4304,98;4,3 %;nein;
+389;Clara Müller;Berlin;10115;26.04.2022;24.02.2026 03:41;;6,0 %;ja;"Rechnung per Post; ""nicht per Mail"""
+390;Ben Richter;Köln;50667;26.05.2021;09.07.2026 16:55;19527,12;3,8 %;ja;
+391;Jonas Wolf;Köln;50667;07.07.2020;07.06.2026 04:09;4093,05;4,6 %;nein;"Stammkunde"
+392;Katja Weber;Oldenburg;26122;21.08.2022;20.05.2026 12:31;755,38;17,7 %;ja;
+393;Sven Schneider;Oldenburg;26122;17.08.2023;16.07.2026 03:42;729,27;13,9 %;ja;"Neukunde 2025"
+394;Rosa Müller;Oldenburg;26122;08.07.2022;05.06.2026 01:42;4352,98;9,7 %;ja;
+395;Anna Richter;Hannover;30159;26.10.2024;09.09.2026 11:31;12274,19;11,7 %;nein;"Rechnung per Post; ""nicht per Mail"""
+396;Hans Meyer;Hannover;30159;29.04.2020;06.03.2026 12:20;5120,92;3,0 %;nein;"Rückruf erbeten;
+Telefon vormittags"
+397;Uwe Schmidt;Oldenburg;26122;11.01.2020;09.09.2026 23:20;20453,00;11,1 %;nein;"Stammkunde"
+398;David Richter;Hamburg;20095;16.11.2019;24.01.2026 14:43;7578,92;1,3 %;nein;
+399;Felix Becker;Köln;50667;21.09.2024;08.09.2026 15:48;1162,12;4,6 %;ja;
+400;Greta Klein;Berlin;10115;01.03.2024;05.05.2026 23:27;1955,83;7,0 %;nein;"Rechnung per Post; ""nicht per Mail"""

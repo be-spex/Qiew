@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=Dirq
+GenericName=Diff Viewer
+GenericName[de]=Diff-Viewer
+Comment=Diff and patch viewer, read-only – by be-spex
+Comment[de]=Diff- und Patch-Viewer, nur lesend – by be-spex
+Keywords=diff;patch;changes;git;compare;viewer;be-spex;bespex;spex;
+Keywords[de]=diff;patch;änderungen;git;vergleich;betrachter;be-spex;bespex;spex;
+Exec=dirq %f
+TryExec=dirq
+Icon=dirq
+Terminal=false
+Categories=Utility;Viewer;TextTools;Development;
+MimeType=text/x-patch;text/x-diff;
+StartupWMClass=dirq

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Orders of a small shop: namespaces, attributes, CDATA and mixed content -->
+<shop:orders xmlns:shop="https://example.org/shop" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" currency="EUR">
+  <shop:order id="1001" status="shipped" date="2026-11-02">
+    <shop:customer>
+      <shop:name>Anna Müller</shop:name>
+      <shop:email>anna@example.org</shop:email>
+    </shop:customer>
+    <shop:items>
+      <shop:item sku="A-1" qty="2" price="19.90">Notebook, <b>lined</b>, A5</shop:item>
+      <shop:item sku="B-7" qty="1" price="80.70">Desk lamp</shop:item>
+    </shop:items>
+    <shop:note><![CDATA[Leave at the door if <nobody> is home & ring twice.]]></shop:note>
+  </shop:order>
+  <shop:order id="1002" status="open" date="2026-11-09">
+    <shop:customer>
+      <shop:name>Ben Schmidt</shop:name>
+      <shop:email xsi:nil="true"/>
+    </shop:customer>
+    <shop:items>
+      <shop:item sku="C-3" qty="5" price="17.98">Pens (<i>blue</i>)</shop:item>
+    </shop:items>
+    <?fulfilment priority="low"?>
+  </shop:order>
+</shop:orders>

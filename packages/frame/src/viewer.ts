@@ -11,7 +11,8 @@ import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { getCurrentWebview } from "@tauri-apps/api/webview";
 import { setExportAvailable, setExportContent } from "./export";
-import { collapsedPaths, initFold, restoreFolds, setAllCollapsed } from "./fold";
+import { collapsedPaths, initFold, restoreFolds, setAllCollapsed, unfoldAround } from "./fold";
+import { onRevealRequest, revealElement, revealLaunchLine, revealTextLine } from "./launch";
 import { formatNumber, plural, type ViewResult } from "./fragment";
 import { docScrollTop, onDocScroll, setDocScrollTop } from "./scroll";
 import { closeSearch, initSearch, refreshSearch } from "./search";
@@ -113,6 +114,27 @@ export function initViewer(opts: ViewerOptions): () => string | null {
     refreshSearch();
   }
 
+  /**
+   * Shows line `n` of the file. The view is re-indented, so its lines are not
+   * the file's: the line is looked up by what it says (the same text, the
+   * same occurrence of it). Where the file is shown as written, lines match.
+   */
+  function revealLine(n: number) {
+    if (!current) return;
+    const raw = article.querySelector("pre.raw");
+    if (raw) return revealTextLine(raw, n);
+    const lines = current.content.split("\n");
+    const wanted = lines[n - 1]?.trim();
+    if (!wanted) return;
+    const nth = lines.slice(0, n - 1).filter((l) => l.trim() === wanted).length;
+    const same = [...article.querySelectorAll(".ln")].filter((el) => el.textContent?.trim() === wanted);
+    const hit = same[nth] ?? same[same.length - 1];
+    if (!hit) return;
+    unfoldAround(hit);
+    revealElement(hit);
+  }
+  onRevealRequest(revealLine);
+
   function showMessage(text: string, isError = false) {
     article.hidden = true;
     notice.hidden = true;
@@ -143,6 +165,7 @@ export function initViewer(opts: ViewerOptions): () => string | null {
       current = doc;
       render(doc, false);
       setDocScrollTop(scroll);
+      revealLaunchLine(revealLine);
     } catch (err) {
       current = null;
       showMessage(`Datei konnte nicht gelesen werden:\n${err}`, true);

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Names the files Maiqe shows: the system does not know them by itself. -->
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="text/vnd.mermaid">
+    <comment>Mermaid diagram</comment>
+    <comment xml:lang="de">Mermaid-Diagramm</comment>
+    <sub-class-of type="text/plain"/>
+    <glob pattern="*.mmd"/>
+    <glob pattern="*.mermaid"/>
+  </mime-type>
+</mime-info>

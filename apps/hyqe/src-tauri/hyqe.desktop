@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=Hyqe
+GenericName=HTML Viewer
+GenericName[de]=HTML-Viewer
+Comment=HTML viewer, read-only – by be-spex
+Comment[de]=HTML-Viewer, nur lesend – by be-spex
+Keywords=html;htm;page;report;preview;viewer;be-spex;bespex;spex;
+Keywords[de]=html;htm;seite;bericht;vorschau;betrachter;be-spex;bespex;spex;
+Exec=hyqe %f
+TryExec=hyqe
+Icon=hyqe
+Terminal=false
+Categories=Utility;Viewer;TextTools;Development;
+MimeType=text/html;application/xhtml+xml;
+StartupWMClass=hyqe

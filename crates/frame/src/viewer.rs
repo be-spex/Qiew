@@ -56,13 +56,13 @@ impl Viewer {
     }
 
     /// The file to show at startup: one handed over by the OS (macOS), else
-    /// the first non-flag CLI argument (double-click on Linux/Windows).
+    /// the one named on the command line (double-click on Linux/Windows).
     pub fn initial_file(&self) -> Option<String> {
         self.pending
             .lock()
             .unwrap()
             .take()
-            .or_else(|| std::env::args().skip(1).find(|a| !a.starts_with('-')))
+            .or_else(|| crate::launch::get().file.clone())
     }
 
     #[cfg_attr(not(target_os = "macos"), allow(dead_code))]
@@ -76,13 +76,17 @@ impl Viewer {
     /// up first (and by a fallback in [`crate::setup`]).
     pub fn show(&self, window: &WebviewWindow) {
         if !self.shown.swap(true, Ordering::SeqCst) {
-            window_layout::place_and_show(window, *self.width.lock().unwrap());
+            window_layout::place_and_show(window, *self.width.lock().unwrap(), crate::launch::get().placement);
         }
     }
 
     /// For documents with a width of their own: the window gets this content
     /// width (logical pixels) – when it is shown, or right away if it already is.
     pub fn set_width(&self, window: &WebviewWindow, width: f64) {
+        // A size given on the command line (`--geometry`) stands.
+        if crate::launch::get().placement.is_some_and(|p| p.size.is_some()) {
+            return;
+        }
         *self.width.lock().unwrap() = Some(width);
         if self.shown.load(Ordering::SeqCst) {
             window_layout::set_width(window, width);
