@@ -9,13 +9,13 @@ name: Release
 # workflow_dispatch only builds (artifacts, no release).
 on:
   push:
-    tags: ["marq-v*", "xaq-v*", "jayq-v*"]
+    tags: ["marq-v*", "xaq-v*", "jayq-v*", "tusq-v*"]
   workflow_dispatch:
     inputs:
       app:
         description: App to build
         type: choice
-        options: [marq, xaq, jayq]
+        options: [marq, xaq, jayq, tusq]
         required: true
 
 permissions:

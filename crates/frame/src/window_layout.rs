@@ -1,6 +1,7 @@
 //! Initial window placement: centred in the work area (without panels and
 //! taskbars) of the monitor under the mouse pointer, using 95 % of its height
-//! and a portrait reading width derived from that height.
+//! and a portrait reading width derived from that height – or the width an
+//! app asks for, where the document has a width of its own.
 
 use std::time::Duration;
 
@@ -34,8 +35,11 @@ fn frame_height(window: &WebviewWindow) -> u32 {
 /// Places the hidden window, shows it, and places it once more as soon as the
 /// window manager has added its frame: on X11 the title bar height is only
 /// known after mapping, so the first pass can only guess it as 0.
-pub fn place_and_show(window: &WebviewWindow) {
-    place(window);
+///
+/// `width` is the content width in logical pixels, if the app has one in
+/// mind; else the reading width is used.
+pub fn place_and_show(window: &WebviewWindow, width: Option<f64>) {
+    place(window, width);
     let _ = window.show();
 
     let window = window.clone();
@@ -44,14 +48,14 @@ pub fn place_and_show(window: &WebviewWindow) {
             std::thread::sleep(Duration::from_millis(20));
             if frame_height(&window) > 0 {
                 let w = window.clone();
-                let _ = window.run_on_main_thread(move || place(&w));
+                let _ = window.run_on_main_thread(move || place(&w, width));
                 return;
             }
         }
     });
 }
 
-fn place(window: &WebviewWindow) {
+fn place(window: &WebviewWindow, preferred: Option<f64>) {
     let Some(monitor) = target_monitor(window) else {
         let _ = window.center();
         return;
@@ -61,12 +65,36 @@ fn place(window: &WebviewWindow) {
 
     let outer_h = (area_h * HEIGHT_SHARE).round();
     let inner_h = outer_h - frame_height(window) as f64;
-    let width = (outer_h * ASPECT).min(area_w * MAX_WIDTH_SHARE).round();
+    let scale = window.scale_factor().unwrap_or(1.0);
+    let width = preferred.map_or(outer_h * ASPECT, |w| w * scale).min(area_w * MAX_WIDTH_SHARE).round();
 
     let _ = window.set_size(PhysicalSize::new(width as u32, inner_h as u32));
     let _ = window.set_position(PhysicalPosition::new(
         area.position.x + ((area_w - width) / 2.0) as i32,
         area.position.y + ((area_h - outer_h) / 2.0) as i32,
+    ));
+}
+
+/// Gives a window that is already shown another content width (logical
+/// pixels), keeping its height and centring it horizontally in the work area.
+pub fn set_width(window: &WebviewWindow, width: f64) {
+    if window.is_maximized().unwrap_or(false) || window.is_fullscreen().unwrap_or(false) {
+        return;
+    }
+    let (Some(monitor), Ok(position), Ok(size), Ok(outer)) =
+        (window.current_monitor().ok().flatten(), window.outer_position(), window.inner_size(), window.outer_size())
+    else {
+        return;
+    };
+    let area = monitor.work_area();
+    let area_w = area.size.width as f64;
+    let frame_w = outer.width.saturating_sub(size.width) as f64;
+    let width = (width * window.scale_factor().unwrap_or(1.0)).min(area_w * MAX_WIDTH_SHARE - frame_w).round();
+
+    let _ = window.set_size(PhysicalSize::new(width as u32, size.height));
+    let _ = window.set_position(PhysicalPosition::new(
+        area.position.x + ((area_w - width - frame_w) / 2.0) as i32,
+        position.y,
     ));
 }
 

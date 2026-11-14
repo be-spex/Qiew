@@ -1,0 +1,15 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Minimal rights for the viewer window: events, window theme, writing text to the clipboard, opening web links in the browser.",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:event:default",
+    "core:webview:default",
+    "core:window:allow-set-theme",
+    "opener:allow-open-url",
+    "clipboard-manager:allow-write-text"
+  ]
+}

@@ -27,6 +27,13 @@ node tools/screenshots/shoot.mjs --readme --site # also into apps/<app>/docs/ima
 - jq filters are not faked: they run in the real engine (`jayq --jq-worker`; set `JAYQ_BIN` to use a
   freshly built binary instead of the installed one).
 
+## Tusq
+
+`tools/screenshots/tusq.sh [--readme] [--site [dir]] [--out <dir>]` takes `tusq-light.png` and `tusq-dark.png`.
+Tusq is photographed as the real app on a virtual display (`xvfb-run`, `xdotool`, ImageMagick): what it
+shows runs in a frame served by its backend, which a browser alone cannot stand in for. Light and dark are
+the system's colour preference, which the demo component `demo/TrailStats.tsx` follows.
+
 ## Changing or adding an image
 
 - Content: edit the files in `demo/` – only invented data, nothing private.

@@ -1,4 +1,5 @@
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
+import { initAbout } from "./about";
 import { appId } from "./app";
 import { docScrollTop, onDocScroll } from "./scroll";
 import { VIEWS, applyView, effectiveView, onSystemThemeChange, saveView, storedView } from "./views";
@@ -8,8 +9,9 @@ const $ = (id: string) => document.getElementById(id)!;
 let source = ""; // text of the open document, for "Copy to Clipboard"
 
 function initViewMenu() {
-  const btn = $("view-btn");
-  const menu = $("view-menu");
+  const btn = document.getElementById("view-btn");
+  const menu = document.getElementById("view-menu");
+  if (!btn || !menu) return; // an app that takes its colours from the document has no menu
 
   const setOpen = (open: boolean) => {
     menu.hidden = !open;
@@ -92,6 +94,7 @@ export function initToolbar() {
   initViewMenu();
   initCopy();
   initScrollShadow();
+  initAbout();
 }
 
 /**

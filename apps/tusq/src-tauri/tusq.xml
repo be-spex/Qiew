@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Names the files Tusq shows, so that it can be offered under "Open with".
+     The weight puts *.tsx ahead of the Tiled tileset type that claims the same ending. -->
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="text/tsx">
+    <comment>TSX component</comment>
+    <comment xml:lang="de">TSX-Komponente</comment>
+    <sub-class-of type="text/plain"/>
+    <glob pattern="*.tsx" weight="60"/>
+  </mime-type>
+  <mime-type type="text/jsx">
+    <comment>JSX component</comment>
+    <comment xml:lang="de">JSX-Komponente</comment>
+    <sub-class-of type="text/plain"/>
+    <glob pattern="*.jsx" weight="60"/>
+  </mime-type>
+</mime-info>

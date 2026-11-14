@@ -11,6 +11,7 @@ publish = false
 tauri = { workspace = true }
 tauri-plugin-dialog = { workspace = true }
 tauri-plugin-updater = { workspace = true }
+tauri-plugin-opener = "2"
 serde = { workspace = true }
 notify = { workspace = true }
 encoding_rs = "0.8"

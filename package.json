@@ -1,7 +1,7 @@
 {
   "name": "qiew",
   "private": true,
-  "description": "Quick viewers: Marq (Markdown), Xaq (XML), Jayq (JSON)",
+  "description": "Quick viewers: Marq (Markdown), Xaq (XML), Jayq (JSON), Tusq (TSX/JSX)",
   "type": "module",
   "workspaces": [
     "apps/*",

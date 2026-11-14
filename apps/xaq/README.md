@@ -80,8 +80,9 @@ Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
 
 - **Open a file:** drag it onto the window, pass it on the command line (`xaq pom.xml`) or double-click it.
   Xaq handles `.xml`, `.wsdl`, `.xsd`, `.xsl` and `.xslt`; `.html` and `.xhtml` appear under "Open with"
-  only. On first start it asks whether it should be your default viewer for XML; later, run
-  `xaq --register-default`.
+  only. On first start it asks whether it should be your default viewer for XML, naming the app it would
+  replace; later, run `xaq --register-default`. Answering no also means it will not ask again; to be asked
+  once more, delete `~/.config/net.spex.xaq/default-handler-declined`.
 - **Fold:** click the triangle (or the `…` of a folded node); Alt+click folds the whole subtree. The toolbar
   expands or collapses everything (the root stays open).
 - **Search:** Ctrl+F, then ↑/↓, Enter/Shift+Enter or F3. Matches in folded nodes unfold them.

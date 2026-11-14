@@ -1,0 +1,31 @@
+{
+  "name": "tusq",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "runtime": "node runtime/build.mjs",
+    "dev": "node runtime/build.mjs && vite",
+    "build": "tsc && vite build && node runtime/build.mjs",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@qiew/frame": "*",
+    "@tailwindcss/browser": "^4.3.5",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-clipboard-manager": "^2.5.0",
+    "@tauri-apps/plugin-opener": "^2.7.3",
+    "lucide-react": "^1.73.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "recharts": "^3.10.1"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "~6.0.3",
+    "vite": "^8.0.16"
+  }
+}

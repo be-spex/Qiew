@@ -18,12 +18,16 @@ use tauri::{AppHandle, State, WebviewWindow};
 static INFO: AppInfo = AppInfo {
     name: "Xaq",
     bin: "xaq",
+    say: "Zack",
+    ipa: "zæk",
     generic_name: "XML Viewer",
     comment: "Read-only XML source viewer",
     categories: "Utility;Viewer;TextTools;Development;",
     mime_types: &["application/xml", "text/xml", "application/xslt+xml", "application/xsd"],
     open_with: &["application/xhtml+xml", "text/html"],
+    mime_definition: None,
     files: "XML-Dateien (.xml, .xsd, .xsl …)",
+    extensions: &[".xml", ".wsdl", ".xsd", ".xsl", ".xslt"],
 };
 
 /// Reads a file and starts watching it for changes.
@@ -88,7 +92,7 @@ pub fn run() {
         .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(Viewer::default())
-        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, read_text, save_text, set_wide])
+        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, read_text, save_text, set_wide, qiew_frame::about::about_info, qiew_frame::about::open_about_link])
         .setup(|app| {
             qiew_frame::setup(app, &INFO);
             Ok(())

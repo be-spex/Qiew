@@ -12,8 +12,10 @@ double-click, show it nicely, follow the file when it changes – and never writ
 | [Marq](apps/marq/README.md) | Markdown, rendered | links, images, back/forward |
 | [Xaq](apps/xaq/README.md) | XML source, pretty-printed and foldable | XSLT mapping view |
 | [Jayq](apps/jayq/README.md) | JSON source, pretty-printed and foldable | jq filter view |
+| [Tusq](apps/tusq/README.md) | TSX/JSX components, running | React, Tailwind, imports, error display |
 
-All of them: search (Ctrl+F), copy, four colour schemes, live reload, file association.
+All of them: copy, live reload, file association. Marq, Xaq and Jayq also search (Ctrl+F) and have four colour
+schemes; Tusq takes its colours and its width from the component.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="apps/jayq/docs/images/jayq-split-dark.png">
@@ -73,7 +75,7 @@ tools/screenshots/     takes the screenshots for the READMEs and the website
 
 The frame is what makes a new viewer cheap:
 
-- `packages/frame`: colour schemes (`views`), toolbar and copy (`toolbar`), search (`search`), page and
+- `packages/frame`: colour schemes (`views`), toolbar and copy (`toolbar`), About box (`about`), search (`search`), page and
   toolbar styles (`base.css`); for source views also the markup fragments (`fragment`), folding (`fold`),
   the viewer itself – open, drop, live reload, history – (`viewer`), the split view with editor and result
   (`split`) and their styles (`source.css`). An app adds its parser and highlighter.

@@ -17,12 +17,16 @@ use tauri::{AppHandle, State, WebviewWindow};
 static INFO: AppInfo = AppInfo {
     name: "Jayq",
     bin: "jayq",
+    say: "Jake",
+    ipa: "dʒeɪk",
     generic_name: "JSON Viewer",
     comment: "Read-only JSON source viewer with jq filters",
     categories: "Utility;Viewer;TextTools;Development;",
     mime_types: &["application/json", "application/x-ndjson", "application/geo+json"],
     open_with: &[],
+    mime_definition: None,
     files: "JSON-Dateien (.json, .jsonl, .geojson …)",
+    extensions: &[".json", ".jsonl", ".ndjson", ".geojson"],
 };
 
 /// Reads a file and starts watching it for changes.
@@ -96,7 +100,7 @@ pub fn run() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(Viewer::default())
         .manage(jq::Runner::default())
-        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, read_text, save_text, set_wide, run_jq])
+        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, read_text, save_text, set_wide, run_jq, qiew_frame::about::about_info, qiew_frame::about::open_about_link])
         .setup(|app| {
             qiew_frame::setup(app, &INFO);
             Ok(())

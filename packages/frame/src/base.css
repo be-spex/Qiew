@@ -311,3 +311,68 @@ body.searching #search-btn { color: var(--fg); background: var(--surface); }
 }
 .check { margin-left: auto; color: var(--accent); visibility: hidden; }
 .tb-item[aria-checked="true"] .check { visibility: visible; }
+
+/* ---------------------------------------------------------------------------
+   About box
+   --------------------------------------------------------------------------- */
+dialog.about {
+  width: min(430px, calc(100vw - 32px));
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--fg) 3%, var(--bg));
+  color: var(--fg);
+  box-shadow: 0 12px 40px rgb(0 0 0 / .28);
+  font: 13.5px/1.5 var(--sans);
+  user-select: none;
+  overflow: visible; /* the banner sticks out */
+}
+.about-say {
+  position: absolute;
+  top: -13px;
+  right: 18px;
+  margin: 0;
+  padding: 3px 11px;
+  border-radius: 7px;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  transform: rotate(3deg);
+  box-shadow: 0 2px 8px rgb(0 0 0 / .2);
+}
+.about-say span { font-weight: 500; opacity: .9; }
+dialog.about::backdrop { background: rgb(0 0 0 / .32); }
+.about-box { padding: 22px 24px 18px; }
+.about-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.about-head h2 { margin: 0; font-size: 20px; line-height: 1.2; }
+.about-version { margin-left: 8px; color: var(--muted); font-size: 13px; font-weight: 400; }
+.about-head p { margin: 6px 0 0; color: var(--muted); }
+.about-icon { flex: none; width: 56px; height: 56px; }
+dialog.about dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 16px;
+  margin: 18px 0;
+  padding: 14px 0;
+  border-block: 1px solid var(--border-soft);
+}
+dialog.about dt { color: var(--muted); }
+dialog.about dd { margin: 0; }
+.about-links { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.about-links a { color: var(--accent); text-decoration: none; }
+.about-links a:hover { text-decoration: underline; }
+.about-close {
+  display: block;
+  margin: 16px 0 0 auto;
+  padding: 6px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+}
+.about-close:hover { border-color: var(--muted); }
+.about-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }

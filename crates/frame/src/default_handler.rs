@@ -3,9 +3,14 @@
 //! XFCE …). The work is delegated to `xdg-mime`, which knows each desktop's
 //! quirks; afterwards the result is verified instead of assumed.
 //!
+//! Every app asks the same way, once: the dialog names the application that
+//! opens these files so far, and "no" also means "do not ask again". That
+//! answer is the file [`DECLINED_MARKER`] in the app's configuration directory
+//! (`~/.config/<identifier>/`); deleting it brings the question back.
+//!
 //! Only desktop configuration is written (`~/.config/mimeapps.list` via
-//! xdg-mime, a user-local `.desktop` entry if needed, a "declined" marker).
-//! The files themselves are never touched.
+//! xdg-mime, a user-local `.desktop` entry and MIME definition if needed, the
+//! marker). The files themselves are never touched.
 
 use std::env;
 use std::fs;
@@ -79,12 +84,55 @@ fn ensure_desktop_entry(info: &AppInfo) -> io::Result<String> {
     let user = user_entry(info);
     fs::write(dir.join(&user), entry)?;
     let _ = Command::new("update-desktop-database").arg(&dir).status();
+
+    // File types the system does not know by itself (the package brings the same definition).
+    if let Some(definition) = info.mime_definition {
+        let mime = data_home().join("mime");
+        fs::create_dir_all(mime.join("packages"))?;
+        fs::write(mime.join("packages").join(format!("{}.xml", info.bin)), definition)?;
+        let _ = Command::new("update-mime-database").arg(&mime).status();
+    }
     Ok(user)
 }
 
 fn current_default(mime: &str) -> Option<String> {
     let out = Command::new("xdg-mime").args(["query", "default", mime]).output().ok()?;
     Some(String::from_utf8_lossy(&out.stdout).trim().to_owned())
+}
+
+/// The name of an installed application, from its desktop entry.
+fn app_name(desktop_id: &str) -> Option<String> {
+    let system = env::var("XDG_DATA_DIRS").unwrap_or_else(|_| "/usr/local/share:/usr/share".into());
+    std::iter::once(data_home())
+        .chain(system.split(':').filter(|d| !d.is_empty()).map(PathBuf::from))
+        .find_map(|dir| fs::read_to_string(dir.join("applications").join(desktop_id)).ok())?
+        .lines()
+        .find_map(|line| line.strip_prefix("Name=").map(|name| name.trim().to_owned()))
+}
+
+/// The applications that open the app's files so far, by name.
+fn replaced(info: &AppInfo) -> Vec<String> {
+    let mut names: Vec<String> = Vec::new();
+    for mime in info.mime_types {
+        let Some(id) = current_default(mime).filter(|id| !id.is_empty()) else { continue };
+        if id == system_entry(info) || id == user_entry(info) {
+            continue;
+        }
+        let name = app_name(&id).unwrap_or_else(|| id.trim_end_matches(".desktop").to_owned());
+        if !names.contains(&name) {
+            names.push(name);
+        }
+    }
+    names
+}
+
+/// The question every app asks, with what saying yes replaces.
+fn question(info: &AppInfo) -> String {
+    let so_far = match replaced(info).as_slice() {
+        [] => "Die bisherige Standard-App für diese Dateien wird dadurch ersetzt.".to_owned(),
+        names => format!("Bisher ist dafür {} eingestellt; das wird dadurch ersetzt.", names.join(", ")),
+    };
+    format!("Soll {} {} künftig standardmäßig öffnen?\n\n{so_far}", info.name, info.files)
 }
 
 pub fn is_default(info: &AppInfo) -> bool {
@@ -135,7 +183,7 @@ pub fn offer(app: &AppHandle, info: &'static AppInfo) {
     std::thread::spawn(move || {
         let mut dialog = app
             .dialog()
-            .message(format!("Soll {} {} künftig standardmäßig öffnen?", info.name, info.files))
+            .message(question(info))
             .title(format!("{} als Standard festlegen", info.name))
             .kind(MessageDialogKind::Info)
             .buttons(MessageDialogButtons::OkCancelCustom("Ja".into(), "Nein, nicht mehr fragen".into()));

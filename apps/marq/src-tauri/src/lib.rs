@@ -14,12 +14,16 @@ use tauri::{AppHandle, Manager, State, WebviewWindow};
 static INFO: AppInfo = AppInfo {
     name: "Marq",
     bin: "marq",
+    say: "Marc",
+    ipa: "mɑːk",
     generic_name: "Markdown Viewer",
     comment: "Read-only Markdown viewer",
     categories: "Utility;Viewer;TextTools;",
     mime_types: &["text/markdown", "text/x-markdown"],
     open_with: &[],
+    mime_definition: None,
     files: "Markdown-Dateien (.md)",
+    extensions: &[".md", ".markdown"],
 };
 
 #[derive(Clone, Serialize)]
@@ -91,7 +95,7 @@ pub fn run() {
         .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(Viewer::default())
-        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window])
+        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, qiew_frame::about::about_info, qiew_frame::about::open_about_link])
         .setup(|app| {
             qiew_frame::setup(app, &INFO);
             Ok(())

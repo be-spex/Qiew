@@ -1,4 +1,4 @@
-//! The frame the Qiew viewers (Marq, Xaq, Jayq) are built on: everything
+//! The frame the Qiew viewers (Marq, Xaq, Jayq, Tusq) are built on: everything
 //! that does not depend on the kind of document shown.
 //!
 //! - [`Viewer`]: state of the one window – file watcher, the file handed over
@@ -8,7 +8,9 @@
 //! - [`default_handler`], [`migrate`] (Linux): file association, moving the
 //!   directories of an older identifier
 //! - [`updates`]: update check of the AppImage
+//! - [`about`]: what the About box shows
 
+pub mod about;
 #[cfg(target_os = "linux")]
 pub mod default_handler;
 #[cfg(target_os = "linux")]
@@ -30,6 +32,10 @@ pub struct AppInfo {
     pub name: &'static str,
     /// Binary, icon and window class, e.g. "xaq".
     pub bin: &'static str,
+    /// How to say the name: a word that sounds the same, and the phonetic
+    /// spelling (IPA, without slashes).
+    pub say: &'static str,
+    pub ipa: &'static str,
     /// Desktop entry: `GenericName`, `Comment` and `Categories`.
     pub generic_name: &'static str,
     pub comment: &'static str,
@@ -39,8 +45,13 @@ pub struct AppInfo {
     /// MIME types the app merely offers itself for ("Open with"), without
     /// ever becoming their default.
     pub open_with: &'static [&'static str],
+    /// shared-mime-info XML for file types the system does not know by itself
+    /// (installed along with a user-local desktop entry; a package ships it).
+    pub mime_definition: Option<&'static str>,
     /// The files in words, for dialogs: "XML-Dateien (.xml, .xsd, .xsl …)".
     pub files: &'static str,
+    /// The file endings the app is made for, for the About box: `[".xml", ".xsd"]`.
+    pub extensions: &'static [&'static str],
 }
 
 /// Handles `--register-default` (set up the file association without asking,
@@ -74,6 +85,7 @@ const SHOW_FALLBACK: Duration = Duration::from_secs(3);
 /// appears at its final size and position without flashing the light default
 /// or the drop target.
 pub fn setup(app: &App, info: &'static AppInfo) {
+    app.manage(info);
     if let Some(window) = app.get_webview_window("main") {
         std::thread::spawn(move || {
             std::thread::sleep(SHOW_FALLBACK);

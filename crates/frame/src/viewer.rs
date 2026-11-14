@@ -25,6 +25,8 @@ pub struct Viewer {
     pending: Mutex<Option<String>>,
     /// Window geometry before a split layout widened it.
     narrow: Mutex<Option<Geometry>>,
+    /// Content width the app asked for (logical pixels), instead of the reading width.
+    width: Mutex<Option<f64>>,
     /// The hidden start window has been placed and shown.
     shown: AtomicBool,
 }
@@ -66,7 +68,16 @@ impl Viewer {
     /// up first (and by a fallback in [`crate::setup`]).
     pub fn show(&self, window: &WebviewWindow) {
         if !self.shown.swap(true, Ordering::SeqCst) {
-            window_layout::place_and_show(window);
+            window_layout::place_and_show(window, *self.width.lock().unwrap());
+        }
+    }
+
+    /// For documents with a width of their own: the window gets this content
+    /// width (logical pixels) – when it is shown, or right away if it already is.
+    pub fn set_width(&self, window: &WebviewWindow, width: f64) {
+        *self.width.lock().unwrap() = Some(width);
+        if self.shown.load(Ordering::SeqCst) {
+            window_layout::set_width(window, width);
         }
     }
 

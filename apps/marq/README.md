@@ -69,9 +69,11 @@ Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
 
 - **Open a file:** drag it onto the window, pass it on the command line (`marq README.md`) or double-click
   it. Marq handles `.md` and `.markdown`. On first start it asks whether it should be your default viewer for
-  Markdown; later, run `marq --register-default` (uses `xdg-mime`; works on Cinnamon, KDE and GNOME).
-- **Toolbar:** back on the left, character and word count in the centre, search, copy and colour scheme on
-  the right.
+  Markdown, naming the app it would replace; later, run `marq --register-default` (uses `xdg-mime`; works on
+  Cinnamon, KDE and GNOME). Answering no also means it will not ask again; to be asked once more, delete
+  `~/.config/net.spex.marq/default-handler-declined`.
+- **Toolbar:** back on the left, character and word count in the centre, search, copy, colour scheme and
+  About on the right.
 - **Search:** Ctrl+F or the toolbar icon, then ↑/↓, Enter/Shift+Enter or F3; Esc closes.
 - **Back and forward:** Alt+←/→, the mouse buttons, the toolbar or the context menu.
 
