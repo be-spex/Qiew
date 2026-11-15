@@ -51,7 +51,7 @@ pub fn text(info: &AppInfo) -> String {
     }
     out += "  - Read-only: the file shown is never written to; the view follows it when it changes.\n";
 
-    out += &format!("\nMore: https://be-spex.github.io/{}/\n", info.bin);
+    out += &format!("\nMore: https://bespex.github.io/{}/\n", info.bin);
     out
 }
 

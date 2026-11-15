@@ -4,7 +4,7 @@ A document with the things Markdown files usually contain. Use **Ctrl+F** to sea
 
 ## Text
 
-Plain paragraphs with *emphasis*, **strong text**, ~~strikethrough~~, `inline code` and a [link to the be spex website](https://be-spex.github.io). Anchors work too: jump to [the table](#table).
+Plain paragraphs with *emphasis*, **strong text**, ~~strikethrough~~, `inline code` and a [link to the be spex website](https://bespex.github.io). Anchors work too: jump to [the table](#table).
 
 > A quote can carry a thought – or a warning.
 >

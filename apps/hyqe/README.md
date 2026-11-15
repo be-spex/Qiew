@@ -6,7 +6,7 @@ Hyqe shows an HTML file the way a browser would – styles, scripts and images n
 blink and is nothing more than a viewer: a report, a dashboard or a prototype an AI assistant wrote. One click
 switches to the (coloured) source.
 
-say “HY-kuh” /ˈhaɪkə/ · part of [Qiew](../../README.md) and [be spex](https://be-spex.github.io) – small, focused apps for Linux
+say “HY-kuh” /ˈhaɪkə/ · part of [Qiew](../../README.md) and [be spex](https://bespex.github.io) – small, focused apps for Linux
 
 ## Install
 
@@ -15,7 +15,7 @@ say “HY-kuh” /ˈhaɪkə/ · part of [Qiew](../../README.md) and [be spex](ht
 Once, add the be spex repository:
 
 ```sh
-curl -fsSLO https://be-spex.github.io/packages/be-spex-archive-keyring.deb
+curl -fsSLO https://bespex.github.io/packages/be-spex-archive-keyring.deb
 sudo apt install ./be-spex-archive-keyring.deb && sudo apt update
 ```
 
@@ -29,7 +29,7 @@ Updates arrive with `sudo apt upgrade`.
 
 ### AppImage
 
-Download `Hyqe_*_amd64.AppImage` from the [latest Hyqe release](https://github.com/be-spex/Qiew/releases?q=hyqe-v),
+Download `Hyqe_*_amd64.AppImage` from the [latest Hyqe release](https://github.com/bespex/Qiew/releases?q=hyqe-v),
 make it executable (`chmod +x Hyqe_*_amd64.AppImage`) and start it.
 
 Hyqe updates itself: it checks for a newer version and offers to replace the AppImage in place. That update
@@ -82,7 +82,7 @@ apps/hyqe/run.sh apps/hyqe/example.html
 
 ## Working with CodeDeck
 
-Hyqe stays a program of its own; [CodeDeck](https://github.com/be-spex) uses it the way it uses any viewer. The
+Hyqe stays a program of its own; [CodeDeck](https://github.com/bespex) uses it the way it uses any viewer. The
 common part (`--line`, `--geometry`, standard input, `--reuse`) is described in the [Qiew README](../../README.md#working-with-codedeck).
 
 ## License

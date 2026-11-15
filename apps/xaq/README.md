@@ -6,7 +6,7 @@ Xaq (read: Zack) shows XML the way you wish it had been written: re-indented, sy
 whatever the file looked like. Need a different shape? Run an XSLT on it in the mapping view. It is a
 read-only viewer: nothing is rendered or executed except an XSLT you run yourself.
 
-**Website:** https://be-spex.github.io/xaq/ · part of [be spex](https://be-spex.github.io) – small, focused apps for Linux
+**Website:** https://bespex.github.io/xaq/ · part of [be spex](https://bespex.github.io) – small, focused apps for Linux
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/xaq-dark.png">
@@ -27,7 +27,7 @@ The mapping view: the XML, your XSLT and the result side by side.
 Once, add the be spex repository:
 
 ```sh
-curl -fsSLO https://be-spex.github.io/packages/be-spex-archive-keyring.deb
+curl -fsSLO https://bespex.github.io/packages/be-spex-archive-keyring.deb
 sudo apt install ./be-spex-archive-keyring.deb && sudo apt update
 ```
 
@@ -41,7 +41,7 @@ Updates arrive with `sudo apt upgrade`.
 
 ### AppImage
 
-Download `Xaq_*_amd64.AppImage` from the [latest Xaq release](https://github.com/be-spex/Qiew/releases?q=xaq-v),
+Download `Xaq_*_amd64.AppImage` from the [latest Xaq release](https://github.com/bespex/Qiew/releases?q=xaq-v),
 make it executable (`chmod +x Xaq_*_amd64.AppImage`) and start it.
 
 Xaq updates itself: it checks for a newer version and offers to replace the AppImage in place. That update

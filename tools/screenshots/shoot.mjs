@@ -9,7 +9,7 @@
 //   --no-build       use the existing apps/<app>/dist instead of building first
 //   --readme         also copy the PNGs to apps/<app>/docs/images/
 //   --site [dir]     also write WebP files to <dir>/public/shots/
-//                    (default dir: ../../be-spex.github.io next to this repo)
+//                    (default dir: ../../bespex.github.io next to this repo)
 //   --out <dir>      where the PNGs go (default: tools/screenshots/out)
 //
 // Needs Chromium or Chrome and Node 22. No Tauri, no display: the frontends run
@@ -36,7 +36,7 @@ for (let i = 0; i < args.length; i++) {
   else if (a === "--theme") opt.themes.push(args[++i]);
   else if (a === "--no-build") opt.build = false;
   else if (a === "--readme") opt.readme = true;
-  else if (a === "--site") opt.site = args[i + 1] && !args[i + 1].startsWith("--") ? args[++i] : path.resolve(ROOT, "../be-spex.github.io");
+  else if (a === "--site") opt.site = args[i + 1] && !args[i + 1].startsWith("--") ? args[++i] : path.resolve(ROOT, "../bespex.github.io");
   else if (a === "--out") opt.out = path.resolve(args[++i]);
   else die(`unknown option ${a}`);
 }

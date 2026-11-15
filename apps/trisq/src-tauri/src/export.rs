@@ -215,7 +215,7 @@ fn page(entry: &Path, entry_key: &str, modules: &BTreeMap<String, String>, versi
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Trisq {version}">
 <title>{title}</title>
-<!-- Exported from {name} with Trisq (https://be-spex.github.io/trisq/): the component and what it needs, in one file. -->
+<!-- Exported from {name} with Trisq (https://bespex.github.io/trisq/): the component and what it needs, in one file. -->
 <script type="application/json" id="trisq-modules">{modules}</script>
 <script>
 // Each module above becomes one the browser can import; the import map names them.

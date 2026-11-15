@@ -5,7 +5,7 @@
 Marq turns a Markdown file into a clean, readable page: headings, tables, code, images. Follow links to other
 documents and step back, like in a browser. It is a read-only viewer: it never writes to your files.
 
-**Website:** https://be-spex.github.io/marq/ · part of [be spex](https://be-spex.github.io) – small, focused apps for Linux
+**Website:** https://bespex.github.io/marq/ · part of [be spex](https://bespex.github.io) – small, focused apps for Linux
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/marq-dark.png">
@@ -19,7 +19,7 @@ documents and step back, like in a browser. It is a read-only viewer: it never w
 Once, add the be spex repository:
 
 ```sh
-curl -fsSLO https://be-spex.github.io/packages/be-spex-archive-keyring.deb
+curl -fsSLO https://bespex.github.io/packages/be-spex-archive-keyring.deb
 sudo apt install ./be-spex-archive-keyring.deb && sudo apt update
 ```
 
@@ -33,7 +33,7 @@ Updates arrive with `sudo apt upgrade`.
 
 ### AppImage
 
-Download `Marq_*_amd64.AppImage` from the [latest Marq release](https://github.com/be-spex/Qiew/releases?q=marq-v),
+Download `Marq_*_amd64.AppImage` from the [latest Marq release](https://github.com/bespex/Qiew/releases?q=marq-v),
 make it executable (`chmod +x Marq_*_amd64.AppImage`) and start it.
 
 Marq updates itself: it checks for a newer version and offers to replace the AppImage in place. That update

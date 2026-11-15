@@ -16,7 +16,7 @@ while [ $# -gt 0 ]; do
   case $1 in
     --size) size=$2; shift ;;
     --readme) readme=1 ;;
-    --site) site=$root/../be-spex.github.io; case ${2:-} in ""|--*) ;; *) site=$2; shift ;; esac ;;
+    --site) site=$root/../bespex.github.io; case ${2:-} in ""|--*) ;; *) site=$2; shift ;; esac ;;
     --out) out=$2; shift ;;
     *) echo "unknown option: $1" >&2; exit 2 ;;
   esac

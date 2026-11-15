@@ -9,7 +9,7 @@ use tauri::{AppHandle, State};
 
 use crate::AppInfo;
 
-const WEBSITE: &str = "https://be-spex.github.io";
+const WEBSITE: &str = "https://bespex.github.io";
 
 #[derive(Serialize)]
 pub struct About {
@@ -46,7 +46,7 @@ pub fn about_info(app: AppHandle, info: State<'_, &'static AppInfo>) -> About {
 pub fn open_about_link(link: &str, info: State<'_, &'static AppInfo>) -> Result<(), String> {
     let url = match link {
         "website" => WEBSITE.to_owned(),
-        "releases" => format!("https://github.com/be-spex/Qiew/releases?q={}-v", info.bin),
+        "releases" => format!("https://github.com/bespex/Qiew/releases?q={}-v", info.bin),
         _ => return Err(format!("unknown link: {link}")),
     };
     tauri_plugin_opener::open_url(url, None::<&str>).map_err(|e| e.to_string())

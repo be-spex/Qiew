@@ -6,7 +6,7 @@ so they can be redone whenever the look of an app changes.
 ```sh
 node tools/screenshots/shoot.mjs                 # everything, light and dark, into tools/screenshots/out/
 node tools/screenshots/shoot.mjs --shot jayq-split --theme nord
-node tools/screenshots/shoot.mjs --readme --site # also into apps/<app>/docs/images/ and ../be-spex.github.io/public/shots/
+node tools/screenshots/shoot.mjs --readme --site # also into apps/<app>/docs/images/ and ../bespex.github.io/public/shots/
 ```
 
 | Option | |
@@ -42,5 +42,5 @@ the system's colour preference, which the demo component `demo/TrailStats.tsx` f
 - After a change of the look: run with `--readme --site`, check the images, then commit them in the repository
   of the app and of the website.
 
-Image sizes must match `width`/`height` of the shot in `be-spex.github.io/src/data/apps.ts`: 1720×1240 for
+Image sizes must match `width`/`height` of the shot in `bespex.github.io/src/data/apps.ts`: 1720×1240 for
 the viewer, 2880×1240 for the split view.

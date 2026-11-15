@@ -5,7 +5,7 @@
 Quick viewers for Linux: small, read-only, one file at a time. They open what you drop on them or
 double-click, show it nicely, follow the file when it changes – and never write to it.
 
-**Website:** https://be-spex.github.io/#qiew · part of [be spex](https://be-spex.github.io) – small, focused apps for Linux
+**Website:** https://bespex.github.io/#qiew · part of [be spex](https://bespex.github.io) – small, focused apps for Linux
 
 | App | Shows | |
 | --- | --- | --- |
@@ -36,7 +36,7 @@ schemes; Trisq takes its colours and its width from the component.
 Once, add the be spex repository:
 
 ```sh
-curl -fsSLO https://be-spex.github.io/packages/be-spex-archive-keyring.deb
+curl -fsSLO https://bespex.github.io/packages/be-spex-archive-keyring.deb
 sudo apt install ./be-spex-archive-keyring.deb && sudo apt update
 ```
 
@@ -57,7 +57,7 @@ qiew-setup
 
 ### AppImage
 
-Each app has its own AppImage in the [releases](https://github.com/be-spex/Qiew/releases) (tags `trisq-v…`,
+Each app has its own AppImage in the [releases](https://github.com/bespex/Qiew/releases) (tags `trisq-v…`,
 `marq-v…`, `jayq-v…`, `xaq-v…`). It runs as it is and updates itself; see the README of the app for details.
 
 ### Other ways
@@ -121,7 +121,7 @@ removed when the window is closed; the files a viewer shows are never written to
 
 ## Working with CodeDeck
 
-Every viewer is a program of its own and stays one. [CodeDeck](https://github.com/be-spex), the be spex
+Every viewer is a program of its own and stays one. [CodeDeck](https://github.com/bespex), the be spex
 coding deck, leaves viewing files to such programs; this is how the two meet without depending on each other.
 
 - **Found through the desktop** – CodeDeck offers the programs installed for a file type ("View with…") and

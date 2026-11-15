@@ -5,7 +5,7 @@
 Cusq lays a CSV or TSV file out as a table you can sort, filter and search. Whoever just wants to look at the
 data does not have to start a spreadsheet program. The window takes the width the table needs.
 
-say “Cask” /kɑːsk/ · part of [Qiew](../../README.md) and [be spex](https://be-spex.github.io) – small, focused apps for Linux
+say “Cask” /kɑːsk/ · part of [Qiew](../../README.md) and [be spex](https://bespex.github.io) – small, focused apps for Linux
 
 ## Install
 
@@ -14,7 +14,7 @@ say “Cask” /kɑːsk/ · part of [Qiew](../../README.md) and [be spex](https:
 Once, add the be spex repository:
 
 ```sh
-curl -fsSLO https://be-spex.github.io/packages/be-spex-archive-keyring.deb
+curl -fsSLO https://bespex.github.io/packages/be-spex-archive-keyring.deb
 sudo apt install ./be-spex-archive-keyring.deb && sudo apt update
 ```
 
@@ -28,7 +28,7 @@ Updates arrive with `sudo apt upgrade`.
 
 ### AppImage
 
-Download `Cusq_*_amd64.AppImage` from the [latest Cusq release](https://github.com/be-spex/Qiew/releases?q=cusq-v),
+Download `Cusq_*_amd64.AppImage` from the [latest Cusq release](https://github.com/bespex/Qiew/releases?q=cusq-v),
 make it executable (`chmod +x Cusq_*_amd64.AppImage`) and start it.
 
 Cusq updates itself: it checks for a newer version and offers to replace the AppImage in place. That update
@@ -81,7 +81,7 @@ apps/cusq/run.sh apps/cusq/example.csv
 
 ## Working with CodeDeck
 
-Cusq stays a program of its own; [CodeDeck](https://github.com/be-spex) uses it the way it uses any viewer. The
+Cusq stays a program of its own; [CodeDeck](https://github.com/bespex) uses it the way it uses any viewer. The
 common part (`--line`, `--geometry`, standard input, `--reuse`) is described in the [Qiew README](../../README.md#working-with-codedeck).
 
 ## License

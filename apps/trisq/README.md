@@ -6,7 +6,7 @@ Trisq shows what a `.tsx` or `.jsx` file renders: open a React component – a p
 a single screen, a chart – and see it live, without a project, Node.js or a dev server. It is a read-only
 viewer: it never writes to your files.
 
-**Website:** https://be-spex.github.io/#qiew · part of [be spex](https://be-spex.github.io) – small, focused apps for Linux
+**Website:** https://bespex.github.io/#qiew · part of [be spex](https://bespex.github.io) – small, focused apps for Linux
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/trisq-dark.png">

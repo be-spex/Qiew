@@ -6,7 +6,7 @@ Maiqe draws the diagrams a Mermaid file describes: flowcharts, sequence, class a
 the rest. Every diagram lies on a card of its own with its own zoom; the text is one click away. It follows the
 file as an assistant or you write it.
 
-say “MY-kuh” /ˈmaɪkə/ · part of [Qiew](../../README.md) and [be spex](https://be-spex.github.io) – small, focused apps for Linux
+say “MY-kuh” /ˈmaɪkə/ · part of [Qiew](../../README.md) and [be spex](https://bespex.github.io) – small, focused apps for Linux
 
 ## Install
 
@@ -15,7 +15,7 @@ say “MY-kuh” /ˈmaɪkə/ · part of [Qiew](../../README.md) and [be spex](ht
 Once, add the be spex repository:
 
 ```sh
-curl -fsSLO https://be-spex.github.io/packages/be-spex-archive-keyring.deb
+curl -fsSLO https://bespex.github.io/packages/be-spex-archive-keyring.deb
 sudo apt install ./be-spex-archive-keyring.deb && sudo apt update
 ```
 
@@ -29,7 +29,7 @@ Updates arrive with `sudo apt upgrade`.
 
 ### AppImage
 
-Download `Maiqe_*_amd64.AppImage` from the [latest Maiqe release](https://github.com/be-spex/Qiew/releases?q=maiqe-v),
+Download `Maiqe_*_amd64.AppImage` from the [latest Maiqe release](https://github.com/bespex/Qiew/releases?q=maiqe-v),
 make it executable (`chmod +x Maiqe_*_amd64.AppImage`) and start it.
 
 Maiqe updates itself: it checks for a newer version and offers to replace the AppImage in place. That update
@@ -86,7 +86,7 @@ apps/maiqe/run.sh apps/maiqe/example.mmd
 
 ## Working with CodeDeck
 
-Maiqe stays a program of its own; [CodeDeck](https://github.com/be-spex) uses it the way it uses any viewer. The
+Maiqe stays a program of its own; [CodeDeck](https://github.com/bespex) uses it the way it uses any viewer. The
 common part (`--line`, `--geometry`, standard input, `--reuse`) is described in the [Qiew README](../../README.md#working-with-codedeck).
 
 ## License
