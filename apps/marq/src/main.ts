@@ -8,6 +8,7 @@ import "github-markdown-css/github-markdown.css";
 import "./styles.css";
 import { setApp } from "@qiew/frame/app";
 import { setExportContent } from "@qiew/frame/export";
+import { drawDiagram, onDiagramThemeChange } from "@qiew/frame/mermaid";
 import { onRevealRequest, revealElement, revealLaunchLine } from "@qiew/frame/launch";
 import { openInitial } from "@qiew/frame/reveal";
 import { closeSearch, initSearch, refreshSearch } from "@qiew/frame/search";
@@ -48,6 +49,17 @@ md.core.ruler.push("source_lines", (state) => {
   }
 });
 
+// ```mermaid blocks become diagrams. Rendering leaves a placeholder that holds the source (shown
+// until the diagram is drawn, and when it cannot be); drawDiagrams() draws them afterwards, because
+// Mermaid draws asynchronously and is loaded only for documents that have diagrams.
+const plainFence = md.renderer.rules.fence!;
+md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+  const tok = tokens[idx];
+  if (tok.info.trim().split(/\s+/)[0].toLowerCase() !== "mermaid") return plainFence(tokens, idx, options, env, self);
+  const line = tok.attrGet("data-line");
+  return `<div class="mermaid-block"${line ? ` data-line="${line}"` : ""}><pre class="mermaid-source"><code>${md.utils.escapeHtml(tok.content)}</code></pre></div>\n`;
+};
+
 const empty = document.getElementById("empty")!;
 const article = document.getElementById("doc")!;
 let current: Doc | null = null;
@@ -68,6 +80,8 @@ function joinPath(dir: string, rel: string): string {
 
 function render(doc: Doc, keepScroll: boolean) {
   const scroll = keepScroll ? window.scrollY : 0;
+  // A live reload keeps the drawings that worked, to show them while a diagram has an error.
+  if (!keepScroll) lastGood = [];
   article.innerHTML = DOMPurify.sanitize(md.render(doc.content));
   localImages.clear();
 
@@ -98,7 +112,63 @@ function render(doc: Doc, keepScroll: boolean) {
   updateToolbar(doc.content, article);
   window.scrollTo(0, scroll);
   refreshSearch();
+  drawDiagrams();
 }
+
+// ---- Mermaid diagrams ---------------------------------------------------------------------
+
+const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const MAIQE_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5M19 5l-7 7M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg>`;
+
+let drawPass = 0; // a pass overtaken by a newer render stops
+/** The last drawing of every diagram that worked, by its place in the document. */
+let lastGood: (string | undefined)[] = [];
+let maiqe: Promise<boolean> | null = null;
+/** Whether Maiqe is installed; asked once. */
+const hasMaiqe = () => (maiqe ??= invoke<boolean>("has_viewer", { bin: "maiqe" }).catch(() => false));
+
+async function drawDiagrams() {
+  const pass = ++drawPass;
+  const blocks = [...article.querySelectorAll<HTMLElement>(".mermaid-block")];
+  if (!blocks.length) return;
+  const handOver = await hasMaiqe();
+  for (const [i, block] of blocks.entries()) {
+    const source = block.querySelector(".mermaid-source")?.textContent ?? "";
+    const { svg, error } = await drawDiagram(`marq-${pass}-${i}`, source);
+    if (pass !== drawPass) return;
+    if (svg) lastGood[i] = svg;
+    const shown = svg ?? lastGood[i];
+    if (shown) block.querySelector(".mermaid-source")?.remove();
+    if (error) {
+      const what = shown ? "This diagram has an error – showing the last version that worked" : "This diagram cannot be drawn";
+      block.insertAdjacentHTML("afterbegin", `<pre class="mermaid-error"><b>${what}</b>${esc(error)}</pre>`);
+    }
+    if (shown) block.insertAdjacentHTML("beforeend", `<div class="mermaid-diagram">${shown}</div>`);
+    if (shown && handOver) {
+      block.insertAdjacentHTML(
+        "beforeend",
+        `<button class="mermaid-open" type="button" title="Open in Maiqe: zoom, move, save as SVG" aria-label="Open in Maiqe">${MAIQE_ICON}<span>Maiqe</span></button>`,
+      );
+    }
+  }
+  refreshSearch();
+}
+
+// The button on a diagram: the same file in Maiqe, at this diagram (its first line inside the fence).
+article.addEventListener("click", (e) => {
+  const btn = (e.target as Element).closest(".mermaid-open");
+  const block = btn?.closest<HTMLElement>(".mermaid-block");
+  if (!block) return;
+  e.stopPropagation();
+  const fence = Number(block.dataset.line);
+  invoke("open_in_viewer", { bin: "maiqe", line: fence ? fence + 1 : null }).catch((err) => console.error(err));
+});
+
+onDiagramThemeChange(() => {
+  if (!current) return;
+  lastGood = [];
+  render(current, true);
+});
 
 /**
  * What the HTML export is made of: the document as rendered, the styles and
@@ -114,6 +184,8 @@ function exportContent(): string {
     img.setAttribute("src", `qiew-embed:${images.length}`);
     images.push(local);
   });
+  // The diagrams' buttons belong to the window, not to the page.
+  copy.querySelectorAll(".mermaid-open").forEach((btn) => btn.remove());
   // A <source> for another image of the same picture would point into the app; the <img> stands for it.
   copy.querySelectorAll("source[srcset]").forEach((source) => {
     if (!/^(https?:|data:)/i.test(source.getAttribute("srcset")!.trim())) source.remove();

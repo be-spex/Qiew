@@ -50,6 +50,8 @@ Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
 
 - **Every diagram type Mermaid knows** – Mermaid is part of Maiqe and draws offline; nothing in the file is run
   (`securityLevel: strict`).
+- **Same drawing as Marq** – Marq draws the diagrams of a Markdown file in the text and hands one over to
+  Maiqe with a click, at that diagram.
 - **Several diagrams in one file** – each gets a card with its number, title and type. Diagrams are told apart by
   their opening keyword (`flowchart`, `sequenceDiagram` …) or, in Markdown files, by their ```` ```mermaid ````
   fences; the title comes from front matter (`title:`), a `%% comment` above the diagram or the heading above

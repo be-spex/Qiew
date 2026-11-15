@@ -31,6 +31,7 @@ static INFO: AppInfo = AppInfo {
     features: &[
         "Renders Markdown as a page: headings, lists, tables, quotes, code, images.",
         "Links to other Markdown files open in place, with back and forward; web links open in the browser.",
+        "Draws Mermaid diagrams (```mermaid blocks) in place; each opens in Maiqe for zoom and export.",
         "Search (Ctrl+F), copy the source, four colour schemes.",
         "Exports the page as one HTML file.",
     ],
@@ -108,7 +109,7 @@ pub fn run() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(Viewer::default())
         .manage(export::exporter())
-        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, qiew_frame::about::about_info, qiew_frame::about::open_about_link, qiew_frame::export::export_info, qiew_frame::export::export_file, qiew_frame::launch::take_line])
+        .invoke_handler(tauri::generate_handler![open_file, initial_file, show_window, qiew_frame::about::about_info, qiew_frame::about::open_about_link, qiew_frame::export::export_info, qiew_frame::export::export_file, qiew_frame::launch::take_line, qiew_frame::siblings::has_viewer, qiew_frame::siblings::open_in_viewer])
         .setup(|app| {
             qiew_frame::setup(app, &INFO);
             Ok(())

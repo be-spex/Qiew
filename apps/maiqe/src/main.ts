@@ -1,21 +1,20 @@
 /*
  * Maiqe – the diagrams a Mermaid file describes, each on a card of its own with its own zoom,
  * and the text one click away. Mermaid is part of the app and draws offline. Toolbar, search,
- * colour schemes and the About box come from the frame.
+ * colour schemes, the About box and the drawing itself (shared with Marq) come from the frame.
  */
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { getCurrentWebview } from "@tauri-apps/api/webview";
-import mermaid from "mermaid";
 import "./styles.css";
 import { setApp } from "@qiew/frame/app";
 import { setExportAvailable, setExportContent } from "@qiew/frame/export";
 import { plural } from "@qiew/frame/fragment";
+import { drawDiagram, onDiagramThemeChange } from "@qiew/frame/mermaid";
 import { onRevealRequest, revealElement, revealLaunchLine, revealTextLine } from "@qiew/frame/launch";
 import { openInitial } from "@qiew/frame/reveal";
 import { closeSearch, initSearch, refreshSearch } from "@qiew/frame/search";
 import { initToolbar, updateToolbar } from "@qiew/frame/toolbar";
-import { VIEWS, effectiveView } from "@qiew/frame/views";
 import { type Part, kindName, split } from "./split";
 
 setApp("maiqe");
@@ -65,7 +64,6 @@ initSearch(source);
 // ---- drawing -----------------------------------------------------------------------------
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-const isDark = () => VIEWS.find((v) => v.id === effectiveView())!.dark;
 
 const ICON = {
   minus: `<svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg>`,
@@ -165,13 +163,6 @@ async function draw() {
   const wasExpanded = views.findIndex((v) => v && expanded(v));
   const kept = views.map((v) => (v && !v.fitted ? { scale: v.scale, x: v.x, y: v.y } : null));
 
-  mermaid.initialize({
-    startOnLoad: false,
-    securityLevel: "strict",
-    theme: isDark() ? "dark" : "default",
-    // The window's own font: it is there, which the fonts Mermaid asks for by default need not be.
-    fontFamily: getComputedStyle(document.body).fontFamily,
-  });
   cards.innerHTML = parts.map((p, i) => cardHtml(p, i, many)).join("");
   document.body.classList.remove("has-expanded");
   views = parts.map(() => null);
@@ -182,16 +173,7 @@ async function draw() {
     const el = cards.children[i] as HTMLElement;
     const stage = el.querySelector<HTMLElement>(".stage")!;
     const canvas = el.querySelector<HTMLElement>(".canvas")!;
-    let svg: string | undefined;
-    let error = "";
-    try {
-      svg = (await mermaid.render(`maiqe-${pass}-${i}`, parts[i].text)).svg;
-    } catch (err) {
-      error = err instanceof Error ? err.message : String(err);
-      // Mermaid leaves its error drawing behind.
-      document.getElementById(`dmaiqe-${pass}-${i}`)?.remove();
-      document.getElementById(`maiqe-${pass}-${i}`)?.remove();
-    }
+    const { svg, error } = await drawDiagram(`maiqe-${pass}-${i}`, parts[i].text);
     if (pass !== generation) return;
     if (svg) lastGood[i] = svg;
     const shown = svg ?? lastGood[i];
@@ -424,15 +406,10 @@ addEventListener("resize", () => {
 });
 
 // The diagrams follow the colour scheme: redraw when it changes.
-let dark = isDark();
-const themeChanged = () => {
-  if (isDark() === dark) return;
-  dark = isDark();
+onDiagramThemeChange(() => {
   lastGood = [];
   draw();
-};
-new MutationObserver(themeChanged).observe(document.documentElement, { attributes: true, attributeFilter: ["data-view"] });
-matchMedia("(prefers-color-scheme: dark)").addEventListener("change", themeChanged);
+});
 
 setExportContent(() => {
   const v = views[active] ?? views.find(Boolean);

@@ -54,6 +54,10 @@ Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
 
 - **A page, not a source file** – headings, lists, tables, quotes and code blocks in a comfortable reading
   column; images next to the file are shown.
+- **Mermaid diagrams in place** – ```` ```mermaid ```` blocks are drawn where they stand, following the colour
+  scheme; a diagram with an error shows Mermaid's message. Where [Maiqe](../maiqe/README.md) is installed, a
+  button on each diagram opens it there, to zoom, move and save it as SVG. Mermaid is part of Marq, draws offline
+  and is only loaded for documents that have diagrams.
 - **Links work** – links to other Markdown files open in place, web links go to your browser, anchors jump
   within the document.
 - **Back and forward** – toolbar, context menu, Alt+←/→ or the mouse buttons take you back through the

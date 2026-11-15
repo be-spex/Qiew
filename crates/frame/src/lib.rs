@@ -11,11 +11,13 @@
 //! - [`about`]: what the About box shows
 //! - [`launch`]: the command line every app understands (file, line, placement, reuse)
 //! - [`export`]: saving the document in another form, for apps that offer one
+//! - [`siblings`]: handing the file shown to another Qiew viewer
 
 pub mod about;
 pub mod export;
 pub mod help;
 pub mod launch;
+pub mod siblings;
 #[cfg(target_os = "linux")]
 pub mod default_handler;
 #[cfg(target_os = "linux")]

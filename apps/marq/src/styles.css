@@ -32,3 +32,55 @@ html .markdown-body {
 
 /* The toolbar is aligned with the reading column. */
 .toolbar-inner { max-width: calc(750px + 2 * 40px); }
+
+/* ---------------------------------------------------------------------------
+   Mermaid diagrams: in the flow of the text, centred, with the button to
+   Maiqe in the corner while pointing at them.
+   --------------------------------------------------------------------------- */
+.markdown-body .mermaid-block {
+  position: relative;
+  margin: 0 0 16px;
+}
+.mermaid-diagram {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  padding: 8px 0;
+}
+.mermaid-diagram svg { height: auto; }
+.markdown-body .mermaid-error {
+  white-space: pre-wrap;
+  color: var(--fg);
+  border-left: 3px solid #d1242f;
+}
+.markdown-body .mermaid-error b { display: block; margin-bottom: 4px; }
+.mermaid-open {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  font: inherit;
+  font-size: 12px;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+.mermaid-block:hover .mermaid-open,
+.mermaid-open:focus-visible { opacity: 1; }
+.mermaid-open:hover { color: var(--fg); border-color: var(--accent); }
+.mermaid-open svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

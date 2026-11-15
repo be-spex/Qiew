@@ -10,7 +10,7 @@ double-click, show it nicely, follow the file when it changes – and never writ
 | App | Shows | |
 | --- | --- | --- |
 | [Trisq](apps/trisq/README.md) | TSX/JSX: a React component, running – no Node.js, no project | Tailwind, imports, live reload, error display |
-| [Marq](apps/marq/README.md) | Markdown, rendered | links, images, back/forward |
+| [Marq](apps/marq/README.md) | Markdown, rendered | links, images, Mermaid diagrams, back/forward |
 | [Jayq](apps/jayq/README.md) | JSON source, pretty-printed and foldable | jq filter view |
 | [Xaq](apps/xaq/README.md) | XML source, pretty-printed and foldable | XSLT mapping view |
 | [Hyqe](apps/hyqe/README.md) | HTML pages, rendered like in a browser – without one | JavaScript, source view |
