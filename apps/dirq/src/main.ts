@@ -324,6 +324,7 @@ function showRaw() {
 
 function showMessage(text: string, isError = false) {
   layout.hidden = true;
+  $btn("side-btn").hidden = true;
   updateToolbar(null, "");
   closeSearch();
   empty.hidden = false;

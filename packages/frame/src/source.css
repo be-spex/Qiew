@@ -180,7 +180,8 @@ body.split .pane-editor {
 }
 .tb-btn.labeled:hover { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--bg)); }
 /* "Back" only exists in the split layout. */
-body:not(.split) #split-close-btn { display: none; }
+body:not(.split) #split-close-btn,
+body:not(.split) .split-only { display: none; }
 .tb-btn.run:hover { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--bg)); }
 #split-btn[aria-pressed="true"] { color: var(--accent); background: var(--surface); }
 

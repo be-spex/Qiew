@@ -44,7 +44,8 @@ viewer: it never writes to your files.
   not ask again; to be asked once more, delete `~/.config/net.spex.trisq/default-handler-declined`.
 - **What is shown:** the default export of the file; without one, the first exported component. A file that
   mounts itself into `#root` works too.
-- **Toolbar:** reload (F5) on the left, line count in the centre, copy, export and About on the right.
+- **Toolbar:** reload (F5) on the left, line count in the centre, copy and export on the right, About in the
+  menu at the edge.
 - **Export:** the toolbar button asks where to save; `trisq App.tsx --export-html App.html` does the same
   without a window. The exported page is a snapshot: it does not follow the file, and in a browser the
   component is not kept apart as it is in Trisq. Images that the component names by a relative path in the

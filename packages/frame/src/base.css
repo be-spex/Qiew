@@ -173,14 +173,22 @@ body.dragging #doc { opacity: .35; }
 .tb-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .tb-btn:disabled { opacity: .35; cursor: default; background: transparent; color: var(--muted); }
 
-.tb-sep {
+/*
+ * The bar has one rule per area. Left: where to go (navigation, panels on the
+ * left). Centre: what is shown (stats; clicked, the search field). Right: what
+ * to do with it, always in this order: the app's view switches, folding,
+ * copy and export, and at the edge the menu (colour scheme, About).
+ * Each area is made of parts; a line separates two parts that both show something.
+ */
+.tb-part { display: flex; align-items: center; gap: 4px; }
+.tb-part:not([hidden]):has(> :not([hidden])) ~ .tb-part:not([hidden]):has(> :not([hidden]))::before {
+  content: "";
+  flex: none;
   width: 1px;
   height: 16px;
   margin: 0 4px;
   background: var(--border);
 }
-#doc-tools[hidden] + .tb-sep,
-#fold-tools[hidden] + .tb-sep { display: none; }
 .tb-btn svg {
   width: 17px;
   height: 17px;
@@ -208,7 +216,31 @@ body.dragging #doc { opacity: .35; }
   .tb-stats { display: none; }
 }
 
-/* Search field, shown inside the toolbar between the two groups. */
+/*
+ * The centre: what is shown. Where there is search, the stats sit in a quiet
+ * field with a magnifier that becomes the search field in the same place.
+ */
+.tb-find {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 100%;
+  height: 28px;
+  padding: 0 12px 0 9px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  cursor: text;
+  transition: border-color .12s, background .12s;
+}
+.tb-find:hover { border-color: var(--border-soft); background: var(--surface); }
+.tb-find:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.tb-find svg { flex: none; }
+.tb-find .tb-stats { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+/* Search field, in the centre of the toolbar. */
 .tb-search {
   width: min(380px, 60vw);
   height: 28px;
@@ -255,9 +287,8 @@ body.dragging #doc { opacity: .35; }
 .tb-btn.small { width: 24px; height: 24px; border-radius: 5px; }
 .tb-btn.small svg { width: 15px; height: 15px; }
 
-/* While searching the stats make room; the search button shows as pressed. */
-body.searching #stats { display: none; }
-body.searching #search-btn { color: var(--fg); background: var(--surface); }
+/* While searching the field takes the place of what the centre shows. */
+body.searching .tb-center > :not(.tb-search) { display: none; }
 
 ::highlight(search) {
   background-color: color-mix(in srgb, var(--accent) 22%, transparent);
@@ -280,8 +311,9 @@ body.searching #search-btn { color: var(--fg); background: var(--surface); }
 .tb-menu { position: relative; }
 .tb-dropdown {
   position: absolute;
+  z-index: 30;
   top: 36px;
-  right: 0; /* the palette sits at the right edge */
+  right: 0; /* the menu sits at the right edge */
   min-width: 170px;
   padding: 4px;
   border: 1px solid var(--border);
@@ -319,6 +351,14 @@ body.searching #search-btn { color: var(--fg); background: var(--surface); }
     radial-gradient(circle at 50% 50%, var(--accent) 0 3px, transparent 3.5px),
     var(--bg);
 }
+.tb-menu-label {
+  padding: 6px 10px 4px;
+  color: var(--muted);
+  font-size: 11.5px;
+  letter-spacing: .04em;
+}
+.tb-menu-sep { height: 1px; margin: 4px 6px; background: var(--border-soft); }
+
 .check { margin-left: auto; color: var(--accent); visibility: hidden; }
 .tb-item[aria-checked="true"] .check { visibility: visible; }
 

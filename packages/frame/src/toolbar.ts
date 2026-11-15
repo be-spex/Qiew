@@ -1,5 +1,5 @@
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
-import { initAbout } from "./about";
+import { showAbout } from "./about";
 import { appId } from "./app";
 import { initExport } from "./export";
 import { docScrollTop, onDocScroll } from "./scroll";
@@ -9,10 +9,38 @@ const $ = (id: string) => document.getElementById(id)!;
 
 let source = ""; // text of the open document, for "Copy to Clipboard"
 
-function initViewMenu() {
-  const btn = document.getElementById("view-btn");
-  const menu = document.getElementById("view-menu");
-  if (!btn || !menu) return; // an app that takes its colours from the document has no menu
+const MENU_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true"><circle class="fill" cx="5.5" cy="12" r="1.6" /><circle class="fill" cx="12" cy="12" r="1.6" /><circle class="fill" cx="18.5" cy="12" r="1.6" /></svg>`;
+
+function el<K extends keyof HTMLElementTagNameMap>(tag: K, className: string, text = "") {
+  const node = document.createElement(tag);
+  node.className = className;
+  if (text) node.textContent = text;
+  return node;
+}
+
+/**
+ * The menu at the right edge of the toolbar, the same in every app: the colour
+ * scheme and the About box. An app that takes its colours from the document
+ * (`data-no-themes` on the toolbar) has only the About box in it.
+ */
+function initMenu() {
+  const right = document.querySelector("#toolbar .tb-right");
+  if (!right) return;
+  const themes = !$("toolbar").hasAttribute("data-no-themes");
+
+  const part = el("div", "tb-part tb-menu");
+  const btn = el("button", "tb-btn");
+  btn.id = "menu-btn";
+  btn.title = btn.ariaLabel = themes ? "Color Scheme and About" : "About";
+  btn.setAttribute("aria-haspopup", "menu");
+  btn.setAttribute("aria-expanded", "false");
+  btn.innerHTML = MENU_ICON;
+  const menu = el("div", "tb-dropdown");
+  menu.id = "menu";
+  menu.setAttribute("role", "menu");
+  menu.hidden = true;
+  part.append(btn, menu);
+  right.append(part);
 
   const setOpen = (open: boolean) => {
     menu.hidden = !open;
@@ -20,25 +48,35 @@ function initViewMenu() {
   };
   const markChecked = () => {
     const current = effectiveView();
-    menu.querySelectorAll<HTMLElement>("[data-value]").forEach((el) =>
-      el.setAttribute("aria-checked", String(el.dataset.value === current)),
+    menu.querySelectorAll<HTMLElement>("[data-value]").forEach((item) =>
+      item.setAttribute("aria-checked", String(item.dataset.value === current)),
     );
   };
 
-  for (const v of VIEWS) {
-    const item = document.createElement("button");
-    item.className = "tb-item";
-    item.setAttribute("role", "menuitemradio");
-    item.dataset.value = v.id;
-    item.innerHTML = `<span class="swatch" data-view="${v.id}"></span>${v.label}<span class="check">✓</span>`;
-    item.addEventListener("click", () => {
-      saveView(v.id);
-      applyView(v.id);
-      markChecked();
-      setOpen(false);
-    });
-    menu.append(item);
+  if (themes) {
+    menu.append(el("div", "tb-menu-label", "Color Scheme"));
+    for (const v of VIEWS) {
+      const item = el("button", "tb-item");
+      item.setAttribute("role", "menuitemradio");
+      item.dataset.value = v.id;
+      item.innerHTML = `<span class="swatch" data-view="${v.id}"></span>${v.label}<span class="check">✓</span>`;
+      item.addEventListener("click", () => {
+        saveView(v.id);
+        applyView(v.id);
+        markChecked();
+        setOpen(false);
+      });
+      menu.append(item);
+    }
+    menu.append(el("div", "tb-menu-sep"));
   }
+  const about = el("button", "tb-item", `About ${document.title}`);
+  about.setAttribute("role", "menuitem");
+  about.addEventListener("click", () => {
+    setOpen(false);
+    showAbout();
+  });
+  menu.append(about);
 
   btn.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -54,6 +92,7 @@ function initViewMenu() {
     }
   });
 
+  if (!themes) return;
   applyView(storedView());
   markChecked();
   onSystemThemeChange(() => {
@@ -92,11 +131,10 @@ function initScrollShadow() {
 }
 
 export function initToolbar() {
-  initViewMenu();
   initCopy();
   initScrollShadow();
   initExport();
-  initAbout();
+  initMenu();
 }
 
 /**
@@ -107,6 +145,7 @@ export function initToolbar() {
 export function updateToolbar(text: string | null, stats: string, foldable = false) {
   source = text ?? "";
   $("doc-tools").hidden = text === null;
+  document.querySelectorAll<HTMLElement>(".needs-doc").forEach((el) => (el.hidden = text === null));
   const foldTools = document.getElementById("fold-tools");
   if (foldTools) foldTools.hidden = text === null || !foldable;
   $("stats").hidden = text === null;

@@ -10,7 +10,7 @@ double-click, show it nicely, follow the file when it changes – and never writ
 | App | Shows | |
 | --- | --- | --- |
 | [Trisq](apps/trisq/README.md) | TSX/JSX: a React component, running – no Node.js, no project | Tailwind, imports, live reload, error display |
-| [Marq](apps/marq/README.md) | Markdown, rendered | links, images, Mermaid diagrams, back/forward |
+| [Marq](apps/marq/README.md) | Markdown, rendered | links, images, Mermaid diagrams, outline, back/forward |
 | [Jayq](apps/jayq/README.md) | JSON source, pretty-printed and foldable | jq filter view |
 | [Xaq](apps/xaq/README.md) | XML source, pretty-printed and foldable | XSLT mapping view |
 | [Hyqe](apps/hyqe/README.md) | HTML pages, rendered like in a browser – without one | JavaScript, source view |
@@ -19,7 +19,9 @@ double-click, show it nicely, follow the file when it changes – and never writ
 | [Maiqe](apps/maiqe/README.md) | Mermaid diagrams, one card each | zoom, text view |
 
 
-All of them: copy, live reload, file association. Marq, Xaq and Jayq also search (Ctrl+F) and have four colour
+All of them: copy, live reload, file association, and the same toolbar: navigation on the left, what is shown in
+the centre, on the right the app's view switches, then copy and export, and at the edge
+the menu with colour scheme and About. Marq, Xaq and Jayq also search (Ctrl+F) and have four colour
 schemes; Trisq takes its colours and its width from the component.
 
 <picture>

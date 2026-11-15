@@ -1,8 +1,8 @@
 /**
  * The About box, the same in every app: name and purpose, the file endings
  * the app is made for, whether it is the default viewer, and links to the
- * be spex website and to the app's releases. Its button is the last one in
- * the toolbar. The backend part is `qiew_frame::about`.
+ * be spex website and to the app's releases. It opens from the toolbar's menu
+ * (see toolbar.ts). The backend part is `qiew_frame::about`.
  */
 import { invoke } from "@tauri-apps/api/core";
 
@@ -15,8 +15,6 @@ interface About {
   extensions: string[];
   is_default: boolean | null;
 }
-
-const ICON = `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" /><path d="M12 11v5.5" /><circle cx="12" cy="7.8" r="1.1" class="fill" /></svg>`;
 
 function el<K extends keyof HTMLElementTagNameMap>(tag: K, className = "", text = "") {
   const node = document.createElement(tag);
@@ -83,21 +81,17 @@ async function open(dialog: HTMLDialogElement) {
   close.focus();
 }
 
-/** Adds the About button as the last one of the toolbar. */
-export function initAbout() {
-  const right = document.querySelector("#toolbar .tb-right");
-  if (!right) return;
-  const button = el("button", "tb-btn");
-  button.id = "about-btn";
-  button.title = button.ariaLabel = "About";
-  button.innerHTML = ICON;
+let dialog: HTMLDialogElement | null = null;
 
-  const dialog = el("dialog", "about");
-  // A click beside the box closes it.
-  dialog.addEventListener("click", (e) => {
-    if (e.target === dialog) dialog.close();
-  });
-  document.body.append(dialog);
-  button.addEventListener("click", () => open(dialog).catch((err) => console.error("about:", err)));
-  right.append(button);
+/** Opens the About box. */
+export function showAbout() {
+  if (!dialog) {
+    dialog = el("dialog", "about");
+    // A click beside the box closes it.
+    dialog.addEventListener("click", (e) => {
+      if (e.target === dialog) dialog?.close();
+    });
+    document.body.append(dialog);
+  }
+  open(dialog).catch((err) => console.error("about:", err));
 }
