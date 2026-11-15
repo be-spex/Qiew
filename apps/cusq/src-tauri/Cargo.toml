@@ -1,6 +1,6 @@
 [package]
 name = "cusq"
-version = "0.1.0"
+version = "0.2.0"
 description = "CSV viewer, read-only – by be-spex"
 authors.workspace = true
 edition.workspace = true
