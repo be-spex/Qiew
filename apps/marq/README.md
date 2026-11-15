@@ -58,6 +58,11 @@ Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
   scheme; a diagram with an error shows Mermaid's message. Where [Maiqe](../maiqe/README.md) is installed, a
   button on each diagram opens it there, to zoom, move and save it as SVG. Mermaid is part of Marq, draws offline
   and is only loaded for documents that have diagrams.
+- **Outline** – the headings as a table of contents in a side panel (Ctrl+Shift+O); a click jumps to the
+  section, the section being read is marked. Pinned, the panel makes room beside the page and is open at the next
+  start; otherwise it floats over the page.
+- **Wide content** – the text keeps its reading column; tables, images and diagrams that do not fit break out of
+  it, up to the window width. Ctrl+Shift+B switches the whole page to full width.
 - **Links work** – links to other Markdown files open in place, web links go to your browser, anchors jump
   within the document.
 - **Back and forward** – toolbar, context menu, Alt+←/→ or the mouse buttons take you back through the
@@ -78,9 +83,9 @@ Requirements: Ubuntu 24.04+, Linux Mint 22+ or Debian 13+ (x86_64).
   Markdown, naming the app it would replace; later, run `marq --register-default` (uses `xdg-mime`; works on
   Cinnamon, KDE and GNOME). Answering no also means it will not ask again; to be asked once more, delete
   `~/.config/net.spex.marq/default-handler-declined`.
-- **Toolbar:** back on the left, character and word count in the centre, search, copy, export, colour scheme and
-  About on the right.
-- **Search:** Ctrl+F or the toolbar icon, then ↑/↓, Enter/Shift+Enter or F3; Esc closes.
+- **Toolbar:** back on the left; character and word count in the centre (a click there searches); on the right
+  full width and outline, then copy and export, and at the edge the menu with colour scheme and About.
+- **Search:** Ctrl+F or a click on the count in the centre, then ↑/↓, Enter/Shift+Enter or F3; Esc closes.
 - **Back and forward:** Alt+←/→, the mouse buttons, the toolbar or the context menu.
 
 ## Build from source

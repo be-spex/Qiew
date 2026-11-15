@@ -13,6 +13,8 @@ import { onRevealRequest, revealElement, revealLaunchLine } from "@qiew/frame/la
 import { openInitial } from "@qiew/frame/reveal";
 import { closeSearch, initSearch, refreshSearch } from "@qiew/frame/search";
 import { effectiveView } from "@qiew/frame/views";
+import { initWide, layoutWide } from "./wide";
+import { initOutline, updateOutline } from "./outline";
 import { initToolbar, setBackEnabled, updateToolbar } from "./toolbar";
 
 setApp("marq");
@@ -67,6 +69,8 @@ let current: Doc | null = null;
 const localImages = new Map<HTMLImageElement, { file: string; src: string }>();
 
 initSearch(article);
+initOutline();
+initWide(article);
 
 function joinPath(dir: string, rel: string): string {
   const sep = dir.includes("\\") && !dir.includes("/") ? "\\" : "/";
@@ -110,8 +114,10 @@ function render(doc: Doc, keepScroll: boolean) {
   empty.hidden = true;
   article.hidden = false;
   updateToolbar(doc.content, article);
+  updateOutline(article);
   window.scrollTo(0, scroll);
   refreshSearch();
+  layoutWide();
   drawDiagrams();
 }
 
@@ -152,6 +158,7 @@ async function drawDiagrams() {
     }
   }
   refreshSearch();
+  layoutWide();
 }
 
 // The button on a diagram: the same file in Maiqe, at this diagram (its first line inside the fence).
@@ -217,6 +224,7 @@ onRevealRequest(revealLine);
 function showMessage(text: string, isError = false) {
   article.hidden = true;
   updateToolbar(null, article);
+  updateOutline(null);
   closeSearch();
   empty.hidden = false;
   empty.textContent = text;
