@@ -38,13 +38,20 @@ curl -fsSLO https://be-spex.github.io/packages/be-spex-archive-keyring.deb
 sudo apt install ./be-spex-archive-keyring.deb && sudo apt update
 ```
 
-Then:
+Then all viewers at once, including any added later:
 
 ```sh
-sudo apt install trisq marq jayq xaq
+sudo apt install qiew
 ```
 
-Updates arrive with `sudo apt upgrade`.
+or only the ones you want, e.g. `sudo apt install marq dirq`. Updates arrive with `sudo apt upgrade`.
+
+Each viewer offers once, on its first start, to become the default app for its files. To do that for
+all installed viewers in one step instead (as your own user, not with `sudo`):
+
+```sh
+qiew-setup
+```
 
 ### AppImage
 
